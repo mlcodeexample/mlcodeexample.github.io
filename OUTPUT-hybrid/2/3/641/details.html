@@ -1,0 +1,22 @@
+<html><h3>8cdbb1637b140c01f431831e7b2c2a63afc96209,kapre/time_frequency.py,Spectrogram,call,#Spectrogram#Any#,139
+</h3><img src='862127.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                    axis=self.ch_axis_idx,
+                )
+        if self.power_spectrogram != 2.0:
+            output = K.pow(<a id="change">K.sqrt(output)</a>, self.power_spectrogram)
+        if self.return_decibel_spectrogram:
+            <a id="change">output = backend_keras.amplitude_to_decibel(output)</a>
+        return output
+
+    def get_config(self):
+        config = {</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        &#47&#47 this is needed because tf.signal.stft lives in channels_first land.
+        if self.input_data_format == &quotchannels_last&quot:
+            signals = tf.transpose(signals, perm=<a id="change">(0, 2, 1)</a>)  &#47&#47 (batch, ch, time)
+
+        stfts = tf.signal.stft(
+            signals=signals,</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/keunwoochoi/kapre/commit/8cdbb1637b140c01f431831e7b2c2a63afc96209#diff-2c1907602675e677df66c0bda1f1a65d1ed2c9d051eaf6e954d075dafd04884dL74' target='_blank'>Link</a></div><div id='project'> Project Name: keunwoochoi/kapre</div><div id='commit'> Commit Name: 8cdbb1637b140c01f431831e7b2c2a63afc96209</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: kapre/time_frequency.py</div><div id='class'> Class Name: Spectrogram</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/de7f5863338af5e1f92257cb29a6ca9a1c52c473#diff-a302b06348a2674233d46c3de6deb16a2ce42d13fe6fafaa5228797464f34ffdL65' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: de7f5863338af5e1f92257cb29a6ca9a1c52c473</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/metalearning/tests/test_maml.py</div><div id='class'> Class Name: TestMAML</div><div id='method'> Method Name: test_sine</div><BR><BR><div id='link'><a href='https://github.com/khaotik/DaNet-Tensorflow/commit/f31d73eab214f5d8f8bc993807db9f73faed8e42#diff-4c00529a9b4a713e9f327fa1bad03fbd7443846d7e45d570338fd14f7201fb30L101' target='_blank'>Link</a></div><div id='project'> Project Name: khaotik/DaNet-Tensorflow</div><div id='commit'> Commit Name: f31d73eab214f5d8f8bc993807db9f73faed8e42</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: app/modules.py</div><div id='class'> Class Name: BiLstmEncoder</div><div id='method'> Method Name: __call__</div><BR><BR><div id='link'><a href='https://github.com/dpressel/mead-baseline/commit/78a7f7de24c34235d0784a5781f46de34d2336eb#diff-c41fa94148789d4fdd61157e7ff95333b730d8f4e1f417ecfcec8007cafc71caL408' target='_blank'>Link</a></div><div id='project'> Project Name: dpressel/mead-baseline</div><div id='commit'> Commit Name: 78a7f7de24c34235d0784a5781f46de34d2336eb</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: python/eight_mile/pytorch/layers.py</div><div id='class'> Class Name: LayerNorm</div><div id='method'> Method Name: forward</div><BR>

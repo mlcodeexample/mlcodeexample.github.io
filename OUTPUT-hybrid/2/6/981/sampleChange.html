@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+               keep_dims=False,
+               name=None,
+               reduction_indices=None):
+    <a id="change">if tf.__version__ &lt; &quot2.0.0&quot:
+        return tf.reduce_mean(input_tensor,
+                   axis=axis,
+                   keep_dims=keep_dims,
+                   name=name,
+                   reduction_indices=reduction_indices)
+    else:
+        return  tf.reduce_mean(input_tensor,
+                   axis=axis,
+                   keepdims=keep_dims,
+                   name=name)
+
+
+</a>def reduce_sum(input_tensor,
+               axis=None,
+               keep_dims=False,
+               name=None,</code></pre><h3>After Change</h3><pre><code class='java'>
+                keep_dims=False,
+                name=None,
+                reduction_indices=None):
+    <a id="change">try:
+        return tf.reduce_mean(input_tensor,
+                              axis=axis,
+                              keep_dims=keep_dims,
+                              name=name,
+                              reduction_indices=reduction_indices)
+    except TypeError:
+        return tf.reduce_mean(input_tensor,
+                              axis=axis,
+                              keepdims=keep_dims,
+                              name=name)
+
+
+</a>def reduce_sum(input_tensor,
+               axis=None,
+               keep_dims=False,
+               name=None,</code></pre>

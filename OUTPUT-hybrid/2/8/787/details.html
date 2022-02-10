@@ -1,0 +1,43 @@
+<html><h3>14b7ac5210cf4d4e4cdffcc7739cc0c9817c6a00,official/vision/beta/serving/image_classification_test.py,ImageClassificationExportTest,_export_from_module,#ImageClassificationExportTest#Any#Any#Any#,40
+</h3><img src='1002767.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    return classification_module
+
+  def _export_from_module(self, module, input_type, save_directory):
+    <a id="change">if input_type == &quotimage_tensor&quot:
+      input_signature = tf.TensorSpec(shape=[None, 224, 224, 3], dtype=tf.uint8)
+      signatures = {
+          &quotserving_default&quot:
+              module.inference_from_image_tensors.get_concrete_function(
+                  input_signature)
+      }
+    elif input_type == &quotimage_bytes&quot:
+      input_signature = tf.TensorSpec(shape=[None], dtype=tf.string)
+      signatures = {
+          &quotserving_default&quot:
+              module.inference_from_image_bytes.get_concrete_function(
+                  input_signature)
+      }
+    elif input_type == &quottf_example&quot:
+      input_signature = tf.TensorSpec(shape=[None], dtype=tf.string)
+      signatures = {
+          &quotserving_default&quot:
+              module.inference_from_tf_example.get_concrete_function(
+                  input_signature)
+      }
+    else:
+      raise ValueError(&quotUnrecognized `input_type`&quot)
+
+   </a> tf.saved_model.save(module,
+                        save_directory,
+                        signatures=signatures)
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+  def _export_from_module(self, module, input_type, save_directory):
+    signatures = module.get_inference_signatures(
+        <a id="change">{input_type: &quotserving_default&quot}</a>)
+    tf.saved_model.save(module,
+                        save_directory,
+                        signatures=signatures)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 7</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/models/commit/14b7ac5210cf4d4e4cdffcc7739cc0c9817c6a00#diff-90353789503664283ab1cce91f4453f531af424b0c175475c6a5bae279094b03L41' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/models</div><div id='commit'> Commit Name: 14b7ac5210cf4d4e4cdffcc7739cc0c9817c6a00</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: official/vision/beta/serving/image_classification_test.py</div><div id='class'> Class Name: ImageClassificationExportTest</div><div id='method'> Method Name: _export_from_module</div><BR><BR><div id='link'><a href='https://github.com/tensorlayer/tensorlayer/commit/3d305831a0edd1288cc2f94f81debbdc359d7bb3#diff-4d7335b89c309a04f60dcbebc6260bb5c2301379c2976c39880e767f6f1b61e6L62' target='_blank'>Link</a></div><div id='project'> Project Name: tensorlayer/tensorlayer</div><div id='commit'> Commit Name: 3d305831a0edd1288cc2f94f81debbdc359d7bb3</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorlayer/layers/lambda_layers.py</div><div id='class'> Class Name: Lambda</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/models/commit/14b7ac5210cf4d4e4cdffcc7739cc0c9817c6a00#diff-320b223853a2b15a564f9785bf3104c67033c2aa9f4c636590de2a04c81e8833L41' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/models</div><div id='commit'> Commit Name: 14b7ac5210cf4d4e4cdffcc7739cc0c9817c6a00</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: official/vision/beta/serving/semantic_segmentation_test.py</div><div id='class'> Class Name: SemanticSegmentationExportTest</div><div id='method'> Method Name: _export_from_module</div><BR>

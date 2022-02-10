@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    ):
+
+        &#47&#47 super(Elementwise, self).__init__(prev_layer=prev_layer, act=act, name=name)
+        <a id="change">super().__init__(name)</a>
+        self.combine_fn = combine_fn
+
+        self.build(None)
+        self._built = True</code></pre><h3>After Change</h3><pre><code class='java'>
+            name=None,  &#47&#47&quotelementwise&quot,
+    ):
+
+        <a id="change">super(Elementwise, self).__init__(name)</a>
+        self.combine_fn = combine_fn
+        <a id="change">self.act</a> = act
+
+        self.build(None)
+        self._built = True</code></pre>

@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        G.check_graph_for_ml()
+
+        &#47&#47 Create sparse adjacency matrix
+        self.node_list = <a id="change">list(G.nodes())</a>
+        self.Aadj = G.to_adjacency_matrix()
+
+        &#47&#47 Power-user feature: make the generator yield dense adjacency matrix instead
+        &#47&#47 of the default sparse one.</code></pre><h3>After Change</h3><pre><code class='java'>
+        G.check_graph_for_ml()
+
+        &#47&#47 Check that there is only a single node type for GAT or GCN
+        <a id="change">node_types = list(G.node_types)</a>
+        if len(node_types) &gt; 1:
+            raise TypeError(
+                "{}: node generator requires graph with single node type; "
+                "a graph with multiple node types is passed. Stopping.".format(
+                    type(self).__name__
+                )
+            )
+
+        &#47&#47 Create sparse adjacency matrix:
+        &#47&#47 Use the node orderings the same as in the graph features
+        self.node_list = G.nodes_of_type(<a id="change">node_types[0]</a>)
+        self.Aadj = G.to_adjacency_matrix(self.node_list)
+
+        &#47&#47 Function to map node IDs to indices for quicker node index lookups</code></pre>

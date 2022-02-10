@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+          is ready to be replaced in this phase.
+      error_msg_regex: The expected error message.
+    
+    <a id="change">tensors = create_graph_fn()</a>
+    <a id="change">replaced_tensors_ready = {tensors[name]: ready
+                              for name, ready in replaced_tensors_ready.items()}</a>
+    with self.assertRaisesRegexp(ValueError, error_msg_regex):
+      graph_tools.InitializableGraphAnalyzer(tf.compat.v1.get_default_graph(),
+                                             {x: tensors[x] for x in feeds},
+                                             replaced_tensors_ready)</code></pre><h3>After Change</h3><pre><code class='java'>
+          is ready to be replaced in this phase.
+      error_msg_regex: The expected error message.
+    
+    <a id="change">with tf.compat.v1.Graph().as_default() as graph:
+      tensors = create_graph_fn()
+      replaced_tensors_ready = [(tensors[name], ready) for name, ready
+                                in replaced_tensors_ready.items()]
+      with self.assertRaisesRegexp(ValueError, error_msg_regex):
+        graph_tools.InitializableGraphAnalyzer(graph,
+                                               {x: tensors[x] for x in feeds},
+                                               replaced_tensors_ready)
+
+ </a> @test_case.parameters(
+      (_create_graph_with_y_function_of_x, [], {}, &quoty&quot,
+       &quotmay have be caused by manually adding a placeholder to the graph&quot),
+      (_create_graph_with_y_function_of_x_and_untracked_table,</code></pre>

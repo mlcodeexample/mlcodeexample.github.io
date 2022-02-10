@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                mode=self.mode,
+                normalization_type=normalization_type))
+
+        for i in <a id="change">range(self.params[&quotdecoder_layers&quot])</a>:
+          in_dim = knum_list[i] if i == 0 else knum_list[i - 1]
+          out_dim = knum_list[i]
+
+          &#47&#47 linear projection is needed for residual connections if
+          &#47&#47 input and output of a cnn layer do not match
+          if in_dim != out_dim:
+            <a id="change">linear_proj</a> = ffn_wn_layer.FeedFowardNetworkNormalized(
+                in_dim,
+                out_dim,
+                var_scope_name="linear_mapping_cnn_" + str(i + 1),
+                dropout=1.0,
+                mode=self.mode,
+                normalization_type=normalization_type)
+          else:
+            linear_proj = None
+
+          conv_layer = conv_wn_layer.Conv1DNetworkNormalized(
+              in_dim,
+              out_dim,
+              kernel_width=kwidth_list[i],
+              mode=self.mode,
+              layer_id=i + 1,
+              hidden_dropout=self.params["hidden_dropout_keep_prob"],
+              conv_padding="VALID",
+              decode_padding=True,
+              activation=conv_activation,
+              normalization_type=normalization_type)
+
+          att_layer = attention_wn_layer.AttentionLayerNormalized(
+              out_dim,
+              embed_size=self._tgt_emb_size,
+              layer_id=i + 1,
+              add_res=True,
+              mode=self.mode)
+
+          self.layers.append([linear_proj, conv_layer, att_layer])
+
+        &#47&#47 linear projection after cnn layers
+        self.layers.append(
+            ffn_wn_layer.FeedFowardNetworkNormalized(
+                knum_list[<a id="change">self.params[&quotdecoder_layers&quot] - 1</a>],
+                self.params.get("out_emb_size", self._tgt_emb_size),
+                dropout=1.0,
+                var_scope_name="linear_mapping_after_cnn_layers",</code></pre><h3>After Change</h3><pre><code class='java'>
+                mode=self.mode,
+                normalization_type=normalization_type))
+
+        for i in <a id="change">range(len(knum_list))</a>:
+          in_dim = knum_list[i] if i == 0 else knum_list[i - 1]
+          out_dim = knum_list[i]
+
+          &#47&#47 linear projection is needed for residual connections if
+          &#47&#47 input and output of a cnn layer do not match
+          if in_dim != out_dim:
+            <a id="change">linear_proj</a> = ffn_wn_layer.FeedFowardNetworkNormalized(
+                in_dim,
+                out_dim,
+                var_scope_name="linear_mapping_cnn_" + str(i + 1),</code></pre>

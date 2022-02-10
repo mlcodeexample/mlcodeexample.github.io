@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            n_hop = n_dft // 2
+
+        assert image_data_format in (&quotdefault&quot, &quotchannels_first&quot, &quotchannels_last&quot)
+        <a id="change">if image_data_format == &quotdefault&quot:
+            self.image_data_format = K.image_data_format()
+        else:
+            self.image_data_format = image_data_format
+
+       </a> self.n_dft = n_dft
+        assert n_dft % 2 == 0
+        self.n_filter = n_dft // 2 + 1
+        self.trainable_kernel = trainable_kernel</code></pre><h3>After Change</h3><pre><code class='java'>
+    ):
+        super(STFT, self).__init__(**kwargs)
+
+        <a id="change">if win_length is None:
+            win_length = n_fft
+       </a> if hop_length is None:
+            hop_length = win_length // 4
+        if window_fn is None:
+            window_fn = tf.signal.hann_window</code></pre>

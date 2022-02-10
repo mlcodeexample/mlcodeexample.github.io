@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                     sequence_length = tl.layers.retrieve_seq_length_op2(input_seqs),
+                     return_last = True,
+                     name = &quotdynamic&quot)
+    <a id="change">if return_embed:
+        with tf.variable_scope("rnn", reuse=reuse):
+            net_embed = DenseLayer(network, n_units = t_dim,
+                            act = tf.identity,&#47&#47 W_init = initializer,
+                            b_init = None, name=&quothidden_state_embedding&quot)
+            return net_embed
+    else:
+        return network
+
+</a>def generator_txt2img(input_z, net_rnn_embed=None, is_train=True, reuse=False, batch_size=64):
+    &#47&#47 IMPLEMENTATION based on : https://github.com/paarthneekhara/text-to-image/blob/master/model.py
+    s = image_size
+    s2, s4, s8, s16 = int(s/2), int(s/4), int(s/8), int(s/16)</code></pre><h3>After Change</h3><pre><code class='java'>
+def rnn_embed(input_seqs, is_train=True, reuse=False, return_embed=False):
+     txt --&gt; t_dim 
+    w_init = tf.random_normal_initializer(stddev=0.02)
+    <a id="change">if tf.__version__ &lt;= &quot0.12.1&quot:
+        LSTMCell = tf.nn.rnn_cell.LSTMCell
+    else:
+        LSTMCell = tf.contrib.rnn.BasicLSTMCell
+   </a> with tf.variable_scope("rnnftxt", reuse=reuse):
+        tl.layers.set_name_reuse(reuse)
+        network = EmbeddingInputlayer(
+                     inputs = input_seqs,</code></pre>

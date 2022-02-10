@@ -1,0 +1,27 @@
+<html><h3>9c51193d4203f796c2adeca69b29a4ea168d7ceb,deepchem/models/tensorgraph/models/gan.py,GAN,predict_gan_generator,#GAN#Any#Any#Any#Any#,440
+</h3><img src='937486.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    for layer, value in zip(self.conditional_inputs, conditional_inputs):
+      batch[layer] = value
+    return self.predict_on_generator(
+        <a id="change">[batch]</a>, outputs=self.generators[generator_index])
+
+  def _set_empty_inputs(self, feed_dict, layers):
+    Set entries in a feed dict corresponding to a batch size of 0.</code></pre><h3>After Change</h3><pre><code class='java'>
+      batch_size = len(conditional_inputs[0])
+    if noise_input is None:
+      noise_input = self.get_noise_batch(batch_size)
+    <a id="change">inputs = [noise_input]</a>
+    <a id="change">inputs += conditional_inputs</a>
+    inputs = <a id="change">[i.astype(np.float32) for i in inputs]</a>
+    pred = self.generators[generator_index](inputs, training=False)
+    if tf.executing_eagerly():
+      pred = pred.numpy()
+    else:
+      <a id="change">pred = pred.eval(session=self.session)</a>
+    return pred
+
+
+class WGAN(GAN):</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 7</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/9c51193d4203f796c2adeca69b29a4ea168d7ceb#diff-e8c7775a85f9788a9925198d071e7c05e88654ee73d82f7dcc064ee2acfa7d79L389' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: 9c51193d4203f796c2adeca69b29a4ea168d7ceb</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/gan.py</div><div id='class'> Class Name: GAN</div><div id='method'> Method Name: predict_gan_generator</div><BR><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/2952f2a19f04cc3e3df9beb4a23eb9e1bd497753#diff-63d9d47a7646c663273fed506c111c08c439764b9adb598cf8eebb4d7a5a8935L107' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: 2952f2a19f04cc3e3df9beb4a23eb9e1bd497753</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/network/se_resnet.py</div><div id='class'> Class Name: SE_ResNet</div><div id='method'> Method Name: layer_op</div><BR><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/2cde5402070962026283b186a6b871066de7d2d3#diff-617ecc3bacaf35e6ffd9ff869d1b8c872754ff630b6246c52547626778235177L109' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: 2cde5402070962026283b186a6b871066de7d2d3</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/network/resnet.py</div><div id='class'> Class Name: ResNet</div><div id='method'> Method Name: layer_op</div><BR>

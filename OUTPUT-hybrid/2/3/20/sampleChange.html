@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        G.check_graph_for_ml()
+
+        &#47&#47 Create sparse adjacency matrix
+        self.node_list = <a id="change">list(G.nodes())</a>
+        self.Aadj = G.to_adjacency_matrix()
+
+        &#47&#47 Power-user feature: make the generator yield dense adjacency matrix instead
+        &#47&#47 of the default sparse one.</code></pre><h3>After Change</h3><pre><code class='java'>
+        &#47&#47 Function to map node IDs to indices for quicker node index lookups
+        &#47&#47 TODO: Move this to the graph class
+        node_index_dict = dict(zip(self.node_list, range(len(self.node_list))))
+        <a id="change">self._node_lookup = np.vectorize(node_index_dict.get, otypes=[np.int64])</a>
+
+        &#47&#47 Power-user feature: make the generator yield dense adjacency matrix instead
+        &#47&#47 of the default sparse one.
+        &#47&#47 If sparse is specified, check that the backend is tensorflow</code></pre>

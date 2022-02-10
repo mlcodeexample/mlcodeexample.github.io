@@ -1,0 +1,26 @@
+<html><h3>70cf20f6cf5e21c3b6165067483b925db61c161c,deepmedic/neuralnet/ops.py,,pool3dMirrorPad,#Any#Any#Any#,267
+</h3><img src='411942.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                            ws=ws,
+                            ignore_border=True,
+                            st=stride,
+                            pad=<a id="change">(0,0,0)</a>,
+                            mode=mode1)
+    
+    &#47&#47calculate the shape of the image after the max pooling.</code></pre><h3>After Change</h3><pre><code class='java'>
+    
+    image3dBC012WithMirrorPad = mirrorFinalBordersOfImage(image3dBC012, poolParams[2])
+    
+    pooled_out = tf.nn.pool( input = <a id="change">tf.transpose( image3dBC012WithMirrorPad, perm=[0,4,3,2,1] )</a>,
+                            window_shape=ws,
+                            strides=stride,
+                            padding="VALID", &#47&#47 SAME or VALID
+                            pooling_type=mode1,
+                            data_format="NDHWC") &#47&#47 AVG or MAX
+    pooled_out = <a id="change">tf.transpose( pooled_out, perm=[0,4,3,2,1] )</a>
+    
+    &#47&#47calculate the shape of the image after the max pooling.
+    &#47&#47This calculation is for ignore_border=True! Pooling should only be done in full areas in the mirror-padded image.
+    imgShapeAfterPoolAndPad = [ image3dBC012Shape[0],</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 5</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/Kamnitsask/deepmedic/commit/70cf20f6cf5e21c3b6165067483b925db61c161c#diff-8b1e8e227fd9d8860f571297f17c5de701fdf7f4f0748bb21263a534afe63ff2L1' target='_blank'>Link</a></div><div id='project'> Project Name: Kamnitsask/deepmedic</div><div id='commit'> Commit Name: 70cf20f6cf5e21c3b6165067483b925db61c161c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepmedic/neuralnet/ops.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: pool3dMirrorPad</div><BR><BR><div id='link'><a href='https://github.com/keunwoochoi/kapre/commit/8cdbb1637b140c01f431831e7b2c2a63afc96209#diff-2c1907602675e677df66c0bda1f1a65d1ed2c9d051eaf6e954d075dafd04884dL139' target='_blank'>Link</a></div><div id='project'> Project Name: keunwoochoi/kapre</div><div id='commit'> Commit Name: 8cdbb1637b140c01f431831e7b2c2a63afc96209</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: kapre/time_frequency.py</div><div id='class'> Class Name: Spectrogram</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/Kamnitsask/deepmedic/commit/70cf20f6cf5e21c3b6165067483b925db61c161c#diff-8b1e8e227fd9d8860f571297f17c5de701fdf7f4f0748bb21263a534afe63ff2L230' target='_blank'>Link</a></div><div id='project'> Project Name: Kamnitsask/deepmedic</div><div id='commit'> Commit Name: 70cf20f6cf5e21c3b6165067483b925db61c161c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepmedic/neuralnet/ops.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: applySoftmaxToFmAndReturnProbYandPredY</div><BR>

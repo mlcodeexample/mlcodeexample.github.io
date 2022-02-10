@@ -1,0 +1,21 @@
+<html><h3>2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f,snntoolbox/simulation/backends/inisim/ttfs.py,SpikeMaxPooling2D,call,#SpikeMaxPooling2D#Any#Any#,502
+</h3><img src='222507.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        if self.spiketrain is not None:
+            new_spikes = tf.math.logical_xor(
+                k.greater(input_psp, 0), k.greater(self.last_spiketimes, 0))
+            self.add_update([<a id="change">(self.spiketrain,
+                              self.time * k.cast(new_spikes, k.floatx()))</a>])
+
+        psp = self.get_psp(input_psp)
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        psp = self.get_psp(input_psp)
+
+        return <a id="change">tf.cast(psp, self._floatx)</a>
+
+
+custom_layers = {&quotSpikeFlatten&quot: SpikeFlatten,
+                 &quotSpikeDense&quot: SpikeDense,</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f#diff-ff4133761094e7ad758b12266e43745fcd175353724286b073107daad1ba3e40L502' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/ttfs.py</div><div id='class'> Class Name: SpikeMaxPooling2D</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f#diff-ff4133761094e7ad758b12266e43745fcd175353724286b073107daad1ba3e40L67' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/ttfs.py</div><div id='class'> Class Name: SpikeLayer</div><div id='method'> Method Name: update_neurons</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/models/commit/b95fa6e1a7081cadc959de85629b10ef930ab30f#diff-89226f42766d3301ace8ebca604031a87bdd4c9b4d67208b70de878b6d034581L81' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/models</div><div id='commit'> Commit Name: b95fa6e1a7081cadc959de85629b10ef930ab30f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: official/nlp/modeling/models/xlnet.py</div><div id='class'> Class Name: XLNetClassifier</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/dpressel/mead-baseline/commit/f41500f48d5087f531a48059ea0a5339591763ea#diff-56c739f93913ef817fc351cc95027a6046bf8b75e154ee69b54ef8c7c2c3cb21L1945' target='_blank'>Link</a></div><div id='project'> Project Name: dpressel/mead-baseline</div><div id='commit'> Commit Name: f41500f48d5087f531a48059ea0a5339591763ea</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: python/eight_mile/tf/layers.py</div><div id='class'> Class Name: BeamSearchBase</div><div id='method'> Method Name: __call__</div><BR>

@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    def width_px(self):
+        Returns the width in pixels.
+        if self.camera_intr is None:
+            <a id="change">raise ValueError("Must specify camera intrinsics to compute gripper width in 3D space")</a>
+        &#47&#47 Form the jaw locations in 3D space at the given depth.
+        p1 = Point(np.array([0, 0, self.depth]), frame=self.frame)
+        p2 = Point(np.array([self.width, 0, self.depth]), frame=self.frame)
+        </code></pre><h3>After Change</h3><pre><code class='java'>
+    def width_px(self):
+        Returns the width in pixels.
+        if self.camera_intr is None:
+            <a id="change">missing_camera_intr_msg = ("Must specify camera intrinsics to"
+                                       " compute gripper width in 3D space.")</a>
+            <a id="change">raise ValueError(missing_camera_intr_msg)</a>
+        &#47&#47 Form the jaw locations in 3D space at the given depth.
+        p1 = Point(np.array([0, 0, self.depth]), frame=self.frame)
+        p2 = Point(np.array([self.width, 0, self.depth]), frame=self.frame)
+</code></pre>

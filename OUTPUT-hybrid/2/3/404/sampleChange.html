@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+        &#47&#47 The name of placeholder for keep_prob is the same with the name
+        &#47&#47 of the Layer.
+        <a id="change">if is_fix:
+            self.outputs = tf.nn.dropout(self.inputs, keep, name=name)
+        else:
+            set_keep[name] = tf.placeholder(tf.float32)
+            self.outputs = tf.nn.dropout(self.inputs, set_keep[name], name=name) &#47&#47 1.2
+
+       </a> self.all_layers = list(layer.all_layers)
+        self.all_params = list(layer.all_params)
+        self.all_drop = dict(layer.all_drop)
+        if is_fix is False:</code></pre><h3>After Change</h3><pre><code class='java'>
+        self.all_params = list(layer.all_params)
+        self.all_drop = dict(layer.all_drop)
+        self.all_layers.extend( [self.outputs] )
+        <a id="change">self.all_params.extend( variables )</a>
+
+&#47&#47&#47&#47 Estimator layer
+class EstimatorLayer(Layer):
+    </code></pre>

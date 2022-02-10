@@ -1,0 +1,21 @@
+<html><h3>bcf6d0a188ee9ba868c1de01c347f813e3aaa35c,stellargraph/mapper/full_batch_generators.py,FullBatchNodeGenerator,__init__,#FullBatchNodeGenerator#Any#Any#Any#Any#Any#Any#Any#,111
+</h3><img src='10515.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        G.check_graph_for_ml()
+
+        &#47&#47 Create sparse adjacency matrix
+        self.node_list = <a id="change">list(G.nodes())</a>
+        self.Aadj = G.to_adjacency_matrix()
+
+        &#47&#47 Power-user feature: make the generator yield dense adjacency matrix instead
+        &#47&#47 of the default sparse one.</code></pre><h3>After Change</h3><pre><code class='java'>
+        &#47&#47 Function to map node IDs to indices for quicker node index lookups
+        &#47&#47 TODO: Move this to the graph class
+        node_index_dict = dict(zip(self.node_list, range(len(self.node_list))))
+        <a id="change">self._node_lookup = np.vectorize(node_index_dict.get, otypes=[np.int64])</a>
+
+        &#47&#47 Power-user feature: make the generator yield dense adjacency matrix instead
+        &#47&#47 of the default sparse one.
+        &#47&#47 If sparse is specified, check that the backend is tensorflow</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/stellargraph/stellargraph/commit/bcf6d0a188ee9ba868c1de01c347f813e3aaa35c#diff-bf990b45c9643cf08e5d92fd98c57bc4553a9da4120b2a4405c48e614265a181L56' target='_blank'>Link</a></div><div id='project'> Project Name: stellargraph/stellargraph</div><div id='commit'> Commit Name: bcf6d0a188ee9ba868c1de01c347f813e3aaa35c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: stellargraph/mapper/full_batch_generators.py</div><div id='class'> Class Name: FullBatchNodeGenerator</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/deepmipt/DeepPavlov/commit/387bb02bb54d6bec3b3618e62a97aa8618acca8c#diff-69883a06f0e068ed98e545f22e678a3c095d51e29a76427912833c3d8bef2ca4L47' target='_blank'>Link</a></div><div id='project'> Project Name: deepmipt/DeepPavlov</div><div id='commit'> Commit Name: 387bb02bb54d6bec3b3618e62a97aa8618acca8c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deeppavlov/models/ranking/siamese_model.py</div><div id='class'> Class Name: SiameseModel</div><div id='method'> Method Name: train_on_batch</div><BR><BR><div id='link'><a href='https://github.com/rail-berkeley/softlearning/commit/75cba1be3373908e6a1a971778a14e40b240ce4f#diff-5718b660668aa62b01af73b263c3463eca1eaf51c35e7641bca796ceaaf3550aL213' target='_blank'>Link</a></div><div id='project'> Project Name: rail-berkeley/softlearning</div><div id='commit'> Commit Name: 75cba1be3373908e6a1a971778a14e40b240ce4f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: softqlearning/misc/nn.py</div><div id='class'> Class Name: MLPFunction</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/99153ad034108b7d0e759fc246cb3d05593ee897#diff-564f524ac1a158477799843e56ea4a40674f4742a73de318294ca41c4703a28bL136' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: 99153ad034108b7d0e759fc246cb3d05593ee897</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/agents/pg_agent.py</div><div id='class'> Class Name: PGAgent</div><div id='method'> Method Name: _train_policy</div><BR>

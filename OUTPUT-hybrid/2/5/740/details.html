@@ -1,0 +1,25 @@
+<html><h3>343cb214a384df7061e0e4300bc376ae4f66b5ef,deepchem/models/tf_new_models/support_classifier.py,SupportGraphClassifier,add_placeholders,#SupportGraphClassifier#,68
+</h3><img src='955693.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+    &#47&#47 TODO(rbharath): Should weights for the support be used?
+    &#47&#47 Support labels
+    <a id="change">self.support_label_placeholder</a> = <a id="change">Input(
+        tensor=tf.placeholder(dtype=&quotfloat32&quot, shape=[self.support_batch_size],
+        name="support_label_placeholder"))</a>
+    self.phase = tf.placeholder(dtype=&quotbool&quot,
+                                name=&quotkeras_learning_phase&quot)
+
+  def construct_feed_dict(self, test, support, training=True, add_phase=False):</code></pre><h3>After Change</h3><pre><code class='java'>
+    &#47&#47self.support_label_placeholder = Input(
+    &#47&#47    tensor=tf.placeholder(dtype=&quotfloat32&quot, shape=[self.support_batch_size],
+    &#47&#47    name="support_label_placeholder"))
+    <a id="change">self.support_label_placeholder</a> = <a id="change">tf.placeholder(
+        dtype=&quotfloat32&quot, shape=[self.support_batch_size],
+        name="support_label_placeholder")</a>
+    self.phase = tf.placeholder(dtype=&quotbool&quot,
+                                name=&quotkeras_learning_phase&quot)
+    &#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47 DEBUG
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 5</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/343cb214a384df7061e0e4300bc376ae4f66b5ef#diff-d737529975951d0a617e5d3b34d7dd13b33b4276b10620206c35830563013d14L70' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: 343cb214a384df7061e0e4300bc376ae4f66b5ef</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tf_new_models/support_classifier.py</div><div id='class'> Class Name: SupportGraphClassifier</div><div id='method'> Method Name: add_placeholders</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/343cb214a384df7061e0e4300bc376ae4f66b5ef#diff-fbd014deb59365732c1f62cc089ed8aaecda16a0ccf02fee753764c5a7ea99e1L113' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: 343cb214a384df7061e0e4300bc376ae4f66b5ef</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tf_new_models/multitask_classifier.py</div><div id='class'> Class Name: MultitaskGraphClassifier</div><div id='method'> Method Name: build</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/343cb214a384df7061e0e4300bc376ae4f66b5ef#diff-ddf7ceaf9614aef6f8080e152175bd75e0f0136d3737c040c7b4d5c2dfd8a848L68' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: 343cb214a384df7061e0e4300bc376ae4f66b5ef</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tf_new_models/multitask_regressor.py</div><div id='class'> Class Name: MultitaskGraphRegressor</div><div id='method'> Method Name: build</div><BR>

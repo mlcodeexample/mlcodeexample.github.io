@@ -1,0 +1,28 @@
+<html><h3>534c4dc7423681faab78d1829c1ec3c31ffb8330,niftynet/layer/resampler.py,ResamplerLayer,_resample_inv_dst_weighting,#ResamplerLayer#Any#Any#,319
+</h3><img src='1016014.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            samples = [tf.gather_nd(img, knot)
+                       for (img, knot) in zip(batch_inputs, batch_knots)]
+        else:
+            samples = <a id="change">[]</a>
+            for img in batch_inputs:
+                for knot in batch_knots:
+                    samples.append(tf.gather_nd(img, knot))
+        samples = tf.stack(samples, axis=1)</code></pre><h3>After Change</h3><pre><code class='java'>
+        &#47&#47 get values of N neighbours
+        batch_inputs = tf.unstack(inputs, axis=0)
+        batch_knots = tf.unstack(knots_id, axis=1)
+        if <a id="change">batch_size == n_coor</a>ds:
+            samples = [tf.gather_nd(img, knot)
+                       for (img, knot) in zip(batch_inputs, batch_knots)]
+        elif <a id="change">n_coords</a> == 1 and <a id="change">batch_size &gt; 1:
+    </a>        <a id="change">samples = [tf.gather_nd(img, batch_knots[0])
+                       for img in batch_inputs]</a>
+        else:
+            <a id="change">raise NotImplementedError</a>
+        samples = tf.stack(samples, axis=1)
+        &#47&#47 weighted average over N neighbours
+        return tf.reduce_sum(
+            samples * tf.expand_dims(point_weights, axis=-1), axis=0)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/534c4dc7423681faab78d1829c1ec3c31ffb8330#diff-d8e520586ad048af79d6ff89f6b861e143f512901e02109f5201798d57923699L322' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: 534c4dc7423681faab78d1829c1ec3c31ffb8330</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/resampler.py</div><div id='class'> Class Name: ResamplerLayer</div><div id='method'> Method Name: _resample_inv_dst_weighting</div><BR><BR><div id='link'><a href='https://github.com/openai/baselines/commit/b71152eea0470ac2629c33e0fc66a54fe494949f#diff-9afcc7f27d207e1f000c22907bb353cc20cb9dcfbb6f94e21a6a5a38beddfeacL43' target='_blank'>Link</a></div><div id='project'> Project Name: openai/baselines</div><div id='commit'> Commit Name: b71152eea0470ac2629c33e0fc66a54fe494949f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: baselines/a2c/utils.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: conv</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/lattice/commit/04a318d89806e0aaa645c2e261dfd93d0ed200bc#diff-13e904316ff96f4e099aa5a0d662d0cc4a4f3d2dab8af57c68f50db0f3be3a68L660' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/lattice</div><div id='commit'> Commit Name: 04a318d89806e0aaa645c2e261dfd93d0ed200bc</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_lattice/python/premade_lib.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: build_rtl_layer</div><BR>

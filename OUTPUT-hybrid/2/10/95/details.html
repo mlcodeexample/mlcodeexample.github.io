@@ -1,0 +1,48 @@
+<html><h3>c611d9b6b35e44326bc18096dc57abe18eb6c90b,tf_agents/replay_buffers/tf_uniform_replay_buffer_test.py,TFUniformReplayBufferTest,testClear,#TFUniformReplayBufferTest#,116
+</h3><img src='177123.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                          values_, sample_)
+
+  def testClear(self):
+    <a id="change">if tf.executing_eagerly():
+      self.skipTest(&quotb/123886086&quot)
+   </a> batch_size = 1
+    spec = self._data_spec()
+    replay_buffer = tf_uniform_replay_buffer.TFUniformReplayBuffer(
+        spec, batch_size=batch_size, max_length=10)
+
+    values, add_op = _get_add_op(spec, replay_buffer, batch_size)
+    sample, _ = replay_buffer.get_next(sample_batch_size=3)
+    clear_op = replay_buffer.clear()
+    items_op = replay_buffer.gather_all()
+    last_id_op = replay_buffer._get_last_id()
+
+    self.evaluate(tf.compat.v1.global_variables_initializer())
+    last_id = self.evaluate(last_id_op)
+    empty_items = self.evaluate(items_op)
+    <a id="change">self.evaluate(add_op)</a>
+    values_ = self.evaluate(values)
+    sample_ = self.evaluate(sample)
+    tf.nest.map_structure(lambda x, y: self._assertContains([x], list(y)),
+                          values_, sample_)</code></pre><h3>After Change</h3><pre><code class='java'>
+    tf.nest.map_structure(lambda x, y: self._assertContains([x], list(y)),
+                          values_, sample_)
+
+  def testClear(<a id="change">self</a>):
+    batch_size = 1
+    spec = self._data_spec()
+    replay_buffer = tf_uniform_replay_buffer.TFUniformReplayBuffer(
+        spec, batch_size=batch_size, max_length=10)
+
+    self.evaluate(tf.compat.v1.global_variables_initializer())
+
+    initial_id = self.evaluate(replay_buffer._get_last_id())
+    empty_items = self.evaluate(replay_buffer.gather_all())
+
+    values, _ = <a id="change">self.evaluate(_get_add_op(spec, replay_buffer, batch_size))</a>
+    sample, _ = self.evaluate(replay_buffer.get_next(sample_batch_size=3))
+    tf.nest.map_structure(lambda x, y: self._assertContains([x], list(y)),
+                          values, sample)
+    self.assertNotEqual(initial_id, self.evaluate(replay_buffer._get_last_id()))</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/c611d9b6b35e44326bc18096dc57abe18eb6c90b#diff-075306f22c8de3b0e87dcc9255168b4a666fbc741524069dcd17ef54e6dfecc8L116' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: c611d9b6b35e44326bc18096dc57abe18eb6c90b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/replay_buffers/tf_uniform_replay_buffer_test.py</div><div id='class'> Class Name: TFUniformReplayBufferTest</div><div id='method'> Method Name: testClear</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/c611d9b6b35e44326bc18096dc57abe18eb6c90b#diff-075306f22c8de3b0e87dcc9255168b4a666fbc741524069dcd17ef54e6dfecc8L279' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: c611d9b6b35e44326bc18096dc57abe18eb6c90b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/replay_buffers/tf_uniform_replay_buffer_test.py</div><div id='class'> Class Name: TFUniformReplayBufferTest</div><div id='method'> Method Name: testGatherAll</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/c611d9b6b35e44326bc18096dc57abe18eb6c90b#diff-075306f22c8de3b0e87dcc9255168b4a666fbc741524069dcd17ef54e6dfecc8L116' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: c611d9b6b35e44326bc18096dc57abe18eb6c90b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/replay_buffers/tf_uniform_replay_buffer_test.py</div><div id='class'> Class Name: TFUniformReplayBufferTest</div><div id='method'> Method Name: testClear</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/c611d9b6b35e44326bc18096dc57abe18eb6c90b#diff-075306f22c8de3b0e87dcc9255168b4a666fbc741524069dcd17ef54e6dfecc8L305' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: c611d9b6b35e44326bc18096dc57abe18eb6c90b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/replay_buffers/tf_uniform_replay_buffer_test.py</div><div id='class'> Class Name: TFUniformReplayBufferTest</div><div id='method'> Method Name: testGatherAllOverCapacity</div><BR>

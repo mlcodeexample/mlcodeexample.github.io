@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        if np.random.random() &lt; self._epsilon:
+            opt_action = self._action_space.sample()
+
+        <a id="change">return opt_action</a>
+
+    @overrides
+    def get_actions(self, t, observations, policy, **kwargs):
+        </code></pre><h3>After Change</h3><pre><code class='java'>
+        if np.random.random() &lt; self._epsilon:
+            opt_action = self._action_space.sample()
+
+        <a id="change">return opt_action, dict()</a>
+
+    @overrides
+    def get_actions(self, t, observations, policy, **kwargs):
+        </code></pre>

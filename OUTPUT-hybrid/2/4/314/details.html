@@ -1,0 +1,29 @@
+<html><h3>f9b98760f445fc0219cfc9c4cada2b5f9d35ab1b,basic/model.py,Model,_build_loss,#Model#,219
+</h3><img src='458598.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+        loss_mask = tf.reduce_max(tf.cast(self.q_mask, &quotfloat&quot), 1)
+        if config.wy:
+            <a id="change">if config.na:
+                na = tf.reshape(self.na, [-1, 1])
+                concat_y = tf.concat(1, [na, tf.reshape(self.wy, [-1, M * JX])])
+                losses = tf.nn.softmax_cross_entropy_with_logits(self.concat_logits, tf.cast(concat_y, &quotfloat&quot))
+            else:
+                losses = tf.nn.softmax_cross_entropy_with_logits(
+                    self.logits2, tf.cast(tf.reshape(self.wy, [-1, M * JX]), &quotfloat&quot))
+           </a> ce_loss = tf.reduce_mean(loss_mask * losses)
+            tf.add_to_collection(&quotlosses&quot, ce_loss)
+
+        else:</code></pre><h3>After Change</h3><pre><code class='java'>
+            num_pos = tf.reduce_sum(tf.cast(self.wy, &quotfloat&quot))
+            num_neg = tf.reduce_sum(tf.cast(self.x_mask, &quotfloat&quot)) - num_pos
+            damp_ratio = num_pos / num_neg
+            <a id="change">dampened_losses = losses * (
+                (tf.cast(self.x_mask, &quotfloat&quot) - tf.cast(self.wy, &quotfloat&quot)) * damp_ratio + tf.cast(self.wy, &quotfloat&quot))</a>
+            new_losses = <a id="change">tf.reduce_sum(dampened_losses, [1, 2])</a>
+            ce_loss = tf.reduce_mean(loss_mask * new_losses)
+            
+            if config.na:
+                na = tf.reshape(self.na, [-1, 1])</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/wenwei202/iss-rnns/commit/f9b98760f445fc0219cfc9c4cada2b5f9d35ab1b#diff-1079e779be5179430411034adfa57e7cba8daf2c993cb52fbb924dd805321c78L219' target='_blank'>Link</a></div><div id='project'> Project Name: wenwei202/iss-rnns</div><div id='commit'> Commit Name: f9b98760f445fc0219cfc9c4cada2b5f9d35ab1b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basic/model.py</div><div id='class'> Class Name: Model</div><div id='method'> Method Name: _build_loss</div><BR><BR><div id='link'><a href='https://github.com/brightmart/text_classification/commit/a4697b180d4d8f5a7debbf292b6b34cbbbc4df87#diff-1a06236b00febb6cfa45daf29ed9a7152687e0fda7f5381b90b9bdb2f209b44dL125' target='_blank'>Link</a></div><div id='project'> Project Name: brightmart/text_classification</div><div id='commit'> Commit Name: a4697b180d4d8f5a7debbf292b6b34cbbbc4df87</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: a00_Bert/train_bert_multi-label.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: create_model</div><BR><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/946c74ea83f93967e28c585d0bbcd17afbfebb13#diff-023d37a8c76fa73084ec27927d67d215e2eba9f0bc6e99a32ee9d11a4d647fb2L282' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: 946c74ea83f93967e28c585d0bbcd17afbfebb13</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/loss_segmentation.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: cross_entropy</div><BR>

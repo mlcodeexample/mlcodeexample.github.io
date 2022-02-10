@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            &quotn_dft should be &gt; 1 and power of 2, but n_dft == %d&quot % n_dft
+        )
+        assert isinstance(trainable_kernel, bool)
+        <a id="change">assert isinstance(return_decibel_spectrogram, bool)</a>
+        assert padding in (&quotsame&quot, &quotvalid&quot)
+        if n_hop is None:
+            n_hop = n_dft // 2
+</code></pre><h3>After Change</h3><pre><code class='java'>
+        self.window_fn = window_fn
+        self.pad_end = pad_end
+
+        <a id="change">idt</a>, odt = input_data_format, output_data_format
+        self.output_data_format = K.image_data_format() if odt == &quotdefault&quot else odt
+        self.input_data_format = K.image_data_format() if idt == &quotdefault&quot else idt
+</code></pre>

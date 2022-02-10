@@ -1,0 +1,34 @@
+<html><h3>c00d5481241c1bf5fd6a206c46a55f74bb5748f2,gpflow/models/svgp.py,SVGP,build_prior_KL,#SVGP#,99
+</h3><img src='813292.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    @params_as_tensors
+    def build_prior_KL(self):
+        if self.whiten:
+            <a id="change">if self.q_diag:
+                KL = kullback_leiblers.gauss_kl_white_diag(self.q_mu, self.q_sqrt)
+            else:
+                KL = kullback_leiblers.gauss_kl_white(self.q_mu, self.q_sqrt)
+       </a> else:
+            K = self.kern.K(self.Z) + tf.eye(self.num_inducing, dtype=settings.tf_float) * settings.numerics.jitter_level
+            if self.q_diag:
+                KL = kullback_leiblers.gauss_kl_diag(self.q_mu, self.q_sqrt, K)
+            else:
+                <a id="change">KL = kullback_leiblers.gauss_kl(self.q_mu, self.q_sqrt, K)</a>
+        <a id="change">return KL</a>
+
+    @params_as_tensors
+    def _build_likelihood(self):
+        </code></pre><h3>After Change</h3><pre><code class='java'>
+    @params_as_tensors
+    def build_prior_KL(self):
+        if self.whiten:
+            <a id="change">K = None</a>
+        else:
+            K = self.kern.K(self.Z) + tf.eye(self.num_inducing, dtype=settings.tf_float) * settings.numerics.jitter_level
+        <a id="change">return kullback_leiblers.gauss_kl(self.q_mu, self.q_sqrt, K)</a>
+
+    @params_as_tensors
+    def _build_likelihood(self):
+        </code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 8</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/GPflow/GPflow/commit/c00d5481241c1bf5fd6a206c46a55f74bb5748f2#diff-e5e515abadf88d454f99405f4af8fb41b1d6d7aae79f11430f237e1a40395ddcL99' target='_blank'>Link</a></div><div id='project'> Project Name: GPflow/GPflow</div><div id='commit'> Commit Name: c00d5481241c1bf5fd6a206c46a55f74bb5748f2</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: gpflow/models/svgp.py</div><div id='class'> Class Name: SVGP</div><div id='method'> Method Name: build_prior_KL</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L501' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: AspuruGuzikAutoEncoder</div><div id='method'> Method Name: _create_encoder</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L145' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: SeqToSeq</div><div id='method'> Method Name: _create_encoder</div><BR>

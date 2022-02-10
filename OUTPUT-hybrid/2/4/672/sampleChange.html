@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+          batch_size=self.batch_size,
+          deterministic=deterministic,
+          pad_batches=pad_batches):
+        <a id="change">feed_dict = dict()</a>
+        feed_dict[self.m1_features] = X_b[:, 0]
+        feed_dict[self.m2_features] = X_b[:, 1]
+        if y_b is not None and not predict:
+          feed_dict[self.labels[0]] = y_b
+        if w_b is not None and not predict:
+          feed_dict[self.my_task_weights] = w_b
+        <a id="change">yield feed_dict</a>
+
+  def predict_mols(self, mols):
+    featurizer = CircularFingerprint(
+        size=self.n_features, radius=2, chiral=True)</code></pre><h3>After Change</h3><pre><code class='java'>
+          batch_size=self.batch_size,
+          deterministic=deterministic,
+          pad_batches=pad_batches):
+        <a id="change">yield ([X_b[:, 0], X_b[:, 1]], [y_b], [w_b])</a>
+
+  def predict_mols(self, mols):
+    featurizer = CircularFingerprint(
+        size=self.n_features, radius=2, chiral=True)</code></pre>

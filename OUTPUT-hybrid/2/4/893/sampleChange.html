@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            y_pred += list(yp)
+        y_pred = np.asarray(y_pred)
+        if len(responses) &gt; 1:
+            y_pred = <a id="change">np.reshape(y_pred, (j, len(responses)))</a>
+        return y_pred
+
+    def reset(self) -&gt; None:
+        pass</code></pre><h3>After Change</h3><pre><code class='java'>
+            y_pred += list(yp)
+        y_pred = np.asarray(y_pred)
+        &#47&#47 reshape to [batch_size, n_responses] if needed (n_responses &gt; 1)
+        y_pred = <a id="change">np.reshape(y_pred, (j, n_responses)) if n_responses &gt; 1 else y_pred</a>
+        return y_pred
+
+    def reset(self) -&gt; None:
+        pass</code></pre>

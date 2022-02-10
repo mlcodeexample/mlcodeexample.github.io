@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                    axis=self.ch_axis_idx,
+                )
+        if self.power_spectrogram != 2.0:
+            output = K.pow(<a id="change">K.sqrt(output)</a>, self.power_spectrogram)
+        if self.return_decibel_spectrogram:
+            <a id="change">output = backend_keras.amplitude_to_decibel(output)</a>
+        return output
+
+    def get_config(self):
+        config = {</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        &#47&#47 this is needed because tf.signal.stft lives in channels_first land.
+        if self.input_data_format == &quotchannels_last&quot:
+            signals = tf.transpose(signals, perm=<a id="change">(0, 2, 1)</a>)  &#47&#47 (batch, ch, time)
+
+        stfts = tf.signal.stft(
+            signals=signals,</code></pre>

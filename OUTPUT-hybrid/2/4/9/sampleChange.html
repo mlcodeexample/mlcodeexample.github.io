@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        
+        nid = utils.toindex(nid)
+        &#47&#47 TODO(minjie): should not directly use []
+        return <a id="change">self._node_mapping.tousertensor()[nid.tousertensor()]</a>
+
+    def map_to_parent_eid(self, eid):
+        This maps the child edge Ids to the parent Ids.
+</code></pre><h3>After Change</h3><pre><code class='java'>
+            The parent node id array.
+        
+        nid = utils.toindex(nid)
+        return <a id="change">F.gather_row(self._node_mapping.tousertensor(), nid.tousertensor())</a>
+
+    def map_to_parent_eid(self, eid):
+        This maps the child edge Ids to the parent Ids.
+</code></pre>

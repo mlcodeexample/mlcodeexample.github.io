@@ -1,0 +1,21 @@
+<html><h3>3523a61256c3040aa3f4fd3fc579511f85169212,tests/conftest.py,,_config,#Any#Any#,21
+</h3><img src='219362.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    with open(os.path.join(path_wd, filename_ann + &quot.h5&quot), &quotw&quot):
+        pass
+
+    config_filepath = <a id="change">os.path.join(path_wd, &quotconfig&quot)</a>
+    with open(config_filepath, &quotw&quot) as configfile:
+        config.write(configfile)
+
+    config = update_setup(config_filepath)</code></pre><h3>After Change</h3><pre><code class='java'>
+
+@pytest.fixture(scope=&quotfunction&quot)
+def _config(_path_wd, _datapath):
+    <a id="change">return get_config(_path_wd, _datapath)</a>
+
+
+@pytest.fixture(scope=&quotfunction&quot)
+def _config_first(_path_wd, _datapath_first):</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/3523a61256c3040aa3f4fd3fc579511f85169212#diff-e52e4ddd58b7ef887ab03c04116e676f6280b824ab7469d5d3080e5cba4f2128L22' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 3523a61256c3040aa3f4fd3fc579511f85169212</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tests/conftest.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: _config</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/3523a61256c3040aa3f4fd3fc579511f85169212#diff-e52e4ddd58b7ef887ab03c04116e676f6280b824ab7469d5d3080e5cba4f2128L52' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 3523a61256c3040aa3f4fd3fc579511f85169212</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tests/conftest.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: _datapath</div><BR><BR><div id='link'><a href='https://github.com/kermitt2/delft/commit/56a16de2cd288032548267281a2daf69d479f8eb#diff-c884b81511323fc17eedc527719d9aaa9a9e9125da0d8694f19677c19e6066bcL456' target='_blank'>Link</a></div><div id='project'> Project Name: kermitt2/delft</div><div id='commit'> Commit Name: 56a16de2cd288032548267281a2daf69d479f8eb</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: delft/sequenceLabelling/preprocess.py</div><div id='class'> Class Name: NERProcessor</div><div id='method'> Method Name: get_labels</div><BR>

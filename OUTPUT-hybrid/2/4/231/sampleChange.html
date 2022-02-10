@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    assert len(variables) == len(target_variables)
+    for var, target_var in zip(variables, target_variables):
+        init_ops.append(tf.assign(target_var, var))
+        <a id="change">update_ops.append(
+            tf.assign(target_var, tau * var + (1.0 - tau) * target_var))</a>
+    return init_ops, update_ops
+</code></pre><h3>After Change</h3><pre><code class='java'>
+                 policy_weight_decay=0,
+                 qf_weight_decay=0,
+                 policy_optimizer=tf.train.AdamOptimizer,
+                 qf_optimizer=tf.train.Ada<a id="change">mOptimizer,
+                 clip_pos_returns=False,
+                 clip_return=np.inf,
+                 discount=0.99,
+          </a>       max_action=None,
+                 name=None,
+                 **kwargs):
+        </code></pre>

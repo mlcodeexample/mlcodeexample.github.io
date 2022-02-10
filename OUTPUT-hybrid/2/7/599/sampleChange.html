@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        &#47&#47 adaptive lambda
+        if kl &lt; self.kl_target / 1.5:
+            self.lam /= 2
+        elif <a id="change">kl &gt; self.kl</a>_target * 1.5:
+            <a id="change">self.lam *= 2</a>
+        <a id="change">self.lam</a> = np.clip(self.lam, 1e-4, 10)
+
+    def _build_anet(self, name, trainable):
+        with tf.variable_scope(name):</code></pre><h3>After Change</h3><pre><code class='java'>
+                if kl &gt; 4*METHOD[&quotkl_target&quot]:
+                    break
+            if kl &lt; METHOD[&quotkl_target&quot] / 1.5:  &#47&#47 adaptive lambda
+                <a id="change">METHOD[&quotlam&quot]</a> /= 2
+            elif kl &gt; METHOD[&quotkl_target&quot] * 1.5:
+                METHOD[&quotlam&quot] *= 2
+            METHOD[&quotlam&quot] = np.clip(self.lam, 1e-4, 10)</code></pre>

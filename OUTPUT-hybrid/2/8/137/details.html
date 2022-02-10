@@ -1,0 +1,37 @@
+<html><h3>99c14cdf08959bddbe51502cf29f37cb7fdcc9ff,stellargraph/mapper/sequences.py,CorruptedNodeSequence,__init__,#CorruptedNodeSequence#Any#,654
+</h3><img src='218450.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+    def __init__(self, base_generator):
+
+        <a id="change">if not isinstance(base_generator, (FullBatchSequence, SparseFullBatchSequence)):
+            raise TypeError(
+                f"base_generator: expected FullBatchSequence or SparseFullBatchSequence, "
+                f"found {type(base_generator).__name__}"
+            )
+
+       </a> self.base_generator = base_generator
+        self.targets = np.zeros((1, len(base_generator.target_indices), 2))
+        self.targets[0, :, 0] = 1.0
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        self.base_generator = base_generator
+
+        <a id="change">if isinstance(base_generator, (FullBatchSequence, SparseFullBatchSequence)):
+            self.targets = np.tile(
+                [1.0, 0.0], reps=(1, len(base_generator.target_indices), 1),
+            )
+        elif isinstance(base_generator, NodeSequence):
+            self.targets = np.tile([1.0, 0.0], reps=(base_generator.batch_size, 1))
+        else:
+            raise TypeError(
+                f"base_generator: expected FullBatchSequence, SparseFullBatchSequence, "
+                f"or NodeSequence, found {type(base_generator).__name__}"
+            )
+
+   </a> def __len__(self):
+        return len(self.base_generator)
+
+    def __getitem__(self, index):</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/stellargraph/stellargraph/commit/99c14cdf08959bddbe51502cf29f37cb7fdcc9ff#diff-52fd8a3827b70574f96480b2b99dfd6a70f857ad5095cd75462b6e5daefc654aL656' target='_blank'>Link</a></div><div id='project'> Project Name: stellargraph/stellargraph</div><div id='commit'> Commit Name: 99c14cdf08959bddbe51502cf29f37cb7fdcc9ff</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: stellargraph/mapper/sequences.py</div><div id='class'> Class Name: CorruptedNodeSequence</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/stellargraph/stellargraph/commit/99c14cdf08959bddbe51502cf29f37cb7fdcc9ff#diff-ca39a84fdb9282f828c1f7f0bb0bcf87732204c354e7e847d65e24408a68d43aL79' target='_blank'>Link</a></div><div id='project'> Project Name: stellargraph/stellargraph</div><div id='commit'> Commit Name: 99c14cdf08959bddbe51502cf29f37cb7fdcc9ff</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: stellargraph/layer/deep_graph_infomax.py</div><div id='class'> Class Name: DeepGraphInfomax</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/c13faf9996622ddb6297aa090ce0157bcbb5cfe3#diff-ad89ff38763fd3b815c2ce09d9320d611c72cfb0eee2b81f53e6441d7c093016L26' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: c13faf9996622ddb6297aa090ce0157bcbb5cfe3</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/modules/classifiers/conv_classifiers.py</div><div id='class'> Class Name: Conv1DClassifier</div><div id='method'> Method Name: __init__</div><BR>

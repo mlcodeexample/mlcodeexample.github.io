@@ -1,0 +1,21 @@
+<html><h3>6ccde104316865fe94180c1f7b2c40333cb3113e,hyperpose/Model/pose_proposal/utils.py,,draw_bbx,#Any#Any#Any#Any#Any#Any#Any#,80
+</h3><img src='956350.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        y=ry[k][iy][ix]
+        w=rw[k][iy][ix]
+        h=rh[k][iy][ix]
+        <a id="change">img=cv2.circle(img,(int(x),int(y)),radius=2,color=color,thickness=-1)</a>
+        img=cv2.rectangle(img,(int(x-w//2),int(y-h//2)),(int(x+w//2),int(y+h//2)),color,1)
+    return img
+
+def draw_edge(img,img_e,rx,ry,rw,rh,hnei,wnei,hout,wout,limbs,threshold=0.7):</code></pre><h3>After Change</h3><pre><code class='java'>
+    valid_idxs=np.where(img_pc&gt;=threshold,1,0)
+    ks,iys,ixs=np.nonzero(valid_idxs)
+    h,w,_=img.shape
+    thickness=<a id="change">int(min(h,w)/100)</a>
+    for k,iy,ix in zip(ks,iys,ixs):
+        x=rx[k][iy][ix]
+        y=ry[k][iy][ix]
+        w=rw[k][iy][ix]</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorlayer/openpose-plus/commit/6ccde104316865fe94180c1f7b2c40333cb3113e#diff-36ad4f5bdd3f6d00be4ad5e64eaf290b24c866fd7c2686a6a6dc5789577c84dbL81' target='_blank'>Link</a></div><div id='project'> Project Name: tensorlayer/openpose-plus</div><div id='commit'> Commit Name: 6ccde104316865fe94180c1f7b2c40333cb3113e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: hyperpose/Model/pose_proposal/utils.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: draw_bbx</div><BR><BR><div id='link'><a href='https://github.com/baldassarreFe/deep-koalarization/commit/4af0d6b993453f2c8aec62c4ff7a8c0b1c877f22#diff-9f2db1ad0622430377d2450b9189afab3a51f454ea1750d9f3db580c10396d2fL28' target='_blank'>Link</a></div><div id='project'> Project Name: baldassarreFe/deep-koalarization</div><div id='commit'> Commit Name: 4af0d6b993453f2c8aec62c4ff7a8c0b1c877f22</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: dataset/resize.py</div><div id='class'> Class Name: ImagenetResizer</div><div id='method'> Method Name: resize_img</div><BR><BR><div id='link'><a href='https://github.com/emedvedev/attention-ocr/commit/4dc7f459148bd3bc14549d36bd7d09910ca917ca#diff-e00bd59fc1afaa79248b852367e7142bd198df9f9eced012baa0b866fec314cfL26' target='_blank'>Link</a></div><div id='project'> Project Name: emedvedev/attention-ocr</div><div id='commit'> Commit Name: 4dc7f459148bd3bc14549d36bd7d09910ca917ca</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: aocr/model/model.py</div><div id='class'> Class Name: Model</div><div id='method'> Method Name: __init__</div><BR>

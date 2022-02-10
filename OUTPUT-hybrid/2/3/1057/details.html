@@ -1,0 +1,19 @@
+<html><h3>4af0d6b993453f2c8aec62c4ff7a8c0b1c877f22,dataset/resize.py,ImagenetResizer,resize_img,#ImagenetResizer#Any#Any#,23
+</h3><img src='1432820.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            &#47&#47 so take the side that&quots closer in size and enlarge the image
+            &#47&#47 in both directions to make that one fit
+            factor = min(ratio_h, ratio_w)
+            img = img.resize((int(width * factor), <a id="change">int(height * factor)</a>))
+
+        &#47&#47 Now we have an image that&quots either larger than the desired shape
+        &#47&#47 or at least one side matches the desired shape and we can resize</code></pre><h3>After Change</h3><pre><code class='java'>
+        :param size:
+        
+        img = Image.open(join(self.source_dir, filename))
+        <a id="change">orig_width</a>, orig_height = img.size
+        wanted_width, wanted_height = size
+        ratio_w, ratio_h = wanted_width / orig_width, wanted_height / orig_height
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/baldassarreFe/deep-koalarization/commit/4af0d6b993453f2c8aec62c4ff7a8c0b1c877f22#diff-9f2db1ad0622430377d2450b9189afab3a51f454ea1750d9f3db580c10396d2fL28' target='_blank'>Link</a></div><div id='project'> Project Name: baldassarreFe/deep-koalarization</div><div id='commit'> Commit Name: 4af0d6b993453f2c8aec62c4ff7a8c0b1c877f22</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: dataset/resize.py</div><div id='class'> Class Name: ImagenetResizer</div><div id='method'> Method Name: resize_img</div><BR><BR><div id='link'><a href='https://github.com/keithito/tacotron/commit/9190f660bcf6e36015c67961b82fa0449184869f#diff-c8b2ba863644149122090053ca659245c4e014fe242519003ec2c3d5e770b658L52' target='_blank'>Link</a></div><div id='project'> Project Name: keithito/tacotron</div><div id='commit'> Commit Name: 9190f660bcf6e36015c67961b82fa0449184869f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: util/audio.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: _stft</div><BR><BR><div id='link'><a href='https://github.com/keithito/tacotron/commit/9190f660bcf6e36015c67961b82fa0449184869f#diff-c8b2ba863644149122090053ca659245c4e014fe242519003ec2c3d5e770b658L59' target='_blank'>Link</a></div><div id='project'> Project Name: keithito/tacotron</div><div id='commit'> Commit Name: 9190f660bcf6e36015c67961b82fa0449184869f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: util/audio.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: _istft</div><BR>

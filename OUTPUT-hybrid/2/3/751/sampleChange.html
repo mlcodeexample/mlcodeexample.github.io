@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+      if results is None:
+        results = [output_values]
+      else:
+        <a id="change">for i, t in enumerate(output_values):
+          results[i].append(t)
+
+    &#47&#47 Concatenate arrays to create the final results.
+
+   </a> final_results = []
+    final_variances = []
+    for r in results:
+      final_results.append(np.concatenate(r, axis=0))</code></pre><h3>After Change</h3><pre><code class='java'>
+        elif len(output_values) == 1:
+          output_values = [undo_transforms(output_values[0], transformers)]
+      if results is None:
+        results = [[] <a id="change">for</a> i in range(<a id="change">len(output_values)</a>)]
+      for i, t in enumerate(output_values):
+        results[i].append(t)
+</code></pre>

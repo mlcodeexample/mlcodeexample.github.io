@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        results = [env.step(a) for (a,env) in zip(self.actions, self.envs)]
+        obs, rews, dones, infos = map(np.array, zip(*results))
+        self.ts += 1
+        <a id="change">for (i, done) in enumerate(dones):
+            if done: 
+                obs[i] = self.envs[i].reset()
+                self.ts[i] = 0
+       </a> self.actions = None
+        return np.array(obs), np.array(rews), np.array(dones), infos
+
+    def reset(self):        </code></pre><h3>After Change</h3><pre><code class='java'>
+                    self.buf_obs[t][i] = x
+            else:
+                self.buf_obs[0][i] = obs_tuple
+        <a id="change">return self.buf_obs, self.buf_rews, self.buf_dones, self.buf_infos</a>
+
+    def reset(self):        
+        for i in range(self.num_envs):
+            obs_tuple = self.envs[i].reset()</code></pre>

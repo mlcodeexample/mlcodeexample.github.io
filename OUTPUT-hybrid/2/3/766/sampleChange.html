@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+
+&#47&#47 Available solvers
+<a id="change">solvers = [
+    "GreedySolver",
+    "HamiltonSolver",
+    "DQNSolver"
+]</a>
+
+&#47&#47 Game configurations
+conf = GameConf()
+conf.mode = GameMode.TRAIN_DQN</code></pre><h3>After Change</h3><pre><code class='java'>
+conf = GameConf()
+conf.solver_name = dict_solver[args.s]
+conf.mode = dict_mode[args.m]
+<a id="change">print("Solver: %s    Mode: %s" % (conf.solver_name, conf.mode))</a>
+
+Game(conf).run()
+</code></pre>

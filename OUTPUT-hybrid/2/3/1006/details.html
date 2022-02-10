@@ -1,0 +1,21 @@
+<html><h3>f36052b395dc48a473dcc5b49d8d9a3b5d6f58ba,gpflow/conditionals/util.py,,fully_correlated_conditional,#Any#Any#Any#Any#,246
+</h3><img src='1372364.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        q_sqrt=q_sqrt,
+        white=white,
+    )
+    <a id="change">return m[0, ...], v[0, ...]</a>
+
+
+def fully_correlated_conditional_repeat(
+    Kmn, Kmm, Knn, f, *, full_cov=False, full_output_cov=False, q_sqrt=None, white=False</code></pre><h3>After Change</h3><pre><code class='java'>
+        q_sqrt=q_sqrt,
+        white=white,
+    )
+    <a id="change">return tf.squeeze(mean, axis=0), tf.squeeze(var, axis=0)</a>
+
+
+def fully_correlated_conditional_repeat(
+    Kmn, Kmm, Knn, f, *, full_cov=False, full_output_cov=False, q_sqrt=None, white=False</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/GPflow/GPflow/commit/f36052b395dc48a473dcc5b49d8d9a3b5d6f58ba#diff-71207977c6d6e8e6bcba6035bf24bc4ca250aa956d596478cec3ed9d8a07972cL264' target='_blank'>Link</a></div><div id='project'> Project Name: GPflow/GPflow</div><div id='commit'> Commit Name: f36052b395dc48a473dcc5b49d8d9a3b5d6f58ba</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: gpflow/conditionals/util.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: fully_correlated_conditional</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/models/commit/fcd690b14b04c11e7f25b9d473db056c4b7947b3#diff-db705aefa4360fd5c758547b6b9a7309d1bf1cbd7c971f7772efc5639cddf038L100' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/models</div><div id='commit'> Commit Name: fcd690b14b04c11e7f25b9d473db056c4b7947b3</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: official/vision/keras_cv/ops/box_matcher.py</div><div id='class'> Class Name: BoxMatcher</div><div id='method'> Method Name: __call__</div><BR><BR><div id='link'><a href='https://github.com/GPflow/GPflow/commit/f36052b395dc48a473dcc5b49d8d9a3b5d6f58ba#diff-71207977c6d6e8e6bcba6035bf24bc4ca250aa956d596478cec3ed9d8a07972cL119' target='_blank'>Link</a></div><div id='project'> Project Name: GPflow/GPflow</div><div id='commit'> Commit Name: f36052b395dc48a473dcc5b49d8d9a3b5d6f58ba</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: gpflow/conditionals/util.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: sample_mvn</div><BR>

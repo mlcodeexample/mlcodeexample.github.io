@@ -1,0 +1,32 @@
+<html><h3>da37438735fd4b845bb0874562bd071865c480bb,texar/modules/encoders/rnn_encoders.py,RNNEncoderBase,__init__,#RNNEncoderBase#Any#Any#Any#,49
+</h3><img src='659530.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                raise ValueError(
+                    "`vocab_szie` is required if embedding is enabled and "
+                    "`embedding` is not provided")
+            <a id="change">if isinstance(embedding, tf.Variable):
+                self._embedding = embedding
+            else:
+                self._embedding = embedder_utils.get_embedding(
+                    self._hparams.embedding, embedding, self._vocab_size,
+                    self.variable_scope)
+           </a> if self._hparams.embedding.trainable:
+                self._add_trainable_variable(self._embedding)
+            if self._vocab_size is None:
+                self._vocab_size = self._embedding.get_shape().as_list()[0]</code></pre><h3>After Change</h3><pre><code class='java'>
+            else:
+                self._cell_fw = layers.get_rnn_cell(self._hparams.rnn_cell_fw)
+
+            <a id="change">if cell_bw is not None:
+                self._cell_bw = cell_bw
+            elif self.hparams.rnn_cell_share_config:
+                self._cell_bw = layers.get_rnn_cell(self._hparams.rnn_cell_fw)
+            else:
+                self._cell_bw = layers.get_rnn_cell(self._hparams.rnn_cell_bw)
+
+   </a> @staticmethod
+    def default_hparams():
+        Returns a dictionary of hyperparameters with default values.
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/asyml/texar/commit/da37438735fd4b845bb0874562bd071865c480bb#diff-f47320df592dd176c8bd8a1b51f140207c729656a81dc8bdcc0354daa287115aL49' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: da37438735fd4b845bb0874562bd071865c480bb</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/modules/encoders/rnn_encoders.py</div><div id='class'> Class Name: RNNEncoderBase</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/GPflow/GPflow/commit/8c65ef658930afecb7001ce671f15772a0a4b23b#diff-754d035025e026fac6cd53dcec379a55336c167ce7c1b8894ae3afb02b901fc1L106' target='_blank'>Link</a></div><div id='project'> Project Name: GPflow/GPflow</div><div id='commit'> Commit Name: 8c65ef658930afecb7001ce671f15772a0a4b23b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: gpflow/base.py</div><div id='class'> Class Name: Parameter</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/c13faf9996622ddb6297aa090ce0157bcbb5cfe3#diff-ad89ff38763fd3b815c2ce09d9320d611c72cfb0eee2b81f53e6441d7c093016L26' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: c13faf9996622ddb6297aa090ce0157bcbb5cfe3</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/modules/classifiers/conv_classifiers.py</div><div id='class'> Class Name: Conv1DClassifier</div><div id='method'> Method Name: __init__</div><BR>

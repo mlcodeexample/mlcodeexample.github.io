@@ -1,0 +1,23 @@
+<html><h3>c75c1160a5675edb1f52c13d926bbbc584eb80fd,niftynet/layer/channel_sparse_convolution.py,ChannelSparseConvLayer,layer_op,#ChannelSparseConvLayer#Any#Any#Any#,116
+</h3><img src='1008383.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        transpositions = [[4,3,2,1,0],[1,0,2,3,4],[4,3,2,0,1]]
+    
+    sparse_kernel = tf.transpose(tf.boolean_mask(
+                       <a id="change">tf.transpose(tf.boolean_mask(
+                         tf.transpose(conv_kernel,transpositions[0]),
+                         _output_mask),transpositions[1])</a>,_input_mask),
+                         transpositions[2])
+    output_tensor = tf.nn.convolution(input=input_tensor,
+                                      filter=sparse_kernel,</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        sparse_kernel = tf.transpose(conv_kernel, transpositions[0])
+        sparse_kernel = tf.boolean_mask(sparse_kernel, _output_mask)
+        sparse_kernel = <a id="change">tf.transpose(sparse_kernel, transpositions[1])</a>
+        sparse_kernel = tf.boolean_mask(sparse_kernel, _input_mask)
+        <a id="change">sparse_kernel = tf.transpose(sparse_kernel, transpositions[2])</a>
+
+        output_tensor = tf.nn.convolution(input=input_tensor,
+                                          filter=sparse_kernel,</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/c75c1160a5675edb1f52c13d926bbbc584eb80fd#diff-a3ea52f09cdc15b021f0dea4f6f4f6c872546cbe06fcac5df0cdf1dd2f66c5dbL128' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: c75c1160a5675edb1f52c13d926bbbc584eb80fd</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/channel_sparse_convolution.py</div><div id='class'> Class Name: ChannelSparseConvLayer</div><div id='method'> Method Name: layer_op</div><BR><BR><div id='link'><a href='https://github.com/emedvedev/attention-ocr/commit/4dc7f459148bd3bc14549d36bd7d09910ca917ca#diff-e00bd59fc1afaa79248b852367e7142bd198df9f9eced012baa0b866fec314cfL295' target='_blank'>Link</a></div><div id='project'> Project Name: emedvedev/attention-ocr</div><div id='commit'> Commit Name: 4dc7f459148bd3bc14549d36bd7d09910ca917ca</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: aocr/model/model.py</div><div id='class'> Class Name: Model</div><div id='method'> Method Name: test</div><BR><BR><div id='link'><a href='https://github.com/rwth-i6/returnn/commit/1333e33c691f96081d52bd7a0420a1fcfcc4ec91#diff-ca0ad169befa46ecb06c70fc09e64c2ba18fd2077c2940046a137ae9d9e8f598L685' target='_blank'>Link</a></div><div id='project'> Project Name: rwth-i6/returnn</div><div id='commit'> Commit Name: 1333e33c691f96081d52bd7a0420a1fcfcc4ec91</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: returnn/tf/layers/signal_processing.py</div><div id='class'> Class Name: SplitConcatMultiChannel</div><div id='method'> Method Name: __init__</div><BR>

@@ -1,0 +1,67 @@
+<html><h3>ad12fba29f084189bdcb9ab5f23863d431f5bb02,open_seq2seq/decoders/convs2s_decoder.py,ConvS2SDecoder,_decode,#ConvS2SDecoder#Any#,89
+</h3><img src='988187.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                mode=self.mode,
+                normalization_type=normalization_type))
+
+        for i in <a id="change">range(self.params[&quotdecoder_layers&quot])</a>:
+          in_dim = knum_list[i] if i == 0 else knum_list[i - 1]
+          out_dim = knum_list[i]
+
+          &#47&#47 linear projection is needed for residual connections if
+          &#47&#47 input and output of a cnn layer do not match
+          if in_dim != out_dim:
+            <a id="change">linear_proj</a> = ffn_wn_layer.FeedFowardNetworkNormalized(
+                in_dim,
+                out_dim,
+                var_scope_name="linear_mapping_cnn_" + str(i + 1),
+                dropout=1.0,
+                mode=self.mode,
+                normalization_type=normalization_type)
+          else:
+            linear_proj = None
+
+          conv_layer = conv_wn_layer.Conv1DNetworkNormalized(
+              in_dim,
+              out_dim,
+              kernel_width=kwidth_list[i],
+              mode=self.mode,
+              layer_id=i + 1,
+              hidden_dropout=self.params["hidden_dropout_keep_prob"],
+              conv_padding="VALID",
+              decode_padding=True,
+              activation=conv_activation,
+              normalization_type=normalization_type)
+
+          att_layer = attention_wn_layer.AttentionLayerNormalized(
+              out_dim,
+              embed_size=self._tgt_emb_size,
+              layer_id=i + 1,
+              add_res=True,
+              mode=self.mode)
+
+          self.layers.append([linear_proj, conv_layer, att_layer])
+
+        &#47&#47 linear projection after cnn layers
+        self.layers.append(
+            ffn_wn_layer.FeedFowardNetworkNormalized(
+                knum_list[<a id="change">self.params[&quotdecoder_layers&quot] - 1</a>],
+                self.params.get("out_emb_size", self._tgt_emb_size),
+                dropout=1.0,
+                var_scope_name="linear_mapping_after_cnn_layers",</code></pre><h3>After Change</h3><pre><code class='java'>
+                mode=self.mode,
+                normalization_type=normalization_type))
+
+        for i in <a id="change">range(len(knum_list))</a>:
+          in_dim = knum_list[i] if i == 0 else knum_list[i - 1]
+          out_dim = knum_list[i]
+
+          &#47&#47 linear projection is needed for residual connections if
+          &#47&#47 input and output of a cnn layer do not match
+          if in_dim != out_dim:
+            <a id="change">linear_proj</a> = ffn_wn_layer.FeedFowardNetworkNormalized(
+                in_dim,
+                out_dim,
+                var_scope_name="linear_mapping_cnn_" + str(i + 1),</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 10</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/NVIDIA/OpenSeq2Seq/commit/ad12fba29f084189bdcb9ab5f23863d431f5bb02#diff-b5878017eaaf093096ede02914f07bbfc05a7773522db4989a5ab74af744d1c7L89' target='_blank'>Link</a></div><div id='project'> Project Name: NVIDIA/OpenSeq2Seq</div><div id='commit'> Commit Name: ad12fba29f084189bdcb9ab5f23863d431f5bb02</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: open_seq2seq/decoders/convs2s_decoder.py</div><div id='class'> Class Name: ConvS2SDecoder</div><div id='method'> Method Name: _decode</div><BR><BR><div id='link'><a href='https://github.com/NVIDIA/OpenSeq2Seq/commit/ad12fba29f084189bdcb9ab5f23863d431f5bb02#diff-a5ca67ec3fbae91b5a4e1f07a5c9e88067d58360af65520957d23f910b512e2fL64' target='_blank'>Link</a></div><div id='project'> Project Name: NVIDIA/OpenSeq2Seq</div><div id='commit'> Commit Name: ad12fba29f084189bdcb9ab5f23863d431f5bb02</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: open_seq2seq/encoders/convs2s_encoder.py</div><div id='class'> Class Name: ConvS2SEncoder</div><div id='method'> Method Name: _encode</div><BR><BR><div id='link'><a href='https://github.com/NVIDIA/OpenSeq2Seq/commit/ad12fba29f084189bdcb9ab5f23863d431f5bb02#diff-33604b9c5c3adf10647e93b97538e446b76397c140ef25d64dec618c4c735bd6L66' target='_blank'>Link</a></div><div id='project'> Project Name: NVIDIA/OpenSeq2Seq</div><div id='commit'> Commit Name: ad12fba29f084189bdcb9ab5f23863d431f5bb02</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: open_seq2seq/encoders/convs2s_encoder2.py</div><div id='class'> Class Name: ConvS2SEncoder2</div><div id='method'> Method Name: _encode</div><BR><BR><div id='link'><a href='https://github.com/NVIDIA/OpenSeq2Seq/commit/ad12fba29f084189bdcb9ab5f23863d431f5bb02#diff-287b24fba48f4e07f6381c5d1d23ca145a61eb4f3050daa98d795246b925673fL91' target='_blank'>Link</a></div><div id='project'> Project Name: NVIDIA/OpenSeq2Seq</div><div id='commit'> Commit Name: ad12fba29f084189bdcb9ab5f23863d431f5bb02</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: open_seq2seq/decoders/convs2s_decoder2.py</div><div id='class'> Class Name: ConvS2SDecoder2</div><div id='method'> Method Name: _decode</div><BR>

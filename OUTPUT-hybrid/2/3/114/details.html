@@ -1,0 +1,19 @@
+<html><h3>f9b98760f445fc0219cfc9c4cada2b5f9d35ab1b,basic/model.py,Model,_build_loss,#Model#,219
+</h3><img src='195106.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        if config.wy:
+            if config.na:
+                na = tf.reshape(self.na, [-1, 1])
+                concat_y = tf.concat(1, [na, tf.reshape(self.wy, <a id="change">[-1, M * JX]</a>)])
+                losses = tf.nn.softmax_cross_entropy_with_logits(self.concat_logits, tf.cast(concat_y, &quotfloat&quot))
+            else:
+                losses = tf.nn.softmax_cross_entropy_with_logits(</code></pre><h3>After Change</h3><pre><code class='java'>
+            num_neg = tf.reduce_sum(tf.cast(self.x_mask, &quotfloat&quot)) - num_pos
+            damp_ratio = num_pos / num_neg
+            dampened_losses = losses * (
+                (tf.cast(self.x_mask, &quotfloat&quot) - tf.cast(self.wy, &quotfloat&quot)) * damp_ratio + <a id="change">tf.cast(self.wy, &quotfloat&quot)</a>)
+            new_losses = tf.reduce_sum(dampened_losses, [1, 2])
+            ce_loss = tf.reduce_mean(loss_mask * new_losses)
+            </code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/wenwei202/iss-rnns/commit/f9b98760f445fc0219cfc9c4cada2b5f9d35ab1b#diff-1079e779be5179430411034adfa57e7cba8daf2c993cb52fbb924dd805321c78L219' target='_blank'>Link</a></div><div id='project'> Project Name: wenwei202/iss-rnns</div><div id='commit'> Commit Name: f9b98760f445fc0219cfc9c4cada2b5f9d35ab1b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basic/model.py</div><div id='class'> Class Name: Model</div><div id='method'> Method Name: _build_loss</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f#diff-ff4133761094e7ad758b12266e43745fcd175353724286b073107daad1ba3e40L67' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/ttfs.py</div><div id='class'> Class Name: SpikeLayer</div><div id='method'> Method Name: update_neurons</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f#diff-ff4133761094e7ad758b12266e43745fcd175353724286b073107daad1ba3e40L502' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/ttfs.py</div><div id='class'> Class Name: SpikeMaxPooling2D</div><div id='method'> Method Name: call</div><BR>

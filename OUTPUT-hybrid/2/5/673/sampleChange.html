@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+def difference_output(input_mix, featuremap, num_sources, num_channels, filter_width, padding, activation, training):
+    outputs = list()
+    sum_source = 0
+    <a id="change">for _ in range(num_sources-1):
+        out = tf.layers.conv1d(featuremap, num_channels, filter_width, activation=activation, padding=padding)
+        outputs.append(out)
+        sum_source = sum_source + out
+
+    &#47&#47 Compute last source based on the others
+   </a> last_source = Utils.crop(input_mix, sum_source.get_shape().as_list()) - sum_source
+    last_source = Utils.AudioClip(last_source, training)
+    outputs.append(last_source)
+    return outputs</code></pre><h3>After Change</h3><pre><code class='java'>
+def difference_output(input_mix, featuremap, source_names, num_channels, filter_width, padding, activation, training):
+    outputs = dict()
+    sum_source = 0
+    <a id="change">for name in source_names[:-1]:
+        out = tf.layers.conv1d(featuremap, num_channels, filter_width, activation=activation, padding=padding)
+        outputs[name] = out
+        sum_source = sum_source + out
+
+    &#47&#47 Compute last source based on the others
+   </a> last_source = Utils.crop(input_mix, sum_source.get_shape().as_list()) - sum_source
+    last_source = Utils.AudioClip(last_source, training)
+    outputs[source_names[-1]] = last_source
+    return outputs</code></pre>

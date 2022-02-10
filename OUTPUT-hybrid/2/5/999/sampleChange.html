@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+    def __init__(self, base_generator):
+
+        <a id="change">if not isinstance(base_generator, (FullBatchSequence, SparseFullBatchSequence)):
+            raise TypeError(
+                f"base_generator: expected FullBatchSequence or SparseFullBatchSequence, "
+                f"found {type(base_generator).__name__}"
+            )
+
+       </a> self.base_generator = base_generator
+        self.targets = np.zeros((1, len(base_generator.target_indices), 2))
+        self.targets[0, :, 0] = 1.0
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        self.base_generator = base_generator
+
+        <a id="change">if isinstance(base_generator, (FullBatchSequence, SparseFullBatchSequence)):
+            self.targets = np.tile(
+                [1.0, 0.0], reps=(1, len(base_generator.target_indices), 1),
+            )
+        elif isinstance(base_generator, NodeSequence):
+            self.targets = np.tile([1.0, 0.0], reps=(base_generator.batch_size, 1))
+        else:
+            raise TypeError(
+                f"base_generator: expected FullBatchSequence, SparseFullBatchSequence, "
+                f"or NodeSequence, found {type(base_generator).__name__}"
+            )
+
+   </a> def __len__(self):
+        return len(self.base_generator)
+
+    def __getitem__(self, index):</code></pre>

@@ -1,0 +1,19 @@
+<html><h3>0c816cbbc8b607d2edc64888bfd7bac329699953,python/timeseries/timeseries_regression.py,,find_anomalies_with_regression,#Any#Any#Any#Any#Any#Any#,19
+</h3><img src='1534279.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    pred_points = scaler.inverse_transform(pred_points)
+    pred_points = np.vstack([np.zeros(shape=(1, ts.y.shape[1]), dtype=np.float32), pred_points])
+    pred_points = invert_difference_series(pred_points, data[[0], :])
+    logger.debug("inv_diffs:(%s)\n%s" % (<a id="change">str(pred_points.shape)</a>, str(pred_points)))
+
+    scores = np.abs(data[n_tr:, 0] - pred_points[n_tr:, 0])
+</code></pre><h3>After Change</h3><pre><code class='java'>
+                                    max_features="auto", max_leaf_nodes=None, min_impurity_decrease=0.0,
+                                    min_impurity_split=None, bootstrap=True, oob_score=False, n_jobs=1,
+                                    random_state=None, verbose=0, warm_start=False)
+    elif <a id="change">reg_type == "nntf"</a>:
+        &#47&#47 use tensorflow
+        mdl = MLPRegressor_TF(x.shape[1], 100, 1, batch_size=20, shuffle=True,
+                              n_epochs=200, l2_penalty=0.001)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/shubhomoydas/ad_examples/commit/0c816cbbc8b607d2edc64888bfd7bac329699953#diff-5938b160166cdfe60aaf622e8b3387d39d6b6afb4b352bd73397979223b5e87fL57' target='_blank'>Link</a></div><div id='project'> Project Name: shubhomoydas/ad_examples</div><div id='commit'> Commit Name: 0c816cbbc8b607d2edc64888bfd7bac329699953</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: python/timeseries/timeseries_regression.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: find_anomalies_with_regression</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/3523a61256c3040aa3f4fd3fc579511f85169212#diff-e52e4ddd58b7ef887ab03c04116e676f6280b824ab7469d5d3080e5cba4f2128L52' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 3523a61256c3040aa3f4fd3fc579511f85169212</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tests/conftest.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: _datapath</div><BR><BR><div id='link'><a href='https://github.com/NervanaSystems/coach/commit/a1c56edd98898ed25db9c6ed1e05b50a0a85e097#diff-a416346771eb0e36a0edb830b9b5547312f7de12cb87b7ec5f7ac4f445ef9246L272' target='_blank'>Link</a></div><div id='project'> Project Name: NervanaSystems/coach</div><div id='commit'> Commit Name: a1c56edd98898ed25db9c6ed1e05b50a0a85e097</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: rl_coach/memories/non_episodic/differentiable_neural_dictionary.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: load_dnd</div><BR>

@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        [self.sess.run(self.ctrain_op, {self.tfs: s, self.tfdc_r: r}) for _ in range(b)]
+
+        &#47&#47 adaptive lambda
+        <a id="change">if kl &lt; self.kl_target / 1.5:
+            self.lam /= 2
+        elif kl &gt; self.kl_target * 1.5:
+            self.lam *= 2
+       </a> self.lam = np.clip(self.lam, 1e-4, 10)
+
+    def _build_anet(self, name, trainable):
+        with tf.variable_scope(name):</code></pre><h3>After Change</h3><pre><code class='java'>
+                METHOD[&quotlam&quot] *= 2
+            METHOD[&quotlam&quot] = np.clip(self.lam, 1e-4, 10)
+        else:   &#47&#47 clipping method
+            [self.sess.run(self.atrain_op, {self.tfs: s, self.tfa: a, self.tfadv: adv}) <a id="change">for</a> _ in <a id="change">range(m)</a>]
+
+        &#47&#47 update critic
+        [self.sess.run(self.ctrain_op, {self.tfs: s, self.tfdc_r: r}) for _ in range(b)]</code></pre>

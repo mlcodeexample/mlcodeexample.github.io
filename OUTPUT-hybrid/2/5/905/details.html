@@ -1,0 +1,18 @@
+<html><h3>33d61460bcda81161f0254b074c3a0eda3ce70ee,cde/density_estimator/normalizing_flows/AffineFlow.py,AffineFlow,_forward_log_det_jacobian,#AffineFlow#Any#,51
+</h3><img src='1120243.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        return (y - self._b) * tf.exp(-self._a)
+
+    def _forward_log_det_jacobian(self, y):
+        <a id="change">return tf.reduce_sum(self._a, 1, keep_dims=True)</a>
+</code></pre><h3>After Change</h3><pre><code class='java'>
+    @staticmethod
+    def get_param_size(n_dims):
+        
+        :param n_dims: The dimension of the distribution to be tr<a id="change">ansformed by the flow.
+        :retu</a>rn: (int) The dimension of the parameter space for the flow. Here it&quots n_dims + n_dims, for a and b
+        
+        return 2*n_dims
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/freelunchtheorem/Conditional_Density_Estimation/commit/33d61460bcda81161f0254b074c3a0eda3ce70ee#diff-2202b13f3a8481b06424599c8b263bd3a404f84d639801e851e347f2b98a8490L34' target='_blank'>Link</a></div><div id='project'> Project Name: freelunchtheorem/Conditional_Density_Estimation</div><div id='commit'> Commit Name: 33d61460bcda81161f0254b074c3a0eda3ce70ee</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: cde/density_estimator/normalizing_flows/AffineFlow.py</div><div id='class'> Class Name: AffineFlow</div><div id='method'> Method Name: _forward_log_det_jacobian</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/64099a1d2d671705cd9d4a18f9413f4c3569bc86#diff-972803a74a51af2d54b7671dbbc4d2dd3f051e00445d4a58cf6bdfe53c4008f7L3565' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: 64099a1d2d671705cd9d4a18f9413f4c3569bc86</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/layers.py</div><div id='class'> Class Name: NeighborList</div><div id='method'> Method Name: get_cells_for_atoms</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/64099a1d2d671705cd9d4a18f9413f4c3569bc86#diff-972803a74a51af2d54b7671dbbc4d2dd3f051e00445d4a58cf6bdfe53c4008f7L3607' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: 64099a1d2d671705cd9d4a18f9413f4c3569bc86</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/layers.py</div><div id='class'> Class Name: NeighborList</div><div id='method'> Method Name: get_neighbor_cells</div><BR>

@@ -1,0 +1,21 @@
+<html><h3>cec704bd54458bb5b86ca7db4061a5c597fac85e,python/tf_cnn_benchmarks/variable_mgr.py,VariableMgrLocalReplicated,get_gradients_to_apply,#VariableMgrLocalReplicated#Any#Any#,478
+</h3><img src='1526983.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    device_grads = gradient_state
+    &#47&#47 Note that each grad_and_vars looks like the following:
+    &#47&#47   ((grad0_gpu0, var0_gpu0), ... , (grad0_gpuN, var0_gpuN))
+    <a id="change">return [grad_and_vars[device_num] for grad_and_vars in zip(*device_grads)]</a>
+
+  def get_post_init_ops(self):
+    &#47&#47 Copy initialized values for variables on GPU 0 to other GPUs.
+    global_vars = tf.global_variables()</code></pre><h3>After Change</h3><pre><code class='java'>
+
+  def get_gradients_to_apply(self, device_num, gradient_state):
+    device_grads = gradient_state
+    return <a id="change">device_grads[device_num]</a>
+
+  def get_post_init_ops(self):
+    &#47&#47 Copy initialized values for variables on GPU 0 to other GPUs.
+    global_vars = tf.global_variables()</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/HewlettPackard/dlcookbook-dlbs/commit/cec704bd54458bb5b86ca7db4061a5c597fac85e#diff-40385c19379619520692442ccde9febdf9fe13d71a22ee6ff235ed161b6b9d07L317' target='_blank'>Link</a></div><div id='project'> Project Name: HewlettPackard/dlcookbook-dlbs</div><div id='commit'> Commit Name: cec704bd54458bb5b86ca7db4061a5c597fac85e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: python/tf_cnn_benchmarks/variable_mgr.py</div><div id='class'> Class Name: VariableMgrLocalReplicated</div><div id='method'> Method Name: get_gradients_to_apply</div><BR><BR><div id='link'><a href='https://github.com/HewlettPackard/dlcookbook-dlbs/commit/cec704bd54458bb5b86ca7db4061a5c597fac85e#diff-40385c19379619520692442ccde9febdf9fe13d71a22ee6ff235ed161b6b9d07L224' target='_blank'>Link</a></div><div id='project'> Project Name: HewlettPackard/dlcookbook-dlbs</div><div id='commit'> Commit Name: cec704bd54458bb5b86ca7db4061a5c597fac85e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: python/tf_cnn_benchmarks/variable_mgr.py</div><div id='class'> Class Name: VariableMgrIndependent</div><div id='method'> Method Name: get_gradients_to_apply</div><BR><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/135a56e0935fbb04811f8ce7b9f514f498212f71#diff-a8b1842a605e08d9388a75cb12761ae3ba9f87e3cd4ce9816200df088f6ce8fcL163' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: 135a56e0935fbb04811f8ce7b9f514f498212f71</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/crf.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: ftheta</div><BR>

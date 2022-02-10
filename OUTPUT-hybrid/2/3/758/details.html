@@ -1,0 +1,22 @@
+<html><h3>a9ae9989261da6aa85e452ace0c9915fe7c90d22,src/garage/tf/baselines/gaussian_cnn_baseline.py,GaussianCNNBaseline,fit,#GaussianCNNBaseline#Any#,256
+</h3><img src='987405.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            self._y_std.load(np.std(ys, axis=0, keepdims=True) + 1e-8)
+        if self._use_trust_region:
+            old_means, old_log_stds = self._f_pdists(xs)
+            <a id="change">inputs = [xs, ys, old_means, old_log_stds]</a>
+        else:
+            inputs = [xs, ys]
+        loss_before = self._optimizer.loss(inputs)
+        tabular.record(&quot{}/LossBefore&quot.format(self._name), loss_before)</code></pre><h3>After Change</h3><pre><code class='java'>
+            self._x_mean.load(np.mean(xs, axis=0, keepdims=True))
+            self._x_std.load(np.std(xs, axis=0, keepdims=True) + 1e-8)
+            self._old_network.x_mean.load(np.mean(xs, axis=0, keepdims=True))
+            <a id="change">self._old_network.x_std.load(
+                np.std(xs, axis=0, keepdims=True) + 1e-8)</a>
+        if self._normalize_outputs:
+            &#47&#47 recompute normalizing constants for outputs
+            self._y_mean.load(np.mean(ys, axis=0, keepdims=True))
+            self._y_std.load(np.std(ys, axis=0, keepdims=True) + 1e-8)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/rlworkgroup/garage/commit/a9ae9989261da6aa85e452ace0c9915fe7c90d22#diff-590f5491f577754612183349c95e171298a4d65c4a475c2bed6d94f5be201227L236' target='_blank'>Link</a></div><div id='project'> Project Name: rlworkgroup/garage</div><div id='commit'> Commit Name: a9ae9989261da6aa85e452ace0c9915fe7c90d22</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: src/garage/tf/baselines/gaussian_cnn_baseline.py</div><div id='class'> Class Name: GaussianCNNBaseline</div><div id='method'> Method Name: fit</div><BR><BR><div id='link'><a href='https://github.com/rlworkgroup/garage/commit/8295d05ccbe3d5aaa07440f2409cb8fa69ec88fc#diff-85be79152f3d7179cbde608ef2873859ddda31a3b5691bb878ccbf1c3de59a58L77' target='_blank'>Link</a></div><div id='project'> Project Name: rlworkgroup/garage</div><div id='commit'> Commit Name: 8295d05ccbe3d5aaa07440f2409cb8fa69ec88fc</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tests/garage/tf/baselines/test_gaussian_mlp_baseline.py</div><div id='class'> Class Name: TestGaussianMLPBaseline</div><div id='method'> Method Name: test_is_pickleable</div><BR><BR><div id='link'><a href='https://github.com/rlworkgroup/garage/commit/490f5b7364da85d414f4b8e93b3699e4d1b516f5#diff-ef66882f86f156a930323b93b1d3de63f36f763806320304aa1280744ee38581L75' target='_blank'>Link</a></div><div id='project'> Project Name: rlworkgroup/garage</div><div id='commit'> Commit Name: 490f5b7364da85d414f4b8e93b3699e4d1b516f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tests/garage/tf/baselines/test_continuous_mlp_baseline.py</div><div id='class'> Class Name: TestContinuousMLPBaseline</div><div id='method'> Method Name: test_is_pickleable</div><BR>

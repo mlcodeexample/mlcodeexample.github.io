@@ -1,0 +1,39 @@
+<html><h3>70cf20f6cf5e21c3b6165067483b925db61c161c,deepmedic/neuralnet/ops.py,,applyDropout,#Any#Any#Any#Any#Any#Any#,29
+</h3><img src='591881.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        dropoutMask = srng.binomial(n=1, size=inputTrainShape, p=probabilityOfStayingActivated, dtype=theano.config.floatX)
+        inputImgAfterDropout = inputTrain * dropoutMask
+        inputImgAfterDropoutInference = inputInference * probabilityOfStayingActivated
+        inputImgAfterDropoutTesting = <a id="change">inputTesting * probabilityOfStayingActivated</a>
+    else :
+        inputImgAfterDropout = inputTrain
+        <a id="change">inputImgAfterDropoutInference = inputInference</a>
+        <a id="change">inputImgAfterDropoutTesting = inputTesting</a>
+    <a id="change">return (inputImgAfterDropout, inputImgAfterDropoutInference, inputImgAfterDropoutTesting)</a>
+
+
+def applyBn(rollingAverageForBatchNormalizationOverThatManyBatches, inputTrain, inputVal, inputTest, inputShapeTrain) :
+    numberOfChannels = inputShapeTrain[1]</code></pre><h3>After Change</h3><pre><code class='java'>
+    if dropoutRate &gt; 0.001 : &#47&#47Below 0.001 I take it as if there is no dropout at all. (To avoid float problems with == 0.0. Although my tries show it actually works fine.)
+        keep_prob = (1-dropoutRate)
+        
+        <a id="change">random_tensor = keep_prob</a>
+        random_tensor += tf.random_uniform(shape=inputTrainShape, minval=0., maxval=1., seed=rng.randint(999999), dtype="float32")
+        &#47&#47 0. if [keep_prob, 1.0) and 1. if [1.0, 1.0 + keep_prob)
+        <a id="change">dropoutMask = tf.floor(random_tensor)</a>
+    
+        &#47&#47 tf.nn.dropout(x, keep_prob) scales kept values UP, so that at inference you dont need to scale then. 
+        inputImgAfterDropoutTrain = inputTrain * dropoutMask
+        inputImgAfterDropoutVal = inputVal * keep_prob
+        inputImgAfterDropoutTest = inputTest * keep_prob
+    else :
+        inputImgAfterDropoutTrain = inputTrain
+        inputImgAfterDropoutVal = inputVal
+        inputImgAfterDropoutTest = inputTest
+    <a id="change">return (inputImgAfterDropoutTrain, inputImgAfterDropoutVal, inputImgAfterDropoutTest)</a>
+
+
+def applyBn(rollingAverageForBatchNormalizationOverThatManyBatches, inputTrain, inputVal, inputTest, inputShapeTrain) :
+    numOfChanns = inputShapeTrain[1]</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 9</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/Kamnitsask/deepmedic/commit/70cf20f6cf5e21c3b6165067483b925db61c161c#diff-8b1e8e227fd9d8860f571297f17c5de701fdf7f4f0748bb21263a534afe63ff2L1' target='_blank'>Link</a></div><div id='project'> Project Name: Kamnitsask/deepmedic</div><div id='commit'> Commit Name: 70cf20f6cf5e21c3b6165067483b925db61c161c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepmedic/neuralnet/ops.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: applyDropout</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/ecbe066e40882b166401b70ae9c4f1d535c93b12#diff-352df499dbc50fc952705aee8e5345263615dbb7ecef8d0ed09f46b9aef0b572L38' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: ecbe066e40882b166401b70ae9c4f1d535c93b12</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/losses/adv_losses.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: binary_adversarial_losses</div><BR><BR><div id='link'><a href='https://github.com/calico/basenji/commit/5ba781c281d60ad03d0c8088400a73802dd82d03#diff-168653f9fa75da079536ceaef46cdf721d84e1a8a68a67c5e735cf4205dceeedL199' target='_blank'>Link</a></div><div id='project'> Project Name: calico/basenji</div><div id='commit'> Commit Name: 5ba781c281d60ad03d0c8088400a73802dd82d03</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basenji/ops.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: per_target_r2</div><BR>

@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                    print(&quotSaved after %d epochs in: %s&quot % (epoch_num, save_target))
+                    results, precision, recall, f1 = self.evaluate()
+                    print(&quotAccuracy after %d epochs: %s&quot % (epoch_num, results[:5]))
+                    <a id="change">print(&quotAfter &quot + str(epoch_num) + &quot epochs: Precision: &quot + str(precision) + &quot, recall: &quot + str(
+                        recall) + &quot, F1: &quot + str(f1))</a>
+        except tf.errors.OutOfRangeError:
+            pass  &#47&#47 The reader iterator is exhausted and have no more batches to produce.
+
+        print(&quotDone training&quot)</code></pre><h3>After Change</h3><pre><code class='java'>
+                    evaluation_results = self.evaluate()
+                    evaluation_results_str = (str(evaluation_results).replace(&quottopk&quot, &quottop{}&quot.format(
+                        self.config.TOP_K_WORDS_CONSIDERED_DURING_PREDICTION)))
+                    <a id="change">print(&quotAfter {nr_epochs} epochs -- {evaluation_results}&quot.format(
+                        nr_epochs=epoch_num,
+                        evaluation_results=evaluation_results_str
+                    ))</a>
+        except tf.errors.OutOfRangeError:
+            pass  &#47&#47 The reader iterator is exhausted and have no more batches to produce.
+
+        print(&quotDone training&quot)</code></pre>

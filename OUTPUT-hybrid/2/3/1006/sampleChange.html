@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        q_sqrt=q_sqrt,
+        white=white,
+    )
+    <a id="change">return m[0, ...], v[0, ...]</a>
+
+
+def fully_correlated_conditional_repeat(
+    Kmn, Kmm, Knn, f, *, full_cov=False, full_output_cov=False, q_sqrt=None, white=False</code></pre><h3>After Change</h3><pre><code class='java'>
+        q_sqrt=q_sqrt,
+        white=white,
+    )
+    <a id="change">return tf.squeeze(mean, axis=0), tf.squeeze(var, axis=0)</a>
+
+
+def fully_correlated_conditional_repeat(
+    Kmn, Kmm, Knn, f, *, full_cov=False, full_output_cov=False, q_sqrt=None, white=False</code></pre>

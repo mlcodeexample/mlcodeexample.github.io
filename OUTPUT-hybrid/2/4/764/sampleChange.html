@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    fmu = rollaxis_left(rmu[..., 0], 1)  &#47&#47 [N, P]
+
+    if full_cov:
+        fvar = <a id="change">rvar[..., 0, :, :]</a>  &#47&#47 [P, N, N]
+    else:
+        fvar = rollaxis_left(rvar[..., 0], 1)  &#47&#47 [N, P]
+</code></pre><h3>After Change</h3><pre><code class='java'>
+        single_gp_conditional, (Kmms, Kmns, Knns, fs, q_sqrts), (default_float(), default_float())
+    )  &#47&#47 [P, N, 1], [P, 1, N, N] or [P, N, 1]
+
+    fmu = rollaxis_left(<a id="change">tf.squeeze(rmu, axis=-1)</a>, 1)  &#47&#47 [N, P]
+
+    if full_cov:
+        fvar = tf.squeeze(rvar, axis=-3)  &#47&#47 [..., 0, :, :]  &#47&#47 [P, N, N]</code></pre>

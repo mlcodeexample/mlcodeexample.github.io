@@ -1,0 +1,47 @@
+digraph G {
+subgraph cluster0 {
+1 [label="assert" a="6" s="29454" l="7" shape="box"];
+3 [label="SimpleName" a="42" s="" l="" shape="ellipse"];
+4 [label="PyWithStatement" a="104" s="28484,28508" l="10,2" shape="diamond"];
+5 [label="Assignment:=" a="7" s="29136" l="4" shape="box"];
+6 [label="as_default" a="32" s="28496" l="12" shape="box"];
+7 [label="SimpleName" a="42" s="" l="" shape="ellipse"];
+8 [label="PyWithStatement" a="104" s="29091,29120" l="10,2" shape="diamond"];
+9 [label="test_session" a="32" s="29106" l="14" shape="box"];
+10 [label="Graph" a="32" s="27929" l="7" shape="box"];
+11 [label="SimpleName" a="42" s="27916" l="1" shape="ellipse"];
+12 [label="Session" a="32" s="27958,27967" l="8,1" shape="box"];
+13 [label="Assignment:=" a="7" s="27917" l="1" shape="box"];
+14 [label="Assignment:=" a="7" s="27946" l="1" shape="box"];
+15 [label="SimpleName" a="42" s="27966" l="1" shape="ellipse"];
+16 [label="SimpleName" a="42" s="28494" l="1" shape="ellipse"];
+17 [label="SimpleName" a="42" s="27918" l="10" shape="ellipse"];
+18 [label="SimpleName" a="42" s="27947" l="10" shape="ellipse"];
+label = "Old";
+style="dotted";
+}
+subgraph cluster1 {
+2 [label="assert" a="6" s="28554" l="7" shape="box"];
+label = "New";
+style="dotted";
+}
+1 -> 2 [label="_map_"];
+3 -> 4 [label="_cond_"];
+4 -> 9 [label="_control_"];
+4 -> 1 [label="_control_"];
+4 -> 8 [label="_control_"];
+6 -> 3 [label="_def_"];
+7 -> 8 [label="_cond_"];
+8 -> 5 [label="_control_"];
+9 -> 7 [label="_def_"];
+10 -> 13 [label="_para_"];
+11 -> 15 [label="_ref_"];
+11 -> 16 [label="_ref_"];
+12 -> 14 [label="_para_"];
+13 -> 14 [label="_para_"];
+13 -> 11 [label="_def_"];
+15 -> 12 [label="_para_"];
+16 -> 6 [label="_recv_"];
+17 -> 10 [label="_recv_"];
+18 -> 12 [label="_recv_"];
+}

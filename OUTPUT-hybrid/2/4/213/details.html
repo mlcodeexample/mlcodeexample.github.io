@@ -1,0 +1,27 @@
+<html><h3>cbf6039c8b6ebddd501258530f367761406c9366,texar/modules/berts/berts.py,BertBase,default_hparams,#,50
+</h3><img src='361201.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                "name": "bert"
+            }
+        
+        <a id="change">return {
+            "name": "bert"
+        }</a>
+
+    def _build(self, inputs, sequence_length, *args, **kwargs):
+        Encodes the inputs and (optionally) conduct downstream prediction.
+</code></pre><h3>After Change</h3><pre><code class='java'>
+                "name": "bert"
+            }
+        
+        <a id="change">return {
+            &quotpretrained_model_name&quot: &quotbert-base-uncased&quot,
+            &quotname&quot: &quotbert_base&quot,
+            &quot@no_typecheck&quot: [&quotpretrained_model_name&quot]
+        }</a>
+
+    def _build(self, inputs, *args, **kwargs):
+        Encodes the inputs and (optionally) conduct downstream prediction.
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/asyml/texar/commit/cbf6039c8b6ebddd501258530f367761406c9366#diff-ada1e689debe8495a43df7b51e2e26eb4b029569aafa9718482e6a394c337674L59' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: cbf6039c8b6ebddd501258530f367761406c9366</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/modules/berts/berts.py</div><div id='class'> Class Name: BertBase</div><div id='method'> Method Name: default_hparams</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/de7f5863338af5e1f92257cb29a6ca9a1c52c473#diff-4ccc57ccdf00a865a5c1d2a8f9e9068a138ad78a7826fe883122c268de434836L62' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: de7f5863338af5e1f92257cb29a6ca9a1c52c473</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: examples/low_data/toxcast_maml.py</div><div id='class'> Class Name: ToxcastLearner</div><div id='method'> Method Name: get_batch</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/9c51193d4203f796c2adeca69b29a4ea168d7ceb#diff-e8c7775a85f9788a9925198d071e7c05e88654ee73d82f7dcc064ee2acfa7d79L440' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: 9c51193d4203f796c2adeca69b29a4ea168d7ceb</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/gan.py</div><div id='class'> Class Name: GAN</div><div id='method'> Method Name: predict_gan_generator</div><BR>

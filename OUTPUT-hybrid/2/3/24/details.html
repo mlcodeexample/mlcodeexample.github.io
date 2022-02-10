@@ -1,0 +1,19 @@
+<html><h3>20f388cfe01635a2073723c5c4ffd6dd7a87fbb2,tensorflow_hub/tools/module_search/utils.py,,knn_errorrate_loo,#Any#Any#Any#,140
+</h3><img src='12626.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    indices = np.argmin(d, axis=1)
+
+    cnt = 0
+    for i in <a id="change">range(len(indices))</a>:
+      if y[i] != y[indices[i]]:
+        cnt += 1
+</code></pre><h3>After Change</h3><pre><code class='java'>
+    indices = np.argmin(d, axis=1)
+
+    cnt = 0
+    for idx, val in <a id="change">enumerate(indices)</a>:
+      if y[idx] != y[val]:
+        cnt += 1
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/hub/commit/20f388cfe01635a2073723c5c4ffd6dd7a87fbb2#diff-ede2a3389f55bc62e19f594496e58466639a9aa4939f25dd1aa7098ef2b46fdaL154' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/hub</div><div id='commit'> Commit Name: 20f388cfe01635a2073723c5c4ffd6dd7a87fbb2</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_hub/tools/module_search/utils.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: knn_errorrate_loo</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/hub/commit/20f388cfe01635a2073723c5c4ffd6dd7a87fbb2#diff-ede2a3389f55bc62e19f594496e58466639a9aa4939f25dd1aa7098ef2b46fdaL118' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/hub</div><div id='commit'> Commit Name: 20f388cfe01635a2073723c5c4ffd6dd7a87fbb2</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_hub/tools/module_search/utils.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: knn_errorrate</div><BR><BR><div id='link'><a href='https://github.com/IBM/adversarial-robustness-toolbox/commit/cc42963f51b39e75e245057bbf3851afbd589a35#diff-456a08fa4f2138bcca7ac8d7e145979985a4589567ccbb1f50a4844e4af91a05L308' target='_blank'>Link</a></div><div id='project'> Project Name: IBM/adversarial-robustness-toolbox</div><div id='commit'> Commit Name: cc42963f51b39e75e245057bbf3851afbd589a35</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: art/estimators/object_detection/pytorch_faster_rcnn.py</div><div id='class'> Class Name: PyTorchFasterRCNN</div><div id='method'> Method Name: predict</div><BR>

@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        if &quotna&quot in self.id2answer_dict:
+            new_id2na_dict = dict(list(self.id2answer_dict[&quotna&quot].items()) + list(other.id2answer_dict[&quotna&quot].items()))
+            new_id2answer_dict[&quotna&quot] = new_id2na_dict
+        <a id="change">return F1Evaluation(self.data_type, self.global_step, new_idxs, new_yp, new_yp2, new_y, new_correct, new_loss, new_f1s, new_id2answer_dict)</a>
+
+    def __repr__(self):
+        return "{} step {}: accuracy={:.4f}, f1={:.4f}, loss={:.4f}".format(self.data_type, self.global_step, self.acc, self.f1, self.loss)
+</code></pre><h3>After Change</h3><pre><code class='java'>
+            new_id2na_dict = dict(list(self.id2answer_dict[&quotna&quot].items()) + list(other.id2answer_dict[&quotna&quot].items()))
+            new_id2answer_dict[&quotna&quot] = new_id2na_dict
+        e = F1Evaluation(self.data_type, self.global_step, new_idxs, new_yp, new_yp2, new_y, new_correct, new_loss, new_f1s, new_id2answer_dict)
+        <a id="change">if &quotwyp&quot in self.dict:
+            new_wyp = self.dict[&quotwyp&quot] + other.dict[&quotwyp&quot]
+            e.dict[&quotwyp&quot] = new_wyp
+       </a> return e
+
+    def __repr__(self):
+        return "{} step {}: accuracy={:.4f}, f1={:.4f}, loss={:.4f}".format(self.data_type, self.global_step, self.acc, self.f1, self.loss)</code></pre>

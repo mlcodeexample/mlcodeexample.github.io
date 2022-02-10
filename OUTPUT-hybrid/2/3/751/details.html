@@ -1,0 +1,24 @@
+<html><h3>b68db1aaf6abe4d2cea8321cc6f1564228dd60f5,deepchem/models/keras_model.py,KerasModel,_predict,#KerasModel#Any#Any#Any#Any#,410
+</h3><img src='968474.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+      if results is None:
+        results = [output_values]
+      else:
+        <a id="change">for i, t in enumerate(output_values):
+          results[i].append(t)
+
+    &#47&#47 Concatenate arrays to create the final results.
+
+   </a> final_results = []
+    final_variances = []
+    for r in results:
+      final_results.append(np.concatenate(r, axis=0))</code></pre><h3>After Change</h3><pre><code class='java'>
+        elif len(output_values) == 1:
+          output_values = [undo_transforms(output_values[0], transformers)]
+      if results is None:
+        results = [[] <a id="change">for</a> i in range(<a id="change">len(output_values)</a>)]
+      for i, t in enumerate(output_values):
+        results[i].append(t)
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6959c92eed13049850ed08d423ac054a0f3781b89ba52eceaf68523bbc0cde89L469' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/keras_model.py</div><div id='class'> Class Name: KerasModel</div><div id='method'> Method Name: _predict</div><BR><BR><div id='link'><a href='https://github.com/googledatalab/pydatalab/commit/d98df66f581dca38bbe7dfc299386921b65bda0d#diff-851df0cd5e3908ac58abd8a874f5db8355fbede139862593004f66006422251bL273' target='_blank'>Link</a></div><div id='project'> Project Name: googledatalab/pydatalab</div><div id='commit'> Commit Name: d98df66f581dca38bbe7dfc299386921b65bda0d</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: google/datalab/contrib/mlworkbench/_local_predict.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: get_probs_for_labels</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/1330ea3102315bd79c9c6efdbd8818c8e2a3cb8f#diff-f582aafccf8343587e7bd879c7191fa93da2d547f815068a0b74c88b15dc9b74L200' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: 1330ea3102315bd79c9c6efdbd8818c8e2a3cb8f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/metalearning/maml.py</div><div id='class'> Class Name: MAML</div><div id='method'> Method Name: fit</div><BR>

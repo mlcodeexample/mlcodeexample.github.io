@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+      if not isinstance(items, list):
+        items = [items]
+      for tensor in items:
+        <a id="change">dim = tensor.shape.as_list()[1]</a>
+        <a id="change">if dim == 1:
+          input_tensors.append(tensor)
+        else:
+          input_tensors.extend(tf.split(tensor, dim, axis=1))
+
+    &#47&#47 outputs_for_monotonicity[0] are non-monotonic outputs
+    &#47&#47 outputs_for_monotonicity[1] are monotonic outputs
+   </a> outputs_for_monotonicity = [[], []]
+    for monotonicities, inputs_for_units in self._rtl_structure:
+      &#47&#47 Create inputs to lattice layer by concatenating all the inputs.
+      lattice_inputs = []</code></pre><h3>After Change</h3><pre><code class='java'>
+      output_monotonicity = max(monotonicities)
+      &#47&#47 Call each lattice layer and store based on output monotonicy.
+      outputs_for_monotonicity[output_monotonicity].append(
+          self._lattice_layers[<a id="change">str(monotonicities)</a>](lattice_inputs))
+
+    if self.separate_outputs:
+      separate_outputs = {}</code></pre>

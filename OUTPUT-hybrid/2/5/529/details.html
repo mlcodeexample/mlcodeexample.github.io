@@ -1,0 +1,20 @@
+<html><h3>cb112c4dfca92159520bb7b2c8a95a94ab38239c,python/baseline/tf/tagger/model.py,TaggerModelBase,create,#Any#Any#Any#,279
+</h3><img src='694584.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+        model.lengths = kwargs.get(&quotlengths&quot, tf.placeholder(tf.int32, [None], name="lengths"))
+        model.y = kwargs.get(&quoty&quot, tf.placeholder(tf.int32, [None, None], name="y"))
+        <a id="change">model.pdrop_in = kwargs.get(&quotdropin&quot, 0.0)</a>
+        model.labels = labels
+        model.span_type = kwargs.get(&quotspan_type&quot)
+
+        inputs = {&quotlengths&quot: model.lengths}</code></pre><h3>After Change</h3><pre><code class='java'>
+                inputs[k] = x
+            model._unserializable.append(model.lengths_key)
+            model.lengths = kwargs.get(&quotlengths&quot, tf.compat.v1.placeholder(tf.int32, [None], name="lengths"))
+            <a id="change">inputs[&quotlengths&quot]</a> = model.lengths
+            model.y = kwargs.get(&quoty&quot, tf.placeholder(tf.int32, [None, None], name="y"))
+            model.sess = kwargs.get(&quotsess&quot, create_session())
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/dpressel/mead-baseline/commit/cb112c4dfca92159520bb7b2c8a95a94ab38239c#diff-b857d14918eabd784024c3ab955f387bf4bde0e0bfed37c4fbc274de750b4ff3L300' target='_blank'>Link</a></div><div id='project'> Project Name: dpressel/mead-baseline</div><div id='commit'> Commit Name: cb112c4dfca92159520bb7b2c8a95a94ab38239c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: python/baseline/tf/tagger/model.py</div><div id='class'> Class Name: TaggerModelBase</div><div id='method'> Method Name: create</div><BR><BR><div id='link'><a href='https://github.com/arnomoonens/yarll/commit/3ff2a365cc9ddd5faf8c9f3d1efafe5216cd10a7#diff-5be1dc5c89e7965d3f8c63c064c849688dfdf8c7c9ab25096669a5a9410db0f9L29' target='_blank'>Link</a></div><div id='project'> Project Name: arnomoonens/yarll</div><div id='commit'> Commit Name: 3ff2a365cc9ddd5faf8c9f3d1efafe5216cd10a7</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: REINFORCE.py</div><div id='class'> Class Name: REINFORCELearner</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/arnomoonens/yarll/commit/3ff2a365cc9ddd5faf8c9f3d1efafe5216cd10a7#diff-8814c8dd0c40429d1a28e4d6e51eb32ad275fc57dfa4f5d7c85e123379bb748fL26' target='_blank'>Link</a></div><div id='project'> Project Name: arnomoonens/yarll</div><div id='commit'> Commit Name: 3ff2a365cc9ddd5faf8c9f3d1efafe5216cd10a7</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: A2C.py</div><div id='class'> Class Name: A2C</div><div id='method'> Method Name: __init__</div><BR>

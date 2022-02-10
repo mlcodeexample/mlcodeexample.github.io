@@ -1,0 +1,23 @@
+digraph G {
+subgraph cluster0 {
+1 [label="variable_scope" a="32" s="642,661" l="15,1" shape="box"];
+3 [label="IfStatement" a="25" s="519,533" l="4,2" shape="diamond"];
+4 [label="PyWithStatement" a="104" s="611,662" l="10,2" shape="diamond"];
+5 [label="SimpleName" a="42" s="" l="" shape="ellipse"];
+6 [label="InfixExpression:r" a="27" s="525" l="4" shape="box"];
+7 [label="throw" a="53" s="543" l="6" shape="box"];
+label = "Old";
+style="dotted";
+}
+subgraph cluster1 {
+2 [label="()" a="106" s="789" l="60" shape="box"];
+label = "New";
+style="dotted";
+}
+1 -> 4 [label="_cond_"];
+3 -> 4 [label="_control_"];
+3 -> 7 [label="_control_"];
+3 -> 1 [label="_control_"];
+5 -> 3 [label="_cond_"];
+6 -> 5 [label="_def_"];
+}

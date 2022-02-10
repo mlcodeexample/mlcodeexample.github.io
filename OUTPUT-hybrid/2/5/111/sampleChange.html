@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+&#47&#47 Game configurations
+conf = GameConf()
+conf.mode = GameMode.TRAIN_DQN
+conf.solver_name = <a id="change">solvers[2]</a>
+
+&#47&#47 Run the game
+Game(conf).run()
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+from snake.game import Game, GameConf, GameMode
+
+dict_solver = <a id="change">{
+    "greedy": "GreedySolver",
+    "hamilton": "HamiltonSolver",
+    "dqn": "DQNSolver",
+}</a>
+
+dict_mode = {
+    "normal": GameMode.NORMAL,
+    "bcmk": GameMode.BENCHMARK,</code></pre>

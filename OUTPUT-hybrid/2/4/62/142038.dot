@@ -1,0 +1,16 @@
+digraph G {
+subgraph cluster0 {
+1 [label="len" a="32" s="17272,17287" l="4,1" shape="box"];
+label = "Old";
+style="dotted";
+}
+subgraph cluster1 {
+2 [label="PyComparator" a="113" s="17635" l="30" shape="diamond"];
+3 [label="Assignment:=" a="7" s="17635" l="30" shape="box"];
+4 [label="Assignment:=" a="7" s="17517" l="14" shape="box"];
+label = "New";
+style="dotted";
+}
+2 -> 4 [label="_para_"];
+3 -> 2 [label="_cond_"];
+}

@@ -1,0 +1,33 @@
+<html><h3>b68db1aaf6abe4d2cea8321cc6f1564228dd60f5,deepchem/models/tensorgraph/models/seqtoseq.py,SeqToSeq,predict_from_sequences,#SeqToSeq#Any#Any#,226
+</h3><img src='509606.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+      the beam width to use for searching.  Set to 1 to use a simple greedy search.
+    
+    result = []
+    <a id="change">with self._get_tf("Graph").as_default():
+      for batch in self._batch_elements(sequences):
+        feed_dict = {}
+        feed_dict[self._features] = self._create_input_array(batch)
+        feed_dict[self._gather_indices] = [(i, len(batch[i])
+                                            if i &lt; len(batch) else 0)
+                                           for i in range(self.batch_size)]
+        feed_dict[self._training_placeholder] = 0.0
+        for initial, zero in zip(self.rnn_initial_states, self.rnn_zero_states):
+          feed_dict[initial] = zero
+        probs = self.session.run(self.output, feed_dict=feed_dict)
+        for i in range(len(batch)):
+          result.append(self._beam_search(probs[i], beam_width))
+   </a> return result
+
+  def predict_from_embeddings(self, embeddings, beam_width=5):
+    Given a set of embedding vectors, predict the output sequences.</code></pre><h3>After Change</h3><pre><code class='java'>
+      features = self._create_input_array(batch)
+      indices = np.array([(i, len(batch[i]) if i &lt; len(batch) else 0)
+                          for i in range(self.batch_size)])
+      probs = self.predict_on_generator([[<a id="change">(features, indices,
+                                           self.get_global_step())</a>, None,
+                                          None]])
+      for i in range(len(batch)):
+        result.append(self._beam_search(probs[i], beam_width))</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L226' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: SeqToSeq</div><div id='method'> Method Name: predict_from_sequences</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/de7f5863338af5e1f92257cb29a6ca9a1c52c473#diff-4ccc57ccdf00a865a5c1d2a8f9e9068a138ad78a7826fe883122c268de434836L93' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: de7f5863338af5e1f92257cb29a6ca9a1c52c473</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: examples/low_data/toxcast_maml.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: compute_scores</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L283' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: SeqToSeq</div><div id='method'> Method Name: predict_embeddings</div><BR>

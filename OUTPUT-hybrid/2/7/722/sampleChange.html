@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    for layer, value in zip(self.conditional_inputs, conditional_inputs):
+      batch[layer] = value
+    return self.predict_on_generator(
+        <a id="change">[batch]</a>, outputs=self.generators[generator_index])
+
+  def _set_empty_inputs(self, feed_dict, layers):
+    Set entries in a feed dict corresponding to a batch size of 0.</code></pre><h3>After Change</h3><pre><code class='java'>
+      batch_size = len(conditional_inputs[0])
+    if noise_input is None:
+      noise_input = self.get_noise_batch(batch_size)
+    <a id="change">inputs = [noise_input]</a>
+    <a id="change">inputs += conditional_inputs</a>
+    inputs = <a id="change">[i.astype(np.float32) for i in inputs]</a>
+    pred = self.generators[generator_index](inputs, training=False)
+    if tf.executing_eagerly():
+      pred = pred.numpy()
+    else:
+      <a id="change">pred = pred.eval(session=self.session)</a>
+    return pred
+
+
+class WGAN(GAN):</code></pre>

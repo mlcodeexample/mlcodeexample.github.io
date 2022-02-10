@@ -1,0 +1,29 @@
+<html><h3>bcf6d0a188ee9ba868c1de01c347f813e3aaa35c,stellargraph/mapper/full_batch_generators.py,FullBatchNodeGenerator,flow,#FullBatchNodeGenerator#Any#Any#,202
+</h3><img src='1009551.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                raise TypeError("Targets must be the same length as node_ids")
+
+        &#47&#47 Dictionary to store node indices for quicker node index lookups
+        <a id="change">node_lookup = dict(zip(self.node_list, range(len(self.node_list))))</a>
+
+        &#47&#47 The list of indices of the target nodes in self.node_list
+        node_indices = <a id="change">np.array([node_lookup[n] for n in node_ids], dtype="int32")</a>
+
+        if self.use_sparse:
+            <a id="change">return SparseFullBatchNodeSequence(
+                self.features, self.Aadj, targets, node_indices
+            )</a>
+        else:
+            return FullBatchNodeSequence(
+                self.features, self.Aadj, targets, node_indices
+            )</code></pre><h3>After Change</h3><pre><code class='java'>
+            and :meth:`predict_generator`
+
+        
+        <a id="change">return super().flow(node_ids, targets)</a>
+
+
+class FullBatchLinkGenerator(FullBatchGenerator):
+    </code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/stellargraph/stellargraph/commit/bcf6d0a188ee9ba868c1de01c347f813e3aaa35c#diff-bf990b45c9643cf08e5d92fd98c57bc4553a9da4120b2a4405c48e614265a181L202' target='_blank'>Link</a></div><div id='project'> Project Name: stellargraph/stellargraph</div><div id='commit'> Commit Name: bcf6d0a188ee9ba868c1de01c347f813e3aaa35c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: stellargraph/mapper/full_batch_generators.py</div><div id='class'> Class Name: FullBatchNodeGenerator</div><div id='method'> Method Name: flow</div><BR><BR><div id='link'><a href='https://github.com/openai/baselines/commit/b71152eea0470ac2629c33e0fc66a54fe494949f#diff-56f6344a19b7839c3fd50d079b1f13fe91ba59e74960972bd2206abe9516b49bL15' target='_blank'>Link</a></div><div id='project'> Project Name: openai/baselines</div><div id='commit'> Commit Name: b71152eea0470ac2629c33e0fc66a54fe494949f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: baselines/common/vec_env/dummy_vec_env.py</div><div id='class'> Class Name: DummyVecEnv</div><div id='method'> Method Name: step_wait</div><BR><BR><div id='link'><a href='https://github.com/openai/baselines/commit/b71152eea0470ac2629c33e0fc66a54fe494949f#diff-56f6344a19b7839c3fd50d079b1f13fe91ba59e74960972bd2206abe9516b49bL27' target='_blank'>Link</a></div><div id='project'> Project Name: openai/baselines</div><div id='commit'> Commit Name: b71152eea0470ac2629c33e0fc66a54fe494949f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: baselines/common/vec_env/dummy_vec_env.py</div><div id='class'> Class Name: DummyVecEnv</div><div id='method'> Method Name: reset</div><BR>

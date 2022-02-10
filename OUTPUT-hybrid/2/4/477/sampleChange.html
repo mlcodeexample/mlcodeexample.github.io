@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    pred_points = scaler.inverse_transform(pred_points)
+    pred_points = np.vstack([np.zeros(shape=(1, ts.y.shape[1]), dtype=np.float32), pred_points])
+    pred_points = invert_difference_series(pred_points, data[[0], :])
+    logger.debug(<a id="change">"inv_diffs:(%s)\n%s" % (str(pred_points.shape), str(pred_points))</a>)
+
+    scores = np.abs(data[n_tr:, 0] - pred_points[n_tr:, 0])
+</code></pre><h3>After Change</h3><pre><code class='java'>
+        prev_points.append(scaled_test[i, 0])  &#47&#47 to predict just one step ahead of known values
+        &#47&#47 prev_points.append(yhat)  &#47&#47 to predict far into the future
+
+    logger.debug("pred_points:(%d)\n%s" % (len(pred_points[scaled_tr.shape[0]:]), str(list(<a id="change">pred_points[scaled_tr.shape[0]:]</a>))))
+
+    &#47&#47 now invert all transformations
+    pred_points = np.reshape(pred_points, newshape=(-1, ts.y.shape[1]))</code></pre>

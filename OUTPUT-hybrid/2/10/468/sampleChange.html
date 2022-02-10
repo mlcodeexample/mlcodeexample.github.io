@@ -1,0 +1,61 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                for i in range(len(bias)):
+                    &#47&#47 Todo: This assumes data_format = &quotchannels_first&quot
+                    init_mem[:, i, Ellipsis] = bias[i]
+                <a id="change">self.add_update([(self.bias, np.zeros_like(bias))])</a>
+        else:  &#47&#47 mode == &quotzero&quot:
+            init_mem = np.zeros(output_shape, k.floatx())
+        return init_mem
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        self.time.assign(time)
+
+    def init_membrane_potential(<a id="change">self</a>, output_shape=None, mode=&quotzero&quot):
+        Initialize membrane potential.
+
+        Helpful to avoid transient response in the beginning of the simulation.
+        Not needed when reset between frames is turned off, e.g. with a video
+        data set.
+
+        Parameters
+        ----------
+
+        output_shape: Optional[tuple]
+            Output shape
+        mode: str
+            Initialization mode.
+
+            - ``&quotuniform&quot``: Random numbers from uniform distribution in
+              ``[-thr, thr]``.
+            - ``&quotbias&quot``: Negative bias.
+            - ``&quotzero&quot``: Zero (default).
+
+        Returns
+        -------
+
+        init_mem: ndarray
+            A tensor of ``self.output_shape`` (same as layer).
+        
+
+        if output_shape is None:
+            output_shape = self.output_shape
+
+        if mode == &quotuniform&quot:
+            init_mem = tf.random.uniform(output_shape,
+                                         -self._v_thresh, self._v_thresh)
+        elif mode == &quotbias&quot:
+            init_mem = tf.zeros(output_shape, <a id="change">self._floatx</a>)
+            if hasattr(self, &quotbias&quot):
+                bias = self.get_weights()[1]
+                for i in range(len(bias)):
+                    &#47&#47 Todo: This assumes data_format = &quotchannels_first&quot
+                    init_mem[:, i, Ellipsis] = bias[i]
+                <a id="change">self.bias.assign(tf.zeros_like(bias))</a>
+        else:  &#47&#47 mode == &quotzero&quot:
+            init_mem = tf.zeros(output_shape, <a id="change">self._floatx</a>)
+        return init_mem
+
+    @tf.function</code></pre>

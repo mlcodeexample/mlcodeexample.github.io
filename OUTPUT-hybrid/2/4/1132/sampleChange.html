@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            for inp, shape, dtype in zip(inputs, self.input_shapes, self.input_dtypes):
+                if inp is None:
+                    inp = self.output_init[0](shape=shape, dtype=dtype, **self.output_init[1])
+                <a id="change">inputs_full.append(inp)</a>
+
+            output = self.harbor[0](inputs_full, self.harbor_shape, **self.harbor[1])
+
+            for function, kwargs in self.pre_memory:</code></pre><h3>After Change</h3><pre><code class='java'>
+            &#47&#47     inputs_full.append(inp)
+
+            if inputs is None:
+                inputs = <a id="change">[self.input_init[0](shape=self.harbor_shape,
+                                             **self.input_init[1])]</a>
+            harbor_output = self.harbor[0](inputs, self.harbor_shape, **self.harbor[1])
+
+            for function, kwargs in self.pre_memory:
+                output = function(harbor_output, **kwargs)
+
+            if state is None:
+                state = self.state_init[0](shape=output.shape,
+                                           dtype=self.dtype,
+                                           **self.state_init[1])
+            state = self.memory[0](output, state, **self.memory[1])
+            self.state = tf.identity(state, name=&quotstate&quot)
+
+            output = self.state
+            for function, kwargs in self.post_memory:
+                output = function(output, **kwargs)
+
+            self.output = tf.cast(output, self.dtype, name=&quotoutput&quot)
+            &#47&#47 scope.reuse_variables()
+            self._reuse = True
+        self.state_shape = self.state.shape
+        <a id="change">self.output_shape = self.output.shape</a>
+        return self.output, self.state
+
+    @property
+    def state_size(self):</code></pre>

@@ -1,0 +1,19 @@
+<html><h3>ea60242913a0ce53f4e033fee3be1f55e2ceb7b0,basenji/metrics.py,PearsonR,update_state,#PearsonR#Any#Any#Any#,187
+</h3><img src='555406.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    y_true = tf.cast(y_true, &quotfloat32&quot)
+    y_pred = tf.cast(y_pred, &quotfloat32&quot)
+
+    product = tf.reduce_sum(tf.multiply(y_true, y_pred), axis=<a id="change">[0,1]</a>)
+    self._product.assign_add(product)
+
+    true_sum = tf.reduce_sum(y_true, axis=[0,1])</code></pre><h3>After Change</h3><pre><code class='java'>
+    y_true = tf.cast(y_true, &quotfloat32&quot)
+    y_pred = tf.cast(y_pred, &quotfloat32&quot)
+
+    if <a id="change">len(y_true.shape)</a> == 2:
+      reduce_axes = 0
+    else:
+      reduce_axes = [0,1]</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/calico/basenji/commit/ea60242913a0ce53f4e033fee3be1f55e2ceb7b0#diff-f02fa695459d05d06168dbf488a49366a33c52c56cb02bcf15edbd99b59a591aL188' target='_blank'>Link</a></div><div id='project'> Project Name: calico/basenji</div><div id='commit'> Commit Name: ea60242913a0ce53f4e033fee3be1f55e2ceb7b0</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basenji/metrics.py</div><div id='class'> Class Name: PearsonR</div><div id='method'> Method Name: update_state</div><BR><BR><div id='link'><a href='https://github.com/calico/basenji/commit/ea60242913a0ce53f4e033fee3be1f55e2ceb7b0#diff-f02fa695459d05d06168dbf488a49366a33c52c56cb02bcf15edbd99b59a591aL250' target='_blank'>Link</a></div><div id='project'> Project Name: calico/basenji</div><div id='commit'> Commit Name: ea60242913a0ce53f4e033fee3be1f55e2ceb7b0</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basenji/metrics.py</div><div id='class'> Class Name: R2</div><div id='method'> Method Name: update_state</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/1a7fa6010b7234bb9efddf761c9bf52af07dc347#diff-e7decfde76a7d23ecff2b9492ec0779684dd534634a6c20071452423dd77e3edL105' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: 1a7fa6010b7234bb9efddf761c9bf52af07dc347</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/modules/embedders/position_embedders.py</div><div id='class'> Class Name: PositionEmbedder</div><div id='method'> Method Name: _build</div><BR>

@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+      return endpoints
+
+&#47&#47 Our list of pre-defined models.
+<a id="change">_MODELS = [
+    DeepVariantSmallModel(),
+    DeepVariantInceptionV3(),
+    DeepVariantInceptionV2(),
+    DeepVariantMobileNetV1(),
+    DeepVariantRandomGuessModel(),
+    DeepVariantConstantModel(),
+]</a>
+
+
+def all_models():
+  Gets a list of the all of the known models.</code></pre><h3>After Change</h3><pre><code class='java'>
+&#47&#47 of the entries here will be stratified by variant_type in eval_metric_fn.
+_METRICS_FUNCS_BY_VARIANT_TYPE = {
+    &quotAccuracy&quot: tf.metrics.accuracy,
+    <a id="change">&quotPrecision&quot</a>: tf.metrics.precision,
+    &quotRecall&quot: tf.metrics.recall,
+    &quotFPs&quot: tf.metrics.false_positives,
+    &quotFNs&quot: tf.metrics.false_negatives,</code></pre>

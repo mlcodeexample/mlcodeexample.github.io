@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    ksizes[dim] = window_sz
+    ksizes = ksizes + [1]
+    strides = [1] * (len(tensor.shape) + 1)
+    return tf.extract_volume_patches(<a id="change">tf.expand_dims(tensor, -1)</a>, ksizes=ksizes, strides=strides, padding="SAME")
+
+
+class SeqScaledWindowedRelativeAttention(SequenceSequenceRelativeAttention):</code></pre><h3>After Change</h3><pre><code class='java'>
+    half_window = (window_sz - 1) // 2
+    if dim &lt; 0:
+        dim = len(tensor.shape) + dim
+    paddings = <a id="change">[[0, 0]]</a> * len(tensor.shape)
+    paddings[dim] = [half_window, half_window]
+    <a id="change">padded = tf.pad(tensor, paddings)</a>
+    return tf.signal.frame(padded, frame_length=window_sz, frame_step=1, axis=dim)
+
+
+class SeqScaledWindowedRelativeAttention(SequenceSequenceRelativeAttention):</code></pre>

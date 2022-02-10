@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    for unique_ids, start_logits, end_logits in zip(
+        step_outputs[&quotunique_ids&quot], step_outputs[&quotstart_logits&quot],
+        step_outputs[&quotend_logits&quot]):
+      <a id="change">u_ids</a>, s_logits, e_logits = (unique_ids.numpy(), start_logits.numpy(),
+                                   end_logits.numpy())
+      for values in zip(u_ids, s_logits, e_logits):
+        state.append(</code></pre><h3>After Change</h3><pre><code class='java'>
+    for outputs in zip(step_outputs[&quotunique_ids&quot],
+                       step_outputs[&quotstart_logits&quot],
+                       step_outputs[&quotend_logits&quot]):
+      <a id="change">numpy_values = [
+          output.numpy() for output in outputs if output is not None]</a>
+
+      for values in zip(*numpy_values):
+        state.append(RawAggregatedResult(
+            unique_id=values[0],</code></pre>

@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        self.self_attn = MultiHeadedAttention(num_heads, d_model, pdrop, scale)
+        self.src_attn = MultiHeadedAttention(num_heads, d_model, pdrop, scale)
+        self.dropout = tf.keras.layers.Dropout(pdrop)
+        <a id="change">self.ln1</a> = <a id="change">LayerNorm(name=&quotln_1&quot)</a>
+        self.ln2 = LayerNorm(name=&quotln_2&quot)
+        self.ln3 = LayerNorm(name=&quotln_3&quot)
+        self.feed_forward = FFN(d_model, pdrop, activation, d_ff, name=&quotffn&quot)
+</code></pre><h3>After Change</h3><pre><code class='java'>
+        self.self_attn = MultiHeadedAttention(num_heads, self.d_model, pdrop, scale=scale)
+        self.src_attn = MultiHeadedAttention(num_heads, self.d_model, pdrop, scale=scale)
+        self.ffn = FFN(d_model, pdrop, activation_type, d_ff, name=&quotffn&quot)
+        <a id="change">self.ln1</a> = <a id="change">tf.keras.layers.LayerNormalization(epsilon=1e-6)</a>
+        self.ln2 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
+        self.ln3 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
+        self.dropout = tf.keras.layers.Dropout(pdrop)
+</code></pre>

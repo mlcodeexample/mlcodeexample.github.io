@@ -1,0 +1,22 @@
+<html><h3>168a88e57070871eef5a9fcdad3ed1a4d708d7bd,examples/pytorch/rgcn-hetero/model.py,EntityClassify,forward,#EntityClassify#Any#Any#,194
+</h3><img src='1537959.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    def forward(self, h=None, blocks=None):
+        if blocks is None:
+            &#47&#47 full graph training
+            <a id="change">blocks = [self.g] * len(self.layers)</a>
+        if h is None:
+            &#47&#47 full graph training
+            h = self.embed_layer()
+        for layer, block in zip(self.layers, blocks):</code></pre><h3>After Change</h3><pre><code class='java'>
+        else:
+            &#47&#47 minibatch training
+            for layer, block in zip(self.layers, blocks):
+                h_dst = {k: v[:block.number_of_dst_nodes(k)] <a id="change">for</a> k, v in h.items()}
+                <a id="change">h = layer(block, (h, h_dst))</a>
+        return h
+
+    def inference(self, g, batch_size, device, num_workers, x=None):
+        Minibatch inference of final representation over all node types.</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 5</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/dmlc/dgl/commit/168a88e57070871eef5a9fcdad3ed1a4d708d7bd#diff-e5255001201701cb854d57d6236fea78f0cb826c05dbde702fd7ba7b8fde0b72L194' target='_blank'>Link</a></div><div id='project'> Project Name: dmlc/dgl</div><div id='commit'> Commit Name: 168a88e57070871eef5a9fcdad3ed1a4d708d7bd</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: examples/pytorch/rgcn-hetero/model.py</div><div id='class'> Class Name: EntityClassify</div><div id='method'> Method Name: forward</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/minigo/commit/b32a4724dd2f8c97ff3b3813e5622d6bb6fb8f7a#diff-aaadbf71c05ab6a2e14b4af685da9ee0d5ed6a7f8444249a8617647490fbd333L231' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/minigo</div><div id='commit'> Commit Name: b32a4724dd2f8c97ff3b3813e5622d6bb6fb8f7a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: dual_net.py</div><div id='class'> Class Name: DualNetwork</div><div id='method'> Method Name: run_many</div><BR><BR><div id='link'><a href='https://github.com/GPflow/GPflow/commit/6b8a9a5f0e738d98904ff7c46c79a44bfdd56686#diff-6ba932ef8584752bc43c950d2b757bc27fdb986044bfa89f4af23bfb88aed51aL49' target='_blank'>Link</a></div><div id='project'> Project Name: GPflow/GPflow</div><div id='commit'> Commit Name: 6b8a9a5f0e738d98904ff7c46c79a44bfdd56686</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: testing/test_predict.py</div><div id='class'> Class Name: TestFullCov</div><div id='method'> Method Name: setUp</div><BR>

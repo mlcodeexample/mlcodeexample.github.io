@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    def forward(self, h=None, blocks=None):
+        if blocks is None:
+            &#47&#47 full graph training
+            <a id="change">blocks = [self.g] * len(self.layers)</a>
+        if h is None:
+            &#47&#47 full graph training
+            h = self.embed_layer()
+        for layer, block in zip(self.layers, blocks):</code></pre><h3>After Change</h3><pre><code class='java'>
+        else:
+            &#47&#47 minibatch training
+            for layer, block in zip(self.layers, blocks):
+                h_dst = {k: v[:block.number_of_dst_nodes(k)] <a id="change">for</a> k, v in h.items()}
+                <a id="change">h = layer(block, (h, h_dst))</a>
+        return h
+
+    def inference(self, g, batch_size, device, num_workers, x=None):
+        Minibatch inference of final representation over all node types.</code></pre>

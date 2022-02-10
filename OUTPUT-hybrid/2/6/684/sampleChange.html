@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                  input_signature)
+      }
+    else:
+      <a id="change">raise ValueError(&quotUnrecognized `input_type`&quot)</a>
+
+    tf.saved_model.save(module,
+                        save_directory,
+                        signatures=signatures)</code></pre><h3>After Change</h3><pre><code class='java'>
+    return segmentation_module
+
+  def _export_from_module(self, module, input_type, save_directory):
+    <a id="change">signatures = module.get_inference_signatures(
+        {input_type: &quotserving_default&quot})</a>
+    tf.saved_model.save(module, save_directory, signatures=signatures)
+
+  def _get_dummy_input(self, input_type):
+    Get dummy input for the given input type.</code></pre>

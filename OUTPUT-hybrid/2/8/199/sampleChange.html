@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+tf.app.flags.DEFINE_integer("sentence_len",100,"max sentence length")
+tf.app.flags.DEFINE_integer("embed_size",100,"embedding size")
+tf.app.flags.DEFINE_boolean("is_training",True,"is traning.true:tranining,false:testing/inference")
+<a id="change">tf.app.flags.DEFINE_integer("num_epochs",17,"number of epochs to run.")</a>
+tf.app.flags.DEFINE_integer("validate_every", 1, "Validate every validate_every epochs.") &#47&#47每10轮做一次验证
+tf.app.flags.DEFINE_boolean("use_embedding",True,"whether to use embedding or not.")
+&#47&#47tf.app.flags.DEFINE_string("cache_path","text_cnn_checkpoint/data_cache.pik","checkpoint location for the model")
+&#47&#47train-zhihu4-only-title-all.txt</code></pre><h3>After Change</h3><pre><code class='java'>
+
+tf.app.flags.DEFINE_float("learning_rate",0.0001,"learning rate")
+tf.app.flags.DEFINE_integer("batch_size", 16, "Batch size for training/evaluating.") &#47&#47批处理的大小 32--&gt;128
+<a id="change">tf.app.flags.DEFINE_integer("decay_steps", 1000, "how many steps before decay learning rate.")</a> &#47&#476000批处理的大小 32--&gt;128
+tf.app.flags.DEFINE_float("decay_rate", 0.65, "Rate of decay for learning rate.") &#47&#470.65一次衰减多少
+tf.app.flags.DEFINE_string("ckpt_dir","text_cnn_title_desc_checkpoint/","checkpoint location for the model")
+tf.app.flags.DEFINE_integer("sentence_len",100,"max sentence length")</code></pre>

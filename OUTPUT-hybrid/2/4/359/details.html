@@ -1,0 +1,21 @@
+<html><h3>1bef8a0cb502401e33f8572897d981ef81a1a829,tf_agents/bandits/policies/neural_linucb_policy.py,NeuralLinUCBPolicy,_action,#NeuralLinUCBPolicy#Any#Any#Any#,248
+</h3><img src='515107.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    &#47&#47 Check the shape of the observation matrix.
+    if not observation.shape.is_compatible_with([None, self._context_dim]):
+      raise ValueError(&quotObservation shape is expected to be {}. Got {}.&quot.format(
+          [None, self._context_dim], <a id="change">observation.shape.as_list()</a>))
+
+    observation = tf.cast(observation, dtype=self._dtype)
+</code></pre><h3>After Change</h3><pre><code class='java'>
+        lambda: self._get_actions_from_linucb(encoded_observation, mask))
+
+    arm_observations = ()
+    <a id="change">if self._accepts_per_arm_features:
+      arm_observations = observation[bandit_spec_utils.PER_ARM_FEATURE_KEY]
+   </a> policy_info = policy_utilities.populate_policy_info(
+        arm_observations, chosen_actions, (), est_mean_rewards,
+        self._emit_policy_info, self._accepts_per_arm_features)
+    return policy_step.PolicyStep(chosen_actions, policy_state, policy_info)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/1bef8a0cb502401e33f8572897d981ef81a1a829#diff-c9a02749f6ad063e038acf8968ce2f418ddf3cc10aba5651b54aabbe940724adL248' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: 1bef8a0cb502401e33f8572897d981ef81a1a829</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/bandits/policies/neural_linucb_policy.py</div><div id='class'> Class Name: NeuralLinUCBPolicy</div><div id='method'> Method Name: _action</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/lattice/commit/1c75176947730de8322acf6ad996096625e92e3a#diff-9a3b998d3248524fa6a29ff883da259bac34265ff0749c17d3c708c952c34b8eL220' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/lattice</div><div id='commit'> Commit Name: 1c75176947730de8322acf6ad996096625e92e3a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_lattice/python/rtl_layer.py</div><div id='class'> Class Name: RTL</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/deepmind/sonnet/commit/e164c3574da160fb72fc962947a783fa299424e3#diff-d4c5c5222b0fcf0f37fb18463f022741550e684176e3ccf29200d135567213feL105' target='_blank'>Link</a></div><div id='project'> Project Name: deepmind/sonnet</div><div id='commit'> Commit Name: e164c3574da160fb72fc962947a783fa299424e3</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: sonnet/src/batch_apply.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: merge_leading_dims</div><BR>

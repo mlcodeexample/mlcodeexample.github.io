@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    - "full": cov holds the full covariance matrix (without jitter)
+    :return: sample from the MVN of shape [..., (S), N, D], S = num_samples
+    
+    <a id="change">assert cov_structure == "diag" or cov_structure == "full"</a>
+
+    mean_shape = tf.shape(mean)
+    S = num_samples if num_samples is not None else 1
+    D = mean_shape[-1]</code></pre><h3>After Change</h3><pre><code class='java'>
+    - "full": cov holds the full covariance matrix (without jitter)
+    :return: sample from the MVN of shape [..., (S), N, D], S = num_samples
+    
+    <a id="change">if cov_structure not in ("diag", "full"):
+        raise ValueError("cov_structure must be &quotdiag&quot or &quotfull&quot")
+
+   </a> shape_constraints = [
+        (mean, [..., "N", "D"]),
+        (cov, <a id="change">[..., "N", "D"] if cov_structure == "diag" else [..., "N", "D", "D"]</a>),
+    ]
+    tf.debugging.assert_shapes(shape_constraints, message="sample_mvn() arguments")
+</code></pre>

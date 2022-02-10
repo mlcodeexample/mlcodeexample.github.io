@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+        self._free_vars = tf.Variable(self.get_free_state())
+        if float32_hack:
+            self._free_vars32 = tf.Variable(<a id="change">self.get_free_state().astype(np.float32)</a>)
+            self._free_vars = tf.cast(self._free_vars32, tf.float64)
+
+        self.make_tf_array(self._free_vars)</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        self._free_vars = tf.Variable(self.get_free_state())
+        if float32_hack:
+            x = <a id="change">self.get_free_state().astype(np.float32)</a>
+            <a id="change">self._free_vars32 = tf.Variable(x)</a>
+            self._free_vars = tf.cast(self._free_vars32, tf.float64)
+
+        self.make_tf_array(self._free_vars)
+        with self.tf_mode():</code></pre>

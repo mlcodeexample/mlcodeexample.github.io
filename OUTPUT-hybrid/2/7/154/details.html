@@ -1,0 +1,46 @@
+<html><h3>4ef810643f162aebb1d9efd153a82e0dc9e9094e,garage/tf/core/layers.py,TfGRULayer,get_output_for,#TfGRULayer#Any#,1243
+</h3><img src='222802.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        n_batches = input_shape[0]
+        state = tf.tile(
+            tf.reshape(self.h0, (1, self.num_units)), (n_batches, 1))
+        <a id="change">state.set_shape((None, self.num_units))</a>
+        if self.horizon is not None:
+            outputs = []
+            for idx in range(self.horizon):
+                output, state = self.gru(</code></pre><h3>After Change</h3><pre><code class='java'>
+            return self.gru(x, hprev, scope=self.scope)[1]
+
+    def get_output_for(self, input, **kwargs):
+        <a id="change">with tf.name_scope(self.name, values=[input]):
+            input_shape = tf.shape(input)
+            n_batches = input_shape[0]
+            state = tf.tile(
+                tf.reshape(self.h0, (1, self.num_units)), (n_batches, 1))
+            state.set_shape((None, self.num_units))
+            if self.horizon is not None:
+                outputs = []
+                for idx in range(self.horizon):
+                    output, state = self.gru(
+                        input[:, idx, :], state,
+                        scope=self.scope)  &#47&#47 self.name)
+                    outputs.append(tf.expand_dims(output, 1))
+                outputs = tf.concat(axis=1, values=outputs)
+                return outputs
+            else:
+                n_steps = input_shape[1]
+                input = tf.reshape(input, tf.stack([n_batches, n_steps, -1]))
+                &#47&#47 flatten extra dimensions
+                shuffled_input = tf.transpose(input, (1, 0, 2))
+                shuffled_input.set_shape((None, None, self.input_shape[-1]))
+                hs = tf.scan(
+                    self.step, elems=shuffled_input, initializer=state)
+                shuffled_hs = tf.transpose(hs, (1, 0, 2))
+                return shuffled_hs
+
+   </a> def get_output_shape_for(self, input_shape):
+        n_batch, n_steps = input_shape[:2]
+        return n_batch, n_steps, self.num_units
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/rlworkgroup/garage/commit/4ef810643f162aebb1d9efd153a82e0dc9e9094e#diff-f5ee96338a1e7111a87993304eb67f61a7cdf107d42aeb75f272ac803fd707c4L1244' target='_blank'>Link</a></div><div id='project'> Project Name: rlworkgroup/garage</div><div id='commit'> Commit Name: 4ef810643f162aebb1d9efd153a82e0dc9e9094e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: garage/tf/core/layers.py</div><div id='class'> Class Name: TfGRULayer</div><div id='method'> Method Name: get_output_for</div><BR><BR><div id='link'><a href='https://github.com/rlworkgroup/garage/commit/4ef810643f162aebb1d9efd153a82e0dc9e9094e#diff-f5ee96338a1e7111a87993304eb67f61a7cdf107d42aeb75f272ac803fd707c4L1936' target='_blank'>Link</a></div><div id='project'> Project Name: rlworkgroup/garage</div><div id='commit'> Commit Name: 4ef810643f162aebb1d9efd153a82e0dc9e9094e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: garage/tf/core/layers.py</div><div id='class'> Class Name: BatchNormLayer</div><div id='method'> Method Name: get_output_for</div><BR><BR><div id='link'><a href='https://github.com/rlworkgroup/garage/commit/4ef810643f162aebb1d9efd153a82e0dc9e9094e#diff-f5ee96338a1e7111a87993304eb67f61a7cdf107d42aeb75f272ac803fd707c4L1778' target='_blank'>Link</a></div><div id='project'> Project Name: rlworkgroup/garage</div><div id='commit'> Commit Name: 4ef810643f162aebb1d9efd153a82e0dc9e9094e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: garage/tf/core/layers.py</div><div id='class'> Class Name: TfBasicLSTMLayer</div><div id='method'> Method Name: get_output_for</div><BR>

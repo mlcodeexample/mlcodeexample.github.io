@@ -1,0 +1,22 @@
+<html><h3>1c75176947730de8322acf6ad996096625e92e3a,tensorflow_lattice/python/rtl_layer.py,RTL,call,#RTL#Any#,217
+</h3><img src='671962.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    for input_key in sorted(x.keys()):
+      items = x[input_key]
+      if not isinstance(items, list):
+        <a id="change">items = [items]</a>
+      for tensor in items:
+        dim = <a id="change">tensor.shape.as_list()[1]</a>
+        if dim == 1:
+          input_tensors.append(tensor)
+        else:
+          input_tensors.extend(tf.split(tensor, dim, axis=1))</code></pre><h3>After Change</h3><pre><code class='java'>
+      output_monotonicity = max(monotonicities)
+      &#47&#47 Call each lattice layer and store based on output monotonicy.
+      outputs_for_monotonicity[output_monotonicity].append(
+          self._lattice_layers[<a id="change">str(monotonicities)</a>](lattice_inputs))
+
+    if self.separate_outputs:
+      separate_outputs = {}</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/lattice/commit/1c75176947730de8322acf6ad996096625e92e3a#diff-9a3b998d3248524fa6a29ff883da259bac34265ff0749c17d3c708c952c34b8eL220' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/lattice</div><div id='commit'> Commit Name: 1c75176947730de8322acf6ad996096625e92e3a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_lattice/python/rtl_layer.py</div><div id='class'> Class Name: RTL</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/tech-srl/code2vec/commit/058443c5aa4dcd59675b9a7dcec6ecfbaf2e81a4#diff-621b21abc0eb5284eb662c880505d603cae2a5616152376ab5fdbc02a1f653dfL72' target='_blank'>Link</a></div><div id='project'> Project Name: tech-srl/code2vec</div><div id='commit'> Commit Name: 058443c5aa4dcd59675b9a7dcec6ecfbaf2e81a4</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_model.py</div><div id='class'> Class Name: Code2VecModel</div><div id='method'> Method Name: train</div><BR><BR><div id='link'><a href='https://github.com/NervanaSystems/coach/commit/a1c56edd98898ed25db9c6ed1e05b50a0a85e097#diff-a416346771eb0e36a0edb830b9b5547312f7de12cb87b7ec5f7ac4f445ef9246L272' target='_blank'>Link</a></div><div id='project'> Project Name: NervanaSystems/coach</div><div id='commit'> Commit Name: a1c56edd98898ed25db9c6ed1e05b50a0a85e097</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: rl_coach/memories/non_episodic/differentiable_neural_dictionary.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: load_dnd</div><BR>

@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+      return endpoints
+
+&#47&#47 Our list of pre-defined models.
+_MODELS = <a id="change">[
+    DeepVariantSmallModel(),
+    DeepVariantInceptionV3(),
+    DeepVariantInceptionV2(),
+    DeepVariantMobileNetV1(),
+    DeepVariantRandomGuessModel(),
+    DeepVariantConstantModel(),
+]</a>
+
+
+def all_models():
+  Gets a list of the all of the known models.</code></pre><h3>After Change</h3><pre><code class='java'>
+&#47&#47 This dictionary contains a mapping from the human readable name of a metric
+&#47&#47 function (e.g., Accuracy) and its associated TensorFlow metric function. All
+&#47&#47 of the entries here will be stratified by variant_type in eval_metric_fn.
+_METRICS_FUNCS_BY_VARIANT_TYPE = <a id="change">{
+    &quotAccuracy&quot: tf.metrics.accuracy,
+    &quotPrecision&quot: tf.metrics.precision,
+    &quotRecall&quot: tf.metrics.recall,
+    &quotFPs&quot: tf.metrics.false_positives,
+    &quotFNs&quot: tf.metrics.false_negatives,
+    &quotTPs&quot: tf.metrics.true_positives,
+    &quotTNs&quot: tf.metrics.true_negatives,
+}</a>
+
+&#47&#47 A set containing the names of the variant types we split our metrics by type
+&#47&#47 by. This data structure isn&quott a dictionary like it&quots neighbors because
+&#47&#47 eval_metric_fn requires special logic to compute the values here associated</code></pre>

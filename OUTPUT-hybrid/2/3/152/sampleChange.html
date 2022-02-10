@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        if self.spiketrain is not None:
+            new_spikes = tf.math.logical_xor(
+                k.greater(input_psp, 0), k.greater(self.last_spiketimes, 0))
+            self.add_update([<a id="change">(self.spiketrain,
+                              self.time * k.cast(new_spikes, k.floatx()))</a>])
+
+        psp = self.get_psp(input_psp)
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        psp = self.get_psp(input_psp)
+
+        return <a id="change">tf.cast(psp, self._floatx)</a>
+
+
+custom_layers = {&quotSpikeFlatten&quot: SpikeFlatten,
+                 &quotSpikeDense&quot: SpikeDense,</code></pre>

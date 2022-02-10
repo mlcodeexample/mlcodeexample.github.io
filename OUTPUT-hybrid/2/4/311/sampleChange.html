@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+          if (len(group_list) == 0
+              or common.check_group_list(env, result)):
+            <a id="change">print("init group list")</a>
+            result, xy_per_marine = common.init(env, result)
+            group_list = common.update_group_list(result)
+
+          &#47&#47 ob = result[0].observation["screen"]</code></pre><h3>After Change</h3><pre><code class='java'>
+      step_mul=1,
+      screen_size_px=(32, 32),
+      minimap_size_px=(32, 32)) as env:
+    <a id="change">available_actions = []</a>
+    result = None
+    group_list = []
+    xy_per_marine = {}
+    while True:</code></pre>

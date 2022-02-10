@@ -1,0 +1,14 @@
+digraph G {
+subgraph cluster0 {
+1 [label="__init__" a="32" s="7205,7218" l="9,1" shape="box"];
+3 [label="Assignment:=" a="7" s="7158" l="10" shape="box"];
+label = "Old";
+style="dotted";
+}
+subgraph cluster1 {
+2 [label="<new>" a="46" s="7006" l="8" shape="box"];
+label = "New";
+style="dotted";
+}
+3 -> 1 [label="_recv_"];
+}

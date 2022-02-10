@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    device_grads = gradient_state
+    &#47&#47 Note that each grad_and_vars looks like the following:
+    &#47&#47   ((grad0_gpu0, var0_gpu0), ... , (grad0_gpuN, var0_gpuN))
+    <a id="change">return [grad_and_vars[device_num] for grad_and_vars in zip(*device_grads)]</a>
+
+  def get_post_init_ops(self):
+    &#47&#47 Copy initialized values for variables on GPU 0 to other GPUs.
+    global_vars = tf.global_variables()</code></pre><h3>After Change</h3><pre><code class='java'>
+
+  def get_gradients_to_apply(self, device_num, gradient_state):
+    device_grads = gradient_state
+    return <a id="change">device_grads[device_num]</a>
+
+  def get_post_init_ops(self):
+    &#47&#47 Copy initialized values for variables on GPU 0 to other GPUs.
+    global_vars = tf.global_variables()</code></pre>

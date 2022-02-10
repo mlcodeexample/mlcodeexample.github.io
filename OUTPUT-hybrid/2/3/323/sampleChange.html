@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+  if weights is None:
+    lhs[0] = tf.ones((batch_size, 1, 1), dtype=dtype)
+  else:
+    lhs[0] = tf.reshape(weights, <a id="change">(batch_size, 1, 1)</a>)
+    lhs[0] = tf.cast(lhs[0], dtype=dtype)
+  for core_idx in range(ndims - 1):
+    tens_core = what.tt_cores[core_idx]</code></pre><h3>After Change</h3><pre><code class='java'>
+        einsum_str = &quotoab,ob{0}c-&gt;a{0}c&quot.format(mode_str)
+        proj_core = tf.einsum(einsum_str, lhs[core_idx], tens_core)
+      else:
+        einsum_str = <a id="change">&quotoab,ob{0}c,o-&gt;a{0}c&quot.format(mode_str)</a>
+        proj_core = tf.einsum(einsum_str, lhs[core_idx], tens_core, weights)
+
+    if core_idx == 0:
+      res_core = tf.concat((proj_core, left_tang_core), axis=right_rank_dim)</code></pre>

@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            ret["gt_boxes"] = boxes
+            ret["gt_labels"] = klass
+            if not len(boxes):
+                <a id="change">raise MalformedData("No valid gt_boxes!")</a>
+        except MalformedData as e:
+            log_once("Input {} is filtered for training: {}".format(fname, str(e)), "warn")
+            return None
+</code></pre><h3>After Change</h3><pre><code class='java'>
+                polys = [self.aug.augment_coords(p, params) for p in polys]
+                masks.append(segmentation_to_mask(polys, im.shape[0], gt_mask_width))
+
+            <a id="change">if len(masks):
+                masks = np.asarray(masks, dtype=&quotuint8&quot)    &#47&#47 values in {0, 1}
+                masks = np.packbits(masks, axis=-1)
+            else:  &#47&#47 no gt on the image
+                masks = np.zeros((0, im.shape[0], gt_mask_width // 8), dtype=&quotuint8&quot)
+
+           </a> ret[&quotgt_masks_packed&quot] = masks
+
+            &#47&#47 from viz import draw_annotation, draw_mask
+            &#47&#47 viz = draw_annotation(im, boxes, klass)</code></pre>

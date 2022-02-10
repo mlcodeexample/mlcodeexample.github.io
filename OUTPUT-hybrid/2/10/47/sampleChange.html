@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+  def save_model_with_single_input(self, export_dir):
+    builder = tf.compat.v1.saved_model.builder.SavedModelBuilder(export_dir)
+    <a id="change">with self.test_session(graph=tf.Graph()) as sess:
+      input1 = tf.compat.v1.placeholder(
+          dtype=tf.int32, shape=[5], name=&quotmyinput&quot)
+      initializer = tf.compat.v1.initializers.constant([1, 2, 3, 4, 5])
+      with tf.compat.v1.variable_scope(
+          &quotModel&quot, reuse=None, initializer=initializer):
+        v1 = tf.compat.v1.get_variable(&quotv1&quot, [5], dtype=tf.int32)
+      output1 = tf.add(v1, input1, name=&quotmyadd&quot)
+      inputs = {&quotsingle_input&quot: input1}
+      outputs = {&quotsingle_output&quot: output1}
+      signature_def_map = {
+          &quotmy_signature_single_input&quot:
+              tf.compat.v1.saved_model.signature_def_utils
+              .predict_signature_def(inputs, outputs)
+      }
+      sess.run(tf.compat.v1.global_variables_initializer())
+      builder.add_meta_graph_and_variables(
+          sess, [tf.saved_model.SERVING], signature_def_map=signature_def_map)
+      builder.save(False)
+
+ </a> def save_model_with_multi_inputs(self, export_dir):
+    builder = tf.compat.v1.saved_model.builder.SavedModelBuilder(export_dir)
+    with self.test_session(graph=tf.Graph()) as sess:
+      input1 = tf.compat.v1.placeholder(</code></pre><h3>After Change</h3><pre><code class='java'>
+
+  def save_model_with_single_input(self, export_dir):
+    builder = tf.compat.v1.saved_model.builder.SavedModelBuilder(export_dir)
+    <a id="change">with tf.compat.v1.Graph().as_default() as graph:
+      with self.test_session(graph=graph) as sess:
+        input1 = tf.compat.v1.placeholder(
+            dtype=tf.int32, shape=[5], name=&quotmyinput&quot)
+        initializer = tf.compat.v1.initializers.constant([1, 2, 3, 4, 5])
+        with tf.compat.v1.variable_scope(
+            &quotModel&quot, reuse=None, initializer=initializer):
+          v1 = tf.compat.v1.get_variable(&quotv1&quot, [5], dtype=tf.int32)
+        output1 = tf.add(v1, input1, name=&quotmyadd&quot)
+        inputs = {&quotsingle_input&quot: input1}
+        outputs = {&quotsingle_output&quot: output1}
+        signature_def_map = {
+            &quotmy_signature_single_input&quot:
+                tf.compat.v1.saved_model.signature_def_utils
+                .predict_signature_def(inputs, outputs)
+        }
+        sess.run(tf.compat.v1.global_variables_initializer())
+        builder.add_meta_graph_and_variables(
+            sess, [tf.saved_model.SERVING], signature_def_map=signature_def_map)
+        builder.save(False)
+
+ </a> def save_model_with_multi_inputs(self, export_dir):
+    builder = tf.compat.v1.saved_model.builder.SavedModelBuilder(export_dir)
+    with tf.compat.v1.Graph().as_default() as graph:
+      with self.test_session(graph=graph) as sess:</code></pre>

@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+  input_dim = x.shape.as_list()[1]
+  shape = (input_dim, output_dim)
+
+  <a id="change">combiner = PCACombiner(output_dim, dtype.as_numpy_dtype)</a>
+  <a id="change">if name is None:
+    name = &quotpca&quot
+ </a> <a id="change">return apply_combiner([x], [dtype], [shape], combiner, name)[0]</a>
+</code></pre><h3>After Change</h3><pre><code class='java'>
+        analyzer_nodes.Combine,
+        x,
+        combiner=PCACombiner(output_dim, dtype.as_numpy_dtype, shape))
+    <a id="change">return result</a>
+
+
+def ptransform_analyzer(inputs, output_dtypes, output_shapes, ptransform,
+                        name=None):</code></pre>

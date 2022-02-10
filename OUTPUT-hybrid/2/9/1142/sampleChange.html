@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    &#47&#47 Predicted probability per class.
+    p_y_given_x_2d = T.nnet.softmax(inputToSoftmax2d/softmaxTemperature)
+    p_y_given_x_classMinor = p_y_given_x_2d.reshape((inputToSoftmaxShape[0], inputToSoftmaxShape[2], inputToSoftmaxShape[3], inputToSoftmaxShape[4], inputToSoftmaxShape[1])) &#47&#47Result: batchSize, R,C,Z, Classes.
+    p_y_given_x = <a id="change">p_y_given_x_classMinor.dimshuffle(0,4,1,2,3)</a> &#47&#47Result: batchSize, Class, R, C, Z
+    
+    &#47&#47 Classification (EM) for each voxel
+    y_pred = T.argmax(p_y_given_x, axis=1) &#47&#47Result: batchSize, R, C, Z</code></pre><h3>After Change</h3><pre><code class='java'>
+    &#47&#47 The reshaped 2D Tensor will have dimensions: [ batchSize * r * c * z , &#47&#47Classses ]
+    &#47&#47 The order of the elements in the rows after the reshape should be :
+    
+    inputToSoftmaxReshaped = tf.transpose(inputToSoftmax, perm=<a id="change">[0,2,3,4,1]</a>) &#47&#47 [batchSize, r, c, z, &#47&#47classes), the classes stay as the last dimension.
+    inputToSoftmaxFlattened = <a id="change">tf.reshape(inputToSoftmaxReshaped, shape=[-1])</a> 
+    &#47&#47 flatten is "Row-major" &quotC&quot style. ie, starts from index [0,0,0] and grabs elements in order such that last dim index increases first and first index increases last. (first row flattened, then second follows, etc)
+    numberOfVoxelsDenselyClassified = inputToSoftmaxShape[2]*inputToSoftmaxShape[3]*inputToSoftmaxShape[4]
+    firstDimOfInputToSoftmax2d = inputToSoftmaxShape[0]*numberOfVoxelsDenselyClassified &#47&#47 batchSize*r*c*z.</code></pre>

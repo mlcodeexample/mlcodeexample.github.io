@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            &#47&#47 so take the side that&quots closer in size and enlarge the image
+            &#47&#47 in both directions to make that one fit
+            factor = min(ratio_h, ratio_w)
+            img = img.resize((int(width * factor), <a id="change">int(height * factor)</a>))
+
+        &#47&#47 Now we have an image that&quots either larger than the desired shape
+        &#47&#47 or at least one side matches the desired shape and we can resize</code></pre><h3>After Change</h3><pre><code class='java'>
+        :param size:
+        
+        img = Image.open(join(self.source_dir, filename))
+        <a id="change">orig_width</a>, orig_height = img.size
+        wanted_width, wanted_height = size
+        ratio_w, ratio_h = wanted_width / orig_width, wanted_height / orig_height
+</code></pre>

@@ -1,0 +1,27 @@
+<html><h3>7ab8bc6a70982aa79c36c20678c98becb7f291b1,deepctr/layers/utils.py,Hash,call,#Hash#Any#Any#,42
+</h3><img src='671704.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        super(Hash, self).build(input_shape)
+
+    def call(self, x, mask=None, **kwargs):
+        <a id="change">if x.dtype != tf.string:
+            x = tf.as_string(x, )
+       </a> try:
+            hash_x = tf.string_to_hash_bucket_fast(x, self.num_buckets if not self.mask_zero else self.num_buckets - 1,
+                                                    name=None)  &#47&#47 weak hash
+        except:</code></pre><h3>After Change</h3><pre><code class='java'>
+    def call(self, x, mask=None, **kwargs):
+
+
+        <a id="change">if x.dtype != tf.string:
+            zero = tf.as_string(tf.zeros([1], dtype=x.dtype))
+            x = tf.as_string(x, )
+        else:
+            zero = tf.as_string(tf.zeros([1], dtype=&quotint32&quot))
+
+       </a> num_buckets = self.num_buckets if not self.mask_zero else self.num_buckets - 1
+        try:
+            hash_x = tf.string_to_hash_bucket_fast(x, num_buckets,
+                                                   name=None)  &#47&#47 weak hash</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/shenweichen/DeepCTR/commit/7ab8bc6a70982aa79c36c20678c98becb7f291b1#diff-a021ca7e9e3277ecb0099874db9c0fc053dc1b52cc8bbade19c84b3710f249a0L42' target='_blank'>Link</a></div><div id='project'> Project Name: shenweichen/DeepCTR</div><div id='commit'> Commit Name: 7ab8bc6a70982aa79c36c20678c98becb7f291b1</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepctr/layers/utils.py</div><div id='class'> Class Name: Hash</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/geomstats/geomstats/commit/36bf1cd036d852d10b189727d43fee6ee0b6c66c#diff-4e213e076b1fa0015fa3012c384441f72d108b2ea49bc28e8bb907fcffe424aaL613' target='_blank'>Link</a></div><div id='project'> Project Name: geomstats/geomstats</div><div id='commit'> Commit Name: 36bf1cd036d852d10b189727d43fee6ee0b6c66c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: geomstats/geometry/special_euclidean.py</div><div id='class'> Class Name: SpecialEuclidean</div><div id='method'> Method Name: random_uniform</div><BR><BR><div id='link'><a href='https://github.com/tensorpack/tensorpack/commit/999846b2763b60f70df53f5844ef07857cf5f5aa#diff-4fbc68f6053e0a206e054855e49c20be3e4f8d7beb30c9d7f5f0bc6448addb44L135' target='_blank'>Link</a></div><div id='project'> Project Name: tensorpack/tensorpack</div><div id='commit'> Commit Name: 999846b2763b60f70df53f5844ef07857cf5f5aa</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: examples/FasterRCNN/data.py</div><div id='class'> Class Name: TrainingDataPreprocessor</div><div id='method'> Method Name: __call__</div><BR>

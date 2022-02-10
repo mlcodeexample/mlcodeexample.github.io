@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                activation=ReLU6()))
+            in_channels = init_block_channels
+            for i, channels_per_stage in enumerate(channels):
+                stage = nn.HybridSequential(prefix=<a id="change">"stage{}_".format(i + 1)</a>)
+                with stage.name_scope():
+                    for j, out_channels in enumerate(channels_per_stage):
+                        strides = 2 if (j == 0) and (i != 0) else 1</code></pre><h3>After Change</h3><pre><code class='java'>
+                stage = nn.HybridSequential(prefix="stage{}_".format(i + 1))
+                with stage.name_scope():
+                    for j, out_channels in enumerate(channels_per_stage):
+                     <a id="change">   strides = 2 if (j ==</a> 0) and (i != 0) else 1
+                        expansion = (i != 0) or (j != 0)
+                        stage.add(LinearBottleneck(
+                            in_channels=in_channels,</code></pre>

@@ -1,0 +1,36 @@
+<html><h3>5b485693ea67e3cc1dba9f07d9e7cf6e2b70508e,deepvariant/modeling.py,,,#,1336
+</h3><img src='87321.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+      return endpoints
+
+&#47&#47 Our list of pre-defined models.
+_MODELS = <a id="change">[
+    DeepVariantSmallModel(),
+    DeepVariantInceptionV3(),
+    DeepVariantInceptionV2(),
+    DeepVariantMobileNetV1(),
+    DeepVariantRandomGuessModel(),
+    DeepVariantConstantModel(),
+]</a>
+
+
+def all_models():
+  Gets a list of the all of the known models.</code></pre><h3>After Change</h3><pre><code class='java'>
+&#47&#47 This dictionary contains a mapping from the human readable name of a metric
+&#47&#47 function (e.g., Accuracy) and its associated TensorFlow metric function. All
+&#47&#47 of the entries here will be stratified by variant_type in eval_metric_fn.
+_METRICS_FUNCS_BY_VARIANT_TYPE = <a id="change">{
+    &quotAccuracy&quot: tf.metrics.accuracy,
+    &quotPrecision&quot: tf.metrics.precision,
+    &quotRecall&quot: tf.metrics.recall,
+    &quotFPs&quot: tf.metrics.false_positives,
+    &quotFNs&quot: tf.metrics.false_negatives,
+    &quotTPs&quot: tf.metrics.true_positives,
+    &quotTNs&quot: tf.metrics.true_negatives,
+}</a>
+
+&#47&#47 A set containing the names of the variant types we split our metrics by type
+&#47&#47 by. This data structure isn&quott a dictionary like it&quots neighbors because
+&#47&#47 eval_metric_fn requires special logic to compute the values here associated</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 2</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/google/deepvariant/commit/5b485693ea67e3cc1dba9f07d9e7cf6e2b70508e#diff-a311251b99ae1d2131889103ec9db3436171a26d4c205599ec99b2e18aa4b79dL222' target='_blank'>Link</a></div><div id='project'> Project Name: google/deepvariant</div><div id='commit'> Commit Name: 5b485693ea67e3cc1dba9f07d9e7cf6e2b70508e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepvariant/modeling.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/b8e0a40cf9fc8b74771c270d274d7d2ee7d959d3#diff-d447eb81263ea0737b386f8f195e7604a891621b98b89963bf0238751fe4c494L35' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: b8e0a40cf9fc8b74771c270d274d7d2ee7d959d3</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/tf/modules/pretrained/gpt2_test.py</div><div id='class'> Class Name: GPT2UtilsTest</div><div id='method'> Method Name: test_load_pretrained_gpt2_AND_transform_gpt2_to_texar_config</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/b8e0a40cf9fc8b74771c270d274d7d2ee7d959d3#diff-cb0bf88d77a8fd98fae32a3cd01df71d18ad4b2f3e52f241b4ac9d688c2dd391L111' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: b8e0a40cf9fc8b74771c270d274d7d2ee7d959d3</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/tf/modules/pretrained/gpt2.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: _transform_config</div><BR>

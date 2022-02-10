@@ -1,0 +1,25 @@
+<html><h3>f5ef1717933abb45db9669a724a6a4404818375b,basenji/metrics.py,StochasticReverseComplement,call,#StochasticReverseComplement#Any#,127
+</h3><img src='887533.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    Stochastically reverse complement a one hot encoded DNA sequence.
+    rc_seq_1hot = tf.gather(seq_1hot, [3, 2, 1, 0], axis=-1)
+    rc_seq_1hot = tf.reverse(rc_seq_1hot, axis=[1])
+    <a id="change">reverse_bool = tf.random_uniform(shape=[]) &gt; 0.5</a>
+    src_seq_1hot = tf.cond(reverse_bool, lambda: rc_seq_1hot, lambda: seq_1hot)
+    <a id="change">return src_seq_1hot, reverse_bool</a>
+
+class SwitchReverse(tf.keras.layers.Layer):
+  def __init__(self):
+    super(SwitchReverse, self).__init__()</code></pre><h3>After Change</h3><pre><code class='java'>
+    pred_mean = tf.divide(self._pred_sum, self._count)
+    pred_mean2 = tf.math.square(pred_mean)
+
+    term1 = self._prod<a id="change">uct
+    term2 = -tf.multiply(true_mean, self._pred_sum)
+    term3 = -tf.multiply(pr</a>ed_mea<a id="change">n, self._true_sum)
+ </a>   term4 = tf.multiply(self._count, tf.multiply(true_mean, pred_mean))
+    covariance = term1 + term2 + term3 + term4
+
+    true_var = self._true_sumsq - tf.multiply(self._count, true_mean2)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 5</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/calico/basenji/commit/f5ef1717933abb45db9669a724a6a4404818375b#diff-f02fa695459d05d06168dbf488a49366a33c52c56cb02bcf15edbd99b59a591aL56' target='_blank'>Link</a></div><div id='project'> Project Name: calico/basenji</div><div id='commit'> Commit Name: f5ef1717933abb45db9669a724a6a4404818375b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basenji/metrics.py</div><div id='class'> Class Name: StochasticReverseComplement</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/a3fe8bdf1c484e390dfe3947cc395372c0187589#diff-616e99175749acbc06cee04a97e5b66559a407d0d3015022964bc5cb820cd5b2L81' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: a3fe8bdf1c484e390dfe3947cc395372c0187589</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/core/distributions/beta.py</div><div id='class'> Class Name: Beta</div><div id='method'> Method Name: tf_sample</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/a3b5ba44826094feb3f9f02265c416045f59aa08#diff-2400ae0e14b8bd671ca8029c850cfe374e7de6dd32f11e01507c2a953aa4f763L96' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: a3b5ba44826094feb3f9f02265c416045f59aa08</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/bandits/policies/policy_utilities.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: masked_argmax</div><BR>

@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    
+
+    def __init__(self, invlink=probit, scale=1.0):
+        <a id="change">Likelihood.__init__(self)</a>
+        self.scale = Parameter(scale, transform=transforms.positive)
+        self.invlink = invlink
+
+    @params_as_tensors</code></pre><h3>After Change</h3><pre><code class='java'>
+    
+
+    def __init__(self, invlink=inv_probit, scale=1.0, **kwargs):
+        <a id="change">super().__init__(**kwargs)</a>
+        self.scale = Parameter(scale, transform=transforms.positive)
+        self.invlink = invlink
+
+    @params_as_tensors</code></pre>

@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+        self.base_generator = base_generator
+        self.targets = np.zeros((1, len(base_generator.target_indices), 2))
+        self.targets[<a id="change">0, :, 0</a>] = 1.0
+
+    def __len__(self):
+        return len(self.base_generator)</code></pre><h3>After Change</h3><pre><code class='java'>
+                [1.0, 0.0], reps=(1, len(base_generator.target_indices), 1),
+            )
+        elif isinstance(base_generator, NodeSequence):
+            <a id="change">self.targets = np.tile([1.0, 0.0], reps=(base_generator.batch_size, 1))</a>
+        else:
+            raise TypeError(
+                f"base_generator: expected FullBatchSequence, SparseFullBatchSequence, "
+                f"or NodeSequence, found {type(base_generator).__name__}"</code></pre>

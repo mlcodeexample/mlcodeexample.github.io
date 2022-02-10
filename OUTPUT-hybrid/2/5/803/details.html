@@ -1,0 +1,20 @@
+<html><h3>bc324fda2866eab986a604b19272137f9006a603,official/vision/beta/tasks/semantic_segmentation.py,SemanticSegmentationTask,reduce_aggregated_logs,#SemanticSegmentationTask#Any#,266
+</h3><img src='1011053.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    return state
+
+  def reduce_aggregated_logs(self, aggregated_logs):
+    <a id="change">return {self.miou_metric.name: self.miou_metric.result().numpy()}</a>
+</code></pre><h3>After Change</h3><pre><code class='java'>
+    result = {}
+    ious = self.iou_metric.result()
+    &#47&#47 TODO(arashwan): support loading class name from a label map file.
+    <a id="change">if self.task_config.evaluation.report_per_class_iou:
+      for i, value in enumerate(ious.numpy()):
+        result.update({&quotiou/{}&quot.format(i): value})
+    &#47&#47 Computes mean IoU
+   </a> result.update({&quotmean_iou&quot: tf.reduce_mean(ious).numpy()})
+    return result
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 5</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/models/commit/bc324fda2866eab986a604b19272137f9006a603#diff-f1e57c89b043d2ef63a9eaf6a712cf520a822a89c9b381a62d84ba110b2bf239L266' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/models</div><div id='commit'> Commit Name: bc324fda2866eab986a604b19272137f9006a603</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: official/vision/beta/tasks/semantic_segmentation.py</div><div id='class'> Class Name: SemanticSegmentationTask</div><div id='method'> Method Name: reduce_aggregated_logs</div><BR><BR><div id='link'><a href='https://github.com/openai/baselines/commit/b71152eea0470ac2629c33e0fc66a54fe494949f#diff-56f6344a19b7839c3fd50d079b1f13fe91ba59e74960972bd2206abe9516b49bL15' target='_blank'>Link</a></div><div id='project'> Project Name: openai/baselines</div><div id='commit'> Commit Name: b71152eea0470ac2629c33e0fc66a54fe494949f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: baselines/common/vec_env/dummy_vec_env.py</div><div id='class'> Class Name: DummyVecEnv</div><div id='method'> Method Name: step_wait</div><BR><BR><div id='link'><a href='https://github.com/openai/baselines/commit/b71152eea0470ac2629c33e0fc66a54fe494949f#diff-56f6344a19b7839c3fd50d079b1f13fe91ba59e74960972bd2206abe9516b49bL27' target='_blank'>Link</a></div><div id='project'> Project Name: openai/baselines</div><div id='commit'> Commit Name: b71152eea0470ac2629c33e0fc66a54fe494949f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: baselines/common/vec_env/dummy_vec_env.py</div><div id='class'> Class Name: DummyVecEnv</div><div id='method'> Method Name: reset</div><BR>

@@ -1,0 +1,28 @@
+<html><h3>bcf6d0a188ee9ba868c1de01c347f813e3aaa35c,stellargraph/core/graph_networkx.py,NetworkXStellarGraph,nodes_of_type,#NetworkXStellarGraph#Any#,497
+</h3><img src='555032.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        
+        &#47&#47 TODO: unit test!
+        if node_type is None:
+            return <a id="change">list(self)</a>
+        else:
+            return [
+                n
+                for n, ndata in self._graph.nodes(data=True)</code></pre><h3>After Change</h3><pre><code class='java'>
+            A list of node IDs with type node_type
+        
+        &#47&#47 TODO: unit test!
+        <a id="change">if node_type in self._node_index_maps:
+            return list(
+                n for n in self._node_index_maps[node_type].keys() if n is not None
+            )
+
+        else:
+            return [n for n in self.nodes() if self.node_type(n) == node_type]
+
+   </a> def node_type(self, node):
+        
+        Get the type of the node
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/stellargraph/stellargraph/commit/bcf6d0a188ee9ba868c1de01c347f813e3aaa35c#diff-2ab00be2a3dc4cac8ec3b20cbad49325b92e23fcb68844abb4dcb790b2479742L497' target='_blank'>Link</a></div><div id='project'> Project Name: stellargraph/stellargraph</div><div id='commit'> Commit Name: bcf6d0a188ee9ba868c1de01c347f813e3aaa35c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: stellargraph/core/graph_networkx.py</div><div id='class'> Class Name: NetworkXStellarGraph</div><div id='method'> Method Name: nodes_of_type</div><BR><BR><div id='link'><a href='https://github.com/stellargraph/stellargraph/commit/bcf6d0a188ee9ba868c1de01c347f813e3aaa35c#diff-bf990b45c9643cf08e5d92fd98c57bc4553a9da4120b2a4405c48e614265a181L111' target='_blank'>Link</a></div><div id='project'> Project Name: stellargraph/stellargraph</div><div id='commit'> Commit Name: bcf6d0a188ee9ba868c1de01c347f813e3aaa35c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: stellargraph/mapper/full_batch_generators.py</div><div id='class'> Class Name: FullBatchNodeGenerator</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/deepmipt/DeepPavlov/commit/d305759b714cddfa66d214f4dceffe26679e2c02#diff-1c3445c343d96b5131e56b9e837aacddaff710281ac045add4abf679b456afdeL262' target='_blank'>Link</a></div><div id='project'> Project Name: deepmipt/DeepPavlov</div><div id='commit'> Commit Name: d305759b714cddfa66d214f4dceffe26679e2c02</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deeppavlov/models/squad/squad.py</div><div id='class'> Class Name: SquadModel</div><div id='method'> Method Name: train_on_batch</div><BR>

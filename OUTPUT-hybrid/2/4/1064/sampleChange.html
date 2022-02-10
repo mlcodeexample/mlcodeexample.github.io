@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+  seq, label, na = [data_ops[k] for k in [&quotsequence&quot, &quotlabel&quot, &quotna&quot]]
+  seq, label, na = ops.reverse_complement_transform(seq, label, na)
+  reverse_preds = tf.ones((), dtype=tf.bool)
+  data_ops_aug = <a id="change">{&quotsequence&quot: seq, &quotlabel&quot: label, &quotna&quot: na, &quotreverse_preds&quot:reverse_preds}</a>
+  return data_ops_aug
+
+
+def augment_stochastic_rc(data_ops):</code></pre><h3>After Change</h3><pre><code class='java'>
+    data_ops_aug: augmented data ops
+  
+  data_ops_aug = ops.reverse_complement_transform(data_ops)
+  <a id="change">data_ops_aug[&quotreverse_preds&quot]</a> = tf.ones((), dtype=tf.bool)
+  return data_ops_aug
+
+</code></pre>

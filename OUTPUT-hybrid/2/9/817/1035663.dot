@@ -1,0 +1,26 @@
+digraph G {
+subgraph cluster0 {
+1 [label="dict" a="32" s="1843,1897" l="5,1" shape="box"];
+9 [label="Assignment:=" a="7" s="1913" l="1" shape="box"];
+label = "Old";
+style="dotted";
+}
+subgraph cluster1 {
+2 [label="deprecated" a="32" s="1312,1364" l="11,1" shape="box"];
+3 [label="StringLiteral" a="45" s="1346" l="18" shape="ellipse"];
+4 [label="StringLiteral" a="45" s="1323" l="5" shape="ellipse"];
+5 [label="StringLiteral" a="45" s="1329" l="16" shape="ellipse"];
+6 [label="InfixExpression:r" a="27" s="1277" l="4" shape="box"];
+7 [label="SimpleName" a="42" s="" l="" shape="ellipse"];
+8 [label="IfStatement" a="25" s="1259,1285" l="4,2" shape="diamond"];
+label = "New";
+style="dotted";
+}
+1 -> 9 [label="_para_"];
+3 -> 2 [label="_para_"];
+4 -> 2 [label="_para_"];
+5 -> 2 [label="_para_"];
+6 -> 7 [label="_def_"];
+7 -> 8 [label="_cond_"];
+8 -> 2 [label="_control_"];
+}

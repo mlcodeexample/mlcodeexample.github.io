@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        self.actions = actions
+
+    def step_wait(self):
+        results = <a id="change">[env.step(a) for (a,env) in zip(self.actions, self.envs)]</a>
+        <a id="change">obs, rews, dones, infos = map(np.array, zip(*results))</a>
+        self.ts += 1
+        for (i, done) in enumerate(dones):
+            if done: 
+                obs[i] = self.envs[i].reset()</code></pre><h3>After Change</h3><pre><code class='java'>
+    def step_wait(self):
+        for i in range(self.num_envs):
+            obs_tuple, self.buf_rews[i], self.buf_dones[i], self.buf_infos[i] = self.envs[i].step(self.actions[i])
+            if isinstance(obs_tuple, <a id="change">(tuple, list)</a>):
+                for t,x in enumerate(obs_tuple):
+                    self.buf_obs[t][i] = x
+            else:</code></pre>

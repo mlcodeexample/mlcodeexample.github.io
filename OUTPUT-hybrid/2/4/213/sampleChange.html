@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                "name": "bert"
+            }
+        
+        <a id="change">return {
+            "name": "bert"
+        }</a>
+
+    def _build(self, inputs, sequence_length, *args, **kwargs):
+        Encodes the inputs and (optionally) conduct downstream prediction.
+</code></pre><h3>After Change</h3><pre><code class='java'>
+                "name": "bert"
+            }
+        
+        <a id="change">return {
+            &quotpretrained_model_name&quot: &quotbert-base-uncased&quot,
+            &quotname&quot: &quotbert_base&quot,
+            &quot@no_typecheck&quot: [&quotpretrained_model_name&quot]
+        }</a>
+
+    def _build(self, inputs, *args, **kwargs):
+        Encodes the inputs and (optionally) conduct downstream prediction.
+</code></pre>

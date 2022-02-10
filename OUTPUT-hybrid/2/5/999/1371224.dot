@@ -1,0 +1,19 @@
+digraph G {
+subgraph cluster0 {
+1 [label="isinstance" a="32" s="14763,14847" l="11,2" shape="box"];
+4 [label="IfStatement" a="25" s="14758,14849" l="4,2" shape="diamond"];
+5 [label="PrefixExpression:!" a="38" s="14762" l="1" shape="box"];
+label = "Old";
+style="dotted";
+}
+subgraph cluster1 {
+2 [label="isinstance" a="32" s="14802,14886" l="11,2" shape="box"];
+3 [label="IfStatement" a="25" s="14798,14888" l="4,2" shape="diamond"];
+label = "New";
+style="dotted";
+}
+1 -> 5 [label="_para_"];
+1 -> 2 [label="_map_"];
+2 -> 3 [label="_cond_"];
+5 -> 4 [label="_cond_"];
+}

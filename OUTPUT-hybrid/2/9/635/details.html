@@ -1,0 +1,30 @@
+<html><h3>2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f,snntoolbox/simulation/backends/inisim/ttfs.py,SpikeMaxPooling2D,call,#SpikeMaxPooling2D#Any#Any#,502
+</h3><img src='859197.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+        if self.spiketrain is not None:
+            new_spikes = tf.math.logical_xor(
+                k.greater(input_psp, 0), <a id="change">k.greater(self.last_s</a>piketimes, 0))
+            self.add_update([(self.spiketrain,
+                              self.time * k.cast(new_spikes, <a id="change">k.floatx()))])
+
+        </a>psp = self.get_psp(input_psp)
+
+        return k.cast(psp, <a id="change">k.floatx())
+
+
+custom_lay</a>ers = {&quotSpikeFlatten&quot: SpikeFlatten,
+                 &quotSpikeDense&quot: SpikeDense,
+                 &quotSpikeConv2D&quot: SpikeConv2D,
+                 &quotSpikeAveragePooling2D&quot: SpikeAveragePooling2D,</code></pre><h3>After Change</h3><pre><code class='java'>
+        if self.spiketrain is not None:
+            new_spikes = tf.math.logical_xor(
+                tf.greater(input_psp, 0), tf.greater(self.last_spiketimes, 0))
+            <a id="change">self.spiketrain.assign(self.time * tf.cast(new_spikes,
+                                                       self._floatx))</a>
+
+        psp = self.get_psp(input_psp)
+
+        return tf.cast(psp, self._floatx)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 8</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f#diff-ff4133761094e7ad758b12266e43745fcd175353724286b073107daad1ba3e40L502' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/ttfs.py</div><div id='class'> Class Name: SpikeMaxPooling2D</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f#diff-ff4133761094e7ad758b12266e43745fcd175353724286b073107daad1ba3e40L185' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/ttfs.py</div><div id='class'> Class Name: SpikeLayer</div><div id='method'> Method Name: init_membrane_potential</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f#diff-ff4133761094e7ad758b12266e43745fcd175353724286b073107daad1ba3e40L502' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/ttfs.py</div><div id='class'> Class Name: SpikeMaxPooling2D</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f#diff-ff4133761094e7ad758b12266e43745fcd175353724286b073107daad1ba3e40L67' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: 2a64a9d6d97a5c203bd58c0d039eb7e63c07e80f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/ttfs.py</div><div id='class'> Class Name: SpikeLayer</div><div id='method'> Method Name: update_neurons</div><BR>

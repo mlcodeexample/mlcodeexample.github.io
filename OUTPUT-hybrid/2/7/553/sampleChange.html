@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                    (output, self._spectrogram_mono(x[:, ch_idx : ch_idx + 1, :])),
+                    axis=self.ch_axis_idx,
+                )
+        <a id="change">if self.power_spectrogram != 2.0:
+            output = K.pow(K.sqrt(output), self.power_spectrogram)
+       </a> if self.return_decibel_spectrogram:
+            output = backend_keras.amplitude_to_decibel(output)
+        return output
+</code></pre><h3>After Change</h3><pre><code class='java'>
+        )  &#47&#47 (batch, ch, time, freq)
+
+        if self.output_data_format == &quotchannels_last&quot:
+            <a id="change">stfts = tf.transpose(stfts, perm=(0, 2, 3, 1))</a>  &#47&#47 (batch, t, f, ch)
+
+        return stfts
+</code></pre>

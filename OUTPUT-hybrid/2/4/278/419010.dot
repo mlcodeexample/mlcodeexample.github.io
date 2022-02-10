@@ -1,0 +1,16 @@
+digraph G {
+subgraph cluster0 {
+1 [label="IfStatement" a="25" s="15555,15565" l="4,2" shape="diamond"];
+4 [label="Assignment:=" a="7" s="15587" l="1" shape="box"];
+label = "Old";
+style="dotted";
+}
+subgraph cluster1 {
+2 [label="print" a="32" s="84356,84428" l="6,1" shape="box"];
+3 [label="StringLiteral" a="45" s="84362" l="66" shape="ellipse"];
+label = "New";
+style="dotted";
+}
+1 -> 4 [label="_control_"];
+3 -> 2 [label="_para_"];
+}

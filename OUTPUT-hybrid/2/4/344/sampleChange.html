@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        tf.reduce_prod(
+            input_tensor=tf.gather(tf.shape(input=tensor), outer_dims)),
+        tf.float32)
+    <a id="change">mean_sum = tf.reduce_sum(input_tensor=tensor, axis=outer_dims)</a>
+    var_sum = tf.reduce_sum(
+        input_tensor=tf.square(tensor - mean_estimate), axis=outer_dims)
+
+    &#47&#47 Ops to update streaming norm. Make sure that all stats are computed
+    &#47&#47   before updates are performed.
+    <a id="change">with tf.control_dependencies([num_samples, mean_sum, var_sum]):
+      update_ops = [
+          tf.compat.v1.assign_add(
+              self._count,
+              tf.ones_like(self._count) * num_samples,
+              name=&quotupdate_count&quot),
+          tf.compat.v1.assign_add(
+              self._mean_sum, mean_sum, name=&quotupdate_mean_sum&quot),
+          tf.compat.v1.assign_add(
+              self._var_sum, var_sum, name=&quotupdate_var_sum&quot),
+      ]
+   </a> <a id="change">return update_ops</a>
+
+  def _get_mean_var_estimates(self):
+    Returns this normalizer&quots current estimates for mean & variance.
+    mean_estimate = nest.map_structure_up_to(</code></pre><h3>After Change</h3><pre><code class='java'>
+        self._var_sum)
+    all_update_ops = tf.nest.flatten(updates)
+
+    <a id="change">return all_update_ops</a>
+
+  def _get_mean_var_estimates(self):
+    Returns this normalizer&quots current estimates for mean & variance.
+    mean_estimate = nest.map_structure_up_to(</code></pre>

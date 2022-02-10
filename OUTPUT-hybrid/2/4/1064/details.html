@@ -1,0 +1,20 @@
+<html><h3>7ff7ed2cf2d3d9cab8b944d4194f6a3b180deaab,basenji/augmentation.py,,augment_deterministic_rc,#Any#,99
+</h3><img src='1434117.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+  seq, label, na = [data_ops[k] for k in [&quotsequence&quot, &quotlabel&quot, &quotna&quot]]
+  seq, label, na = ops.reverse_complement_transform(seq, label, na)
+  reverse_preds = tf.ones((), dtype=tf.bool)
+  data_ops_aug = <a id="change">{&quotsequence&quot: seq, &quotlabel&quot: label, &quotna&quot: na, &quotreverse_preds&quot:reverse_preds}</a>
+  return data_ops_aug
+
+
+def augment_stochastic_rc(data_ops):</code></pre><h3>After Change</h3><pre><code class='java'>
+    data_ops_aug: augmented data ops
+  
+  data_ops_aug = ops.reverse_complement_transform(data_ops)
+  <a id="change">data_ops_aug[&quotreverse_preds&quot]</a> = tf.ones((), dtype=tf.bool)
+  return data_ops_aug
+
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 2</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/calico/basenji/commit/7ff7ed2cf2d3d9cab8b944d4194f6a3b180deaab#diff-17d5b57045e44a3a09d16204d921541f8415582c21342fbed4d9352c77cf3449L107' target='_blank'>Link</a></div><div id='project'> Project Name: calico/basenji</div><div id='commit'> Commit Name: 7ff7ed2cf2d3d9cab8b944d4194f6a3b180deaab</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basenji/augmentation.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: augment_deterministic_rc</div><BR><BR><div id='link'><a href='https://github.com/calico/basenji/commit/7ff7ed2cf2d3d9cab8b944d4194f6a3b180deaab#diff-17d5b57045e44a3a09d16204d921541f8415582c21342fbed4d9352c77cf3449L83' target='_blank'>Link</a></div><div id='project'> Project Name: calico/basenji</div><div id='commit'> Commit Name: 7ff7ed2cf2d3d9cab8b944d4194f6a3b180deaab</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basenji/augmentation.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: augment_deterministic</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/8832ade6d4e947d5c5e98e3b281adac9ccffa1cb#diff-4c49fc166aeae76404ad0a022a56a5bbbb8216a8192e3eab4c6765537abc3ab7L19' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: 8832ade6d4e947d5c5e98e3b281adac9ccffa1cb</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: examples/bert/utils/model_utils.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: transform_bert_to_texar_config</div><BR>

@@ -1,0 +1,27 @@
+<html><h3>038c439b5275dcf9674b07440207035509d26629,tensorforce/agents/ppo.py,ProximalPolicyOptimization,__init__,#ProximalPolicyOptimization#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#,214
+</h3><img src='1035663.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        else:
+            update = dict(unit=&quotepisodes&quot, batch_size=batch_size, frequency=update_frequency)
+        optimizer = dict(type=&quotadam&quot, learning_rate=learning_rate)
+        optimizer = <a id="change">dict(
+            type=&quotsubsampling_step&quot, optimizer=optimizer, fraction=subsampling_fraction
+        )</a>
+        <a id="change">optimizer = dict(type=&quotmulti_step&quot, optimizer=optimizer, num_steps=optimization_steps)</a>
+        objective = dict(
+            type=&quotpolicy_gradient&quot, ratio_based=True, clipping_value=likelihood_ratio_clipping
+        )
+        if baseline_network is None:</code></pre><h3>After Change</h3><pre><code class='java'>
+        &#47&#47 Preprocessing
+        preprocessing=None,
+        &#47&#47 Exploration
+        exploration=0.0, variable_noise=0.0,<a id="change">
+        &#47&#47 Regularization
+        l2_regularization=0.0, entropy_regularization=0.0,
+        &#47&#47 TensorFlow etc
+        name=&quotagent&quot, device=None, parallel_interactions=1, config=No</a>ne, saver=None,
+        summarizer=None, recorder=None,
+        &#47&#47 Deprecated
+        optimization_steps=None, estimate_terminal=None, critic_network=None, critic_optimizer=None,</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 5</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/038c439b5275dcf9674b07440207035509d26629#diff-24d52eef6f2434176d3eadd7c3c1712accba48c3ff097ab65b98bf2956e284f6L230' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: 038c439b5275dcf9674b07440207035509d26629</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/agents/ppo.py</div><div id='class'> Class Name: ProximalPolicyOptimization</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/980fe014b6215730ac4fdfa451b067e6fb44e622#diff-e2e27b1168d148cbac298650ceef5d7ad71a13f7ad77f2c173bb45b79f5f1034L154' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: 980fe014b6215730ac4fdfa451b067e6fb44e622</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/agents/ac.py</div><div id='class'> Class Name: ActorCritic</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/980fe014b6215730ac4fdfa451b067e6fb44e622#diff-443d67fa7edec8251762387ef1b41ae3875573f7549712628000f7f0dbcc09e6L131' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: 980fe014b6215730ac4fdfa451b067e6fb44e622</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/agents/dpg.py</div><div id='class'> Class Name: DeterministicPolicyGradient</div><div id='method'> Method Name: __init__</div><BR>

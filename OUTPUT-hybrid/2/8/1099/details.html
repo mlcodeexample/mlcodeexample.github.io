@@ -1,0 +1,40 @@
+<html><h3>830108b4b5f71f1a63cbd97c8131ba1aef4ac56a,texar/utils/shapes.py,,mask_sequences,#Any#Any#Any#Any#Any#,48
+</h3><img src='1515894.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        The masked sequence, i.e., a Tensor of the same shape as
+        :attr:`sequence` but with masked-out entries (set to zero).
+    
+    <a id="change">if rank &lt; 2:
+        raise ValueError("rank must be &gt; 2. Got rank = {}".format(rank))
+   </a> if time_major:
+        sequence = rnn._transpose_batch_time(sequence)
+    max_time = tf.to_int32(tf.shape(sequence)[1])
+    if dtype is None:
+        dtype = sequence.dtype
+    mask = tf.sequence_mask(
+        tf.to_int32(sequence_length), max_time, dtype=dtype)
+    for _ in range(2, rank):
+        mask = tf.expand_dims(mask, axis=-1)
+    sequence = sequence * mask
+    <a id="change">if time_major:
+        sequence = rnn._transpose_batch_time(sequence)
+   </a> return sequence
+
+def flatten(tensor, preserve_dims):
+    Flattens a tensor whiling keeping the leading dimensions.</code></pre><h3>After Change</h3><pre><code class='java'>
+        arrays, the returned value is a python array as well.
+    
+    is_tensor = tf.contrib.framework.is_tensor
+    <a id="change">if is_tensor(sequence) or is_tensor(sequence_length):
+        return _mask_sequences_tensor(
+            sequence, sequence_length, dtype, time_major, tensor_rank)
+    else:
+        return _mask_sequences_py(
+            sequence, sequence_length, dtype, time_major)
+
+</a>def _mask_sequences_tensor(sequence,
+                           sequence_length,
+                           dtype=None,
+                           time_major=False,</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/asyml/texar/commit/830108b4b5f71f1a63cbd97c8131ba1aef4ac56a#diff-f9d289c900dcc1e60b70fd4386e567d18fcfc488f2a72882def1fd30d90bb394L82' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: 830108b4b5f71f1a63cbd97c8131ba1aef4ac56a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/utils/shapes.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: mask_sequences</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/1bef8a0cb502401e33f8572897d981ef81a1a829#diff-c9a02749f6ad063e038acf8968ce2f418ddf3cc10aba5651b54aabbe940724adL248' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: 1bef8a0cb502401e33f8572897d981ef81a1a829</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/bandits/policies/neural_linucb_policy.py</div><div id='class'> Class Name: NeuralLinUCBPolicy</div><div id='method'> Method Name: _action</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/b5ae1c6bde39f5130c975992198f1f8ee5200f9a#diff-5cc6013091e2eff01f1a8513d49c798fff3da963f5e6027de432e29c94c737dcL266' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: b5ae1c6bde39f5130c975992198f1f8ee5200f9a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/agents/dqn/dqn_agent.py</div><div id='class'> Class Name: DqnAgent</div><div id='method'> Method Name: _check_action_spec</div><BR>

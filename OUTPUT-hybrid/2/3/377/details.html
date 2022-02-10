@@ -1,0 +1,27 @@
+<html><h3>b68db1aaf6abe4d2cea8321cc6f1564228dd60f5,deepchem/models/tensorgraph/models/seqtoseq.py,SeqToSeq,predict_embeddings,#SeqToSeq#Any#,283
+</h3><img src='523574.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+      for batch in self._batch_elements(sequences):
+        feed_dict = {}
+        feed_dict[self._features] = self._create_input_array(batch)
+        feed_dict[self._gather_indices] = <a id="change">[(i, len(batch[i])
+                                            if i &lt; len(batch) else 0)
+                                           for i in range(self.batch_size)]</a>
+        feed_dict[self._training_placeholder] = 0.0
+        for initial, zero in zip(self.rnn_initial_states, self.rnn_zero_states):
+          feed_dict[initial] = zero
+        embeddings = self.session.run(self.embedding, feed_dict=feed_dict)</code></pre><h3>After Change</h3><pre><code class='java'>
+    result = []
+    for batch in self._batch_elements(sequences):
+      features = self._create_input_array(batch)
+      indices = np.array(<a id="change">[(i, len(batch[i]) if i &lt; len(batch) else 0)
+                          for i in range(self.batch_size)]</a>)
+      <a id="change">embeddings = self.predict_on_generator(
+          [[(features, indices, self.get_global_step()), None, None]],
+          outputs=self._embedding)</a>
+      for i in range(len(batch)):
+        result.append(embeddings[i])
+    return np.array(result, dtype=np.float32)
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 6</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L283' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: SeqToSeq</div><div id='method'> Method Name: predict_embeddings</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L226' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: SeqToSeq</div><div id='method'> Method Name: predict_from_sequences</div><BR><BR><div id='link'><a href='https://github.com/deepmipt/DeepPavlov/commit/f3d3a99ffd73b9256083bfdc0e6e2cb971a633fe#diff-b5dd494f6f1338233bfc0c0b6755c18dce0c16d3dbfba40f2d884ca98237449aL36' target='_blank'>Link</a></div><div id='project'> Project Name: deepmipt/DeepPavlov</div><div id='commit'> Commit Name: f3d3a99ffd73b9256083bfdc0e6e2cb971a633fe</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deeppavlov/metrics/accuracy.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: accuracy</div><BR><BR><div id='link'><a href='https://github.com/deepmipt/DeepPavlov/commit/7481ca1ea5a082d8471164b4e3fa2a48a8409b60#diff-31feb0d0cb68726281a08907422a3c139de89f4379ce16dc6acccf95a06aa25aL62' target='_blank'>Link</a></div><div id='project'> Project Name: deepmipt/DeepPavlov</div><div id='commit'> Commit Name: 7481ca1ea5a082d8471164b4e3fa2a48a8409b60</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deeppavlov/models/embedders/fasttext_embedder.py</div><div id='class'> Class Name: FasttextEmbedder</div><div id='method'> Method Name: __call__</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/f653eeea2ce229b6b40abcff6c77e3fa4daba83f#diff-60f61ab7a8d1910d86d9fda2261620314edcae5894d5aaa236b821c7256badd7L74' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: f653eeea2ce229b6b40abcff6c77e3fa4daba83f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: setup.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR><BR><div id='link'><a href='https://github.com/emedvedev/attention-ocr/commit/4dc7f459148bd3bc14549d36bd7d09910ca917ca#diff-e00bd59fc1afaa79248b852367e7142bd198df9f9eced012baa0b866fec314cfL295' target='_blank'>Link</a></div><div id='project'> Project Name: emedvedev/attention-ocr</div><div id='commit'> Commit Name: 4dc7f459148bd3bc14549d36bd7d09910ca917ca</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: aocr/model/model.py</div><div id='class'> Class Name: Model</div><div id='method'> Method Name: test</div><BR>

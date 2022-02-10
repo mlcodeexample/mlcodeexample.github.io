@@ -1,0 +1,16 @@
+digraph G {
+subgraph cluster0 {
+1 [label="PyWithStatement" a="104" s="5870,5952" l="10,2" shape="diamond"];
+3 [label="Assignment:=" a="7" s="5734" l="1" shape="box"];
+4 [label="return" a="41" s="6258" l="7" shape="box"];
+label = "Old";
+style="dotted";
+}
+subgraph cluster1 {
+2 [label="return" a="41" s="7347" l="7" shape="box"];
+label = "New";
+style="dotted";
+}
+3 -> 1 [label="_cond_"];
+3 -> 4 [label="_para_"];
+}

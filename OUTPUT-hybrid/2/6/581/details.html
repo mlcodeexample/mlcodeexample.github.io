@@ -1,0 +1,39 @@
+<html><h3>f360de0fa4454122d665b9c32f4d5911a4ebec0c,niftynet/layer/loss.py,LossFunction,layer_op,#LossFunction#Any#Any#Any#Any#,32
+</h3><img src='814892.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                        pred, ground_truth, weight_map,
+                        **self._loss_func_params)
+                else:
+                    <a id="change">data_loss += self._data_loss_func(
+                        pred, ground_truth, weight_map)</a>
+            <a id="change">return data_loss / len(list_prediction)</a>
+
+
+def generalised_dice_loss(prediction,
+                          ground_truth,</code></pre><h3>After Change</h3><pre><code class='java'>
+                ground_truth = tf.reshape(ground_truth, [-1])
+
+            if not isinstance(prediction, (list, tuple)):
+                <a id="change">prediction = [prediction]</a>
+            if self._num_classes &gt; 0:
+                &#47&#47 reshape the prediction to [n_voxels , num_classes]
+                prediction = [tf.reshape(pred, [-1, self._num_classes])
+                              for pred in prediction]
+            if weight_map is not None:
+                weight_map = tf.reshape(weight_map, [-1])
+
+            <a id="change">data_loss = []</a>
+            for pred in prediction:
+                if self._loss_func_params:
+                    data_loss.append(self._data_loss_func(
+                        pred, ground_truth, weight_map,
+                        **self._loss_func_params))
+                else:
+                    <a id="change">data_loss.append(self._data_loss_func(
+                        pred, ground_truth, weight_map))</a>
+            return tf.reduce_mean(data_loss)
+
+
+def generalised_dice_loss(prediction,</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/f360de0fa4454122d665b9c32f4d5911a4ebec0c#diff-65d170e9551c638599acfb99f31f4b91c5adb1d4388a3268c3c42093c1184d89L32' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: f360de0fa4454122d665b9c32f4d5911a4ebec0c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/loss.py</div><div id='class'> Class Name: LossFunction</div><div id='method'> Method Name: layer_op</div><BR><BR><div id='link'><a href='https://github.com/google-research/bert/commit/f39e881b169b9d53bea03d2d341b31707a6c052b#diff-eaf11fb298803e7e1596440a5a80e4a2925dbcfec959811b8e71c8019e1390f7L87' target='_blank'>Link</a></div><div id='project'> Project Name: google-research/bert</div><div id='commit'> Commit Name: f39e881b169b9d53bea03d2d341b31707a6c052b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tokenization.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: convert_by_vocab</div><BR><BR><div id='link'><a href='https://github.com/HewlettPackard/dlcookbook-dlbs/commit/cec704bd54458bb5b86ca7db4061a5c597fac85e#diff-40385c19379619520692442ccde9febdf9fe13d71a22ee6ff235ed161b6b9d07L224' target='_blank'>Link</a></div><div id='project'> Project Name: HewlettPackard/dlcookbook-dlbs</div><div id='commit'> Commit Name: cec704bd54458bb5b86ca7db4061a5c597fac85e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: python/tf_cnn_benchmarks/variable_mgr.py</div><div id='class'> Class Name: VariableMgrIndependent</div><div id='method'> Method Name: get_gradients_to_apply</div><BR>

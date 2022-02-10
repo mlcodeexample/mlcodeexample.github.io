@@ -1,0 +1,19 @@
+<html><h3>119e54a353513ff53d4f91b258dff2f8dbecbe5a,tgen/lexicalize.py,RNNLMFormSelect,_init_neural_network,#RNNLMFormSelect#,278
+</h3><img src='194838.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                self._cell = tf.contrib.rnn.BasicLSTMCell(self.emb_size)
+            if re.match(r&quot/[0-9]$&quot, self.cell_type):
+                self._cell = tf.contrib.rnn.MultiRNNCell([self.cell] * int(self.cell_type[-1]))
+            self._initial_state = self._cell.zero_state(<a id="change">tf.shape(self._inputs)[0]</a>, tf.float32)
+
+            &#47&#47 embeddings
+            emb_cell = tf.contrib.rnn.EmbeddingWrapper(self._cell, self.vocab_size, self.emb_size)</code></pre><h3>After Change</h3><pre><code class='java'>
+            inputs = [tf.squeeze(input_, [1])
+                      for input_ in tf.split(axis=1, num_or_size_splits=self.max_sent_len, value=self._inputs)]
+            if self.bidi:
+                <a id="change">enc_outputs</a>, _, _ = tf.nn.static_bidirectional_rnn(emb_cell, emb_cell, inputs, dtype=tf.float32)
+                enc_size = 2 * self.emb_size
+            else:
+                enc_outputs, _ = tf.nn.static_rnn(emb_cell, inputs, dtype=tf.float32)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/UFAL-DSG/tgen/commit/119e54a353513ff53d4f91b258dff2f8dbecbe5a#diff-953ff8f9919686b8c654069e8519186bb4692bf4f0bf38059455dfb50bcaf09eL278' target='_blank'>Link</a></div><div id='project'> Project Name: UFAL-DSG/tgen</div><div id='commit'> Commit Name: 119e54a353513ff53d4f91b258dff2f8dbecbe5a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tgen/lexicalize.py</div><div id='class'> Class Name: RNNLMFormSelect</div><div id='method'> Method Name: _init_neural_network</div><BR><BR><div id='link'><a href='https://github.com/GPflow/GPflow/commit/8259acbe363ecc589103678cc7402c2cf54ea564#diff-32a4f6a29e5df4a0c730970b9d99ada9621b43ed208cefe447dbe005b62bc2f0L27' target='_blank'>Link</a></div><div id='project'> Project Name: GPflow/GPflow</div><div id='commit'> Commit Name: 8259acbe363ecc589103678cc7402c2cf54ea564</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: gpflow/kernels/statics.py</div><div id='class'> Class Name: White</div><div id='method'> Method Name: K</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/ecbe066e40882b166401b70ae9c4f1d535c93b12#diff-352df499dbc50fc952705aee8e5345263615dbb7ecef8d0ed09f46b9aef0b572L38' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: ecbe066e40882b166401b70ae9c4f1d535c93b12</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/losses/adv_losses.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: binary_adversarial_losses</div><BR><BR><div id='link'><a href='https://github.com/GPflow/GPflow/commit/8259acbe363ecc589103678cc7402c2cf54ea564#diff-32a4f6a29e5df4a0c730970b9d99ada9621b43ed208cefe447dbe005b62bc2f0L17' target='_blank'>Link</a></div><div id='project'> Project Name: GPflow/GPflow</div><div id='commit'> Commit Name: 8259acbe363ecc589103678cc7402c2cf54ea564</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: gpflow/kernels/statics.py</div><div id='class'> Class Name: Static</div><div id='method'> Method Name: K_diag</div><BR>

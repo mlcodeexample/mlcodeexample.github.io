@@ -1,0 +1,23 @@
+<html><h3>b96d1546dd91372118e084e2922471fdb7979f9c,garage/tf/algos/ddpg.py,,get_target_ops,#Any#Any#Any#,297
+</h3><img src='370197.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    assert len(variables) == len(target_variables)
+    for var, target_var in zip(variables, target_variables):
+        init_ops.append(tf.assign(target_var, var))
+        <a id="change">update_ops.append(
+            tf.assign(target_var, tau * var + (1.0 - tau) * target_var))</a>
+    return init_ops, update_ops
+</code></pre><h3>After Change</h3><pre><code class='java'>
+                 policy_weight_decay=0,
+                 qf_weight_decay=0,
+                 policy_optimizer=tf.train.AdamOptimizer,
+                 qf_optimizer=tf.train.Ada<a id="change">mOptimizer,
+                 clip_pos_returns=False,
+                 clip_return=np.inf,
+                 discount=0.99,
+          </a>       max_action=None,
+                 name=None,
+                 **kwargs):
+        </code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/rlworkgroup/garage/commit/b96d1546dd91372118e084e2922471fdb7979f9c#diff-12f5bc4605ce717b25e56cb8d5dd2c49e3d91b64d13efd090fa74e3044308c01L35' target='_blank'>Link</a></div><div id='project'> Project Name: rlworkgroup/garage</div><div id='commit'> Commit Name: b96d1546dd91372118e084e2922471fdb7979f9c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: garage/tf/algos/ddpg.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: get_target_ops</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/3c398157c5dabe6c65b478fe7dd26d6e88001f6e#diff-d314fd3b062c056fa7f97b290a37f68769bd9b73b06b00f602d6a65693d75c0eL186' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: 3c398157c5dabe6c65b478fe7dd26d6e88001f6e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/modules/encoders/conv_encoders.py</div><div id='class'> Class Name: SimpleConv1DEncoder</div><div id='method'> Method Name: _build_network</div><BR><BR><div id='link'><a href='https://github.com/dpressel/mead-baseline/commit/cb112c4dfca92159520bb7b2c8a95a94ab38239c#diff-b857d14918eabd784024c3ab955f387bf4bde0e0bfed37c4fbc274de750b4ff3L300' target='_blank'>Link</a></div><div id='project'> Project Name: dpressel/mead-baseline</div><div id='commit'> Commit Name: cb112c4dfca92159520bb7b2c8a95a94ab38239c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: python/baseline/tf/tagger/model.py</div><div id='class'> Class Name: TaggerModelBase</div><div id='method'> Method Name: create</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/models/commit/146a37c6663e4a249e02d3dff0087b576e3dc3a1#diff-80c8e92c2efc4accf6c41f46d3fd34104749de00c01907b41e639c9e0afa502aL422' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/models</div><div id='commit'> Commit Name: 146a37c6663e4a249e02d3dff0087b576e3dc3a1</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: research/deeplab/model.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: extract_features</div><BR>

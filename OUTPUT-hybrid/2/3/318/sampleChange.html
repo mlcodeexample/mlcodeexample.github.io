@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            &#47&#47 Do policy gradient update step
+            episode_rewards = np.array([trajectory["reward"].sum() for trajectory in trajectories])  &#47&#47 episode total rewards
+            episode_lengths = np.array([len(trajectory["reward"]) for trajectory in trajectories])  &#47&#47 episode lengths
+            <a id="change">self.master.session.run([self.add_accum_grad], feed_dict={
+                self.master.state: all_state,
+                self.master.action_taken: all_action,
+                self.master.advantage: all_adv
+            })</a>
+            print("Task:", self.thread_id)
+            reporter.print_iteration_stats(iteration, episode_rewards, episode_lengths, total_n_trajectories)
+
+            self.master.session.run([self.master.apply_gradients])</code></pre><h3>After Change</h3><pre><code class='java'>
+            &#47&#47 Do policy gradient update step
+            episode_rewards = np.array([trajectory["reward"].sum() for trajectory in trajectories])  &#47&#47 episode total rewards
+            episode_lengths = np.array([len(trajectory["reward"]) for trajectory in trajectories])  &#47&#47 episode lengths
+            results = <a id="change">self.master.session.run([self.loss, self.add_accum_grad], feed_dict={
+                self.master.states: all_state,
+                self.master.action_taken: all_action,
+                self.master.advantage: all_adv
+            })</a>
+            print("Task:", self.thread_id)
+            reporter.print_iteration_stats(iteration, episode_rewards, episode_lengths, total_n_trajectories)
+            <a id="change">results = self.master.session.run([self.master.summary_op], feed_dict={
+                            self.master.loss: results[0],
+                            self.master.reward: np.mean(episode_rewards),
+                            self.master.episode_length: np.mean(episode_lengths)
+            })</a>
+            self.writer.add_summary(results[0], iteration)
+            self.writer.flush()
+            self.master.session.run([self.master.apply_gradients])
+</code></pre>

@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+attribution_methods = {
+    &quotzero&quot: (MethodDummyZero, 0),
+    &quotone&quot: (MethodDummyOne, 1),
+    &quotgrad*input&quot: <a id="change">(MethodGradientXInput, 2)</a>
+}
+
+@ops.RegisterGradient("DeepExplainGrad")
+def deepexplain_grad(op, grad):</code></pre><h3>After Change</h3><pre><code class='java'>
+
+
+
+attribution_methods = OrderedDict(<a id="change">{
+    &quotzero&quot: (DummyZero, 0),
+    &quotsaliency&quot: (Saliency, 1),
+    &quotgrad*input&quot: (GradientXInput, 2),
+    &quotintgrad&quot: (IntegratedGradients, 3),
+    &quotelrp&quot: (EpsilonLRP, 4),
+}</a>)
+
+@ops.RegisterGradient("DeepExplainGrad")
+def deepexplain_grad(op, grad):</code></pre>

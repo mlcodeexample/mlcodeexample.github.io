@@ -1,0 +1,21 @@
+<html><h3>534c4dc7423681faab78d1829c1ec3c31ffb8330,niftynet/layer/resampler.py,ResamplerLayer,_resample_inv_dst_weighting,#ResamplerLayer#Any#Any#,319
+</h3><img src='142038.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        &#47&#47 get values of N neighbours
+        batch_inputs = tf.unstack(inputs, axis=0)
+        batch_knots = tf.unstack(knots_id, axis=1)
+        if len(batch_inputs) == <a id="change">len(batch_knots)</a>:
+            samples = [tf.gather_nd(img, knot)
+                       for (img, knot) in zip(batch_inputs, batch_knots)]
+        else:</code></pre><h3>After Change</h3><pre><code class='java'>
+            samples = [tf.gather_nd(img, knot)
+                       for (img, knot) in zip(batch_inputs, batch_knots)]
+        elif n_coords == 1 and batch_size &gt; 1:
+            <a id="change">samples = [tf.gather_nd(img, batch_knots[0])
+                       for img in batch_inputs]</a>
+        else:
+            raise NotImplementedError
+        samples = tf.stack(samples, axis=1)
+        &#47&#47 weighted average over N neighbours</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/534c4dc7423681faab78d1829c1ec3c31ffb8330#diff-d8e520586ad048af79d6ff89f6b861e143f512901e02109f5201798d57923699L322' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: 534c4dc7423681faab78d1829c1ec3c31ffb8330</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/resampler.py</div><div id='class'> Class Name: ResamplerLayer</div><div id='method'> Method Name: _resample_inv_dst_weighting</div><BR><BR><div id='link'><a href='https://github.com/dmlc/dgl/commit/168a88e57070871eef5a9fcdad3ed1a4d708d7bd#diff-e5255001201701cb854d57d6236fea78f0cb826c05dbde702fd7ba7b8fde0b72L194' target='_blank'>Link</a></div><div id='project'> Project Name: dmlc/dgl</div><div id='commit'> Commit Name: 168a88e57070871eef5a9fcdad3ed1a4d708d7bd</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: examples/pytorch/rgcn-hetero/model.py</div><div id='class'> Class Name: EntityClassify</div><div id='method'> Method Name: forward</div><BR><BR><div id='link'><a href='https://github.com/openai/baselines/commit/b71152eea0470ac2629c33e0fc66a54fe494949f#diff-56f6344a19b7839c3fd50d079b1f13fe91ba59e74960972bd2206abe9516b49bL5' target='_blank'>Link</a></div><div id='project'> Project Name: openai/baselines</div><div id='commit'> Commit Name: b71152eea0470ac2629c33e0fc66a54fe494949f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: baselines/common/vec_env/dummy_vec_env.py</div><div id='class'> Class Name: DummyVecEnv</div><div id='method'> Method Name: __init__</div><BR>

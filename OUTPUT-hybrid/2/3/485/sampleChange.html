@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        try:
+            batch_size = int(in_size[0])
+            in_spatial_rank = infer_spatial_rank(inputs)
+            <a id="change">if not partial_shape:
+                in_spatial_size = in_size.as_list()[1:-1]
+       </a> except (TypeError, AssertionError, ValueError):
+            tf.logging.fatal(&quotUnknown input shape, at least batch size &quot
+                             &quotand rank of the inputs are required.&quot)
+            raise</code></pre><h3>After Change</h3><pre><code class='java'>
+        partial_shape = not in_size.is_fully_defined()
+        try:
+            batch_size = int(in_size[0])
+            <a id="change">n_coords = int(sample_coords.shape[0])</a>
+            in_spatial_rank = infer_spatial_rank(inputs)
+            in_spatial_size = \
+                None if partial_shape else in_size.as_list()[1:-1]
+        except (TypeError, AssertionError, ValueError):</code></pre>

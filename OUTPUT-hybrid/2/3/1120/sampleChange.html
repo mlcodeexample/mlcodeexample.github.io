@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                logger.debug("Suggested node: %d, feature: %d, grads: %s" % (attack_node, feature, grads))
+
+        if args.plot and x.shape[1] == 2:  &#47&#47 plot only if 2D dataset
+            fsig = "%s_n%d_l%d" % (dataset, n_neighbors, <a id="change">len(n_neurons)</a>)
+            pdfpath = <a id="change">"temp/test_gcn_%s.pdf" % (fsig)</a>
+            plot_model_diagnostics(attack_model, mod_node=mod_node, attack_grads=all_grads, pdfpath=pdfpath)
+
+    gcn.close_session()
+</code></pre><h3>After Change</h3><pre><code class='java'>
+                logger.debug("Suggested node: %d, feature: %d, grads: %s" % (attack_node, feature, grads))
+
+        if opts.plot and x.shape[1] == 2:  &#47&#47 plot only if 2D dataset
+            fsig = "%s_l%d" % (opts.get_opts_name_prefix(), <a id="change">len(n_neurons)</a>)
+            pdfpath = "%s/%s.pdf" % (opts.results_dir, fsig)
+            plot_model_diagnostics(attack_model, mod_node=mod_node, attack_grads=all_grads, pdfpath=pdfpath)
+</code></pre>

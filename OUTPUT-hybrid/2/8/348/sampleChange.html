@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                -0.0489039, -0.90753943, -0.12664583, -0.23129687, 0.01584663,
+                -0.43854219, 0.40412974, 0.0396539, -0.1590578, -0.53759819]],
+            dtype=np.float32)
+        with self.test_session(graph=<a id="change">test_driver.create_graph()</a>) as sess:
+            test_tensor = tf.get_default_graph().get_tensor_by_name(
+                "G/conv_bn_selu/conv_/w:0")
+            with self.assertRaisesRegexp(</code></pre><h3>After Change</h3><pre><code class='java'>
+                ModelSaver(**vars(test_driver)).restore_model(None)
+
+    def test_from_file_initialisation(self):
+        <a id="change">test_driver</a> = get_initialised_driver(starting_iter=40)
+        expected_init = np.array(
+            [[-0.23192197, 0.60880029, -0.24921742, -0.00186354, -0.3345384,
+              0.16067748, -0.2210995, -0.19460233, -0.3035436, -0.42839912,
+              -0.0489039, -0.90753943, -0.12664583, -0.23129687, 0.01584663,
+              -0.43854219, 0.40412974, 0.0396539, -0.1590578, -0.53759819]],
+            dtype=np.float32)
+        <a id="change">graph = test_driver.create_graph(test_driver.app, 1, True)</a>
+        with self.test_session(graph=graph) as sess:
+            test_tensor = tf.get_default_graph().get_tensor_by_name(
+                "G/conv_bn_selu/conv_/w:0")
+            with self.assertRaisesRegexp(</code></pre>

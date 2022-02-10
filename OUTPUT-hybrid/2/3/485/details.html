@@ -1,0 +1,22 @@
+<html><h3>534c4dc7423681faab78d1829c1ec3c31ffb8330,niftynet/layer/resampler.py,ResamplerLayer,_resample_inv_dst_weighting,#ResamplerLayer#Any#Any#,319
+</h3><img src='659763.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        try:
+            batch_size = int(in_size[0])
+            in_spatial_rank = infer_spatial_rank(inputs)
+            <a id="change">if not partial_shape:
+                in_spatial_size = in_size.as_list()[1:-1]
+       </a> except (TypeError, AssertionError, ValueError):
+            tf.logging.fatal(&quotUnknown input shape, at least batch size &quot
+                             &quotand rank of the inputs are required.&quot)
+            raise</code></pre><h3>After Change</h3><pre><code class='java'>
+        partial_shape = not in_size.is_fully_defined()
+        try:
+            batch_size = int(in_size[0])
+            <a id="change">n_coords = int(sample_coords.shape[0])</a>
+            in_spatial_rank = infer_spatial_rank(inputs)
+            in_spatial_size = \
+                None if partial_shape else in_size.as_list()[1:-1]
+        except (TypeError, AssertionError, ValueError):</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/534c4dc7423681faab78d1829c1ec3c31ffb8330#diff-d8e520586ad048af79d6ff89f6b861e143f512901e02109f5201798d57923699L322' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: 534c4dc7423681faab78d1829c1ec3c31ffb8330</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/resampler.py</div><div id='class'> Class Name: ResamplerLayer</div><div id='method'> Method Name: _resample_inv_dst_weighting</div><BR><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/5f3d7eb543310174c83c8cb3d42a7a28a4260f8e#diff-efe404e1f480cdcd109a54955f537aa0e33c7633e389771b36c2468bf0069982L63' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: 5f3d7eb543310174c83c8cb3d42a7a28a4260f8e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/layer_util.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: expand_spatial_params</div><BR><BR><div id='link'><a href='https://github.com/shenweichen/DeepCTR/commit/4a7675cec337cf92683e3d5d3e3659fe4e7b0f8d#diff-a021ca7e9e3277ecb0099874db9c0fc053dc1b52cc8bbade19c84b3710f249a0L78' target='_blank'>Link</a></div><div id='project'> Project Name: shenweichen/DeepCTR</div><div id='commit'> Commit Name: 4a7675cec337cf92683e3d5d3e3659fe4e7b0f8d</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepctr/layers/utils.py</div><div id='class'> Class Name: Linear</div><div id='method'> Method Name: build</div><BR>

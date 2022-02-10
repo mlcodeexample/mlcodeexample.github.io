@@ -1,0 +1,21 @@
+<html><h3>6b8a9a5f0e738d98904ff7c46c79a44bfdd56686,GPflow/model.py,Model,_compile,#Model#Any#,137
+</h3><img src='165082.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+        self._free_vars = tf.Variable(self.get_free_state())
+        if float32_hack:
+            self._free_vars32 = tf.Variable(<a id="change">self.get_free_state().astype(np.float32)</a>)
+            self._free_vars = tf.cast(self._free_vars32, tf.float64)
+
+        self.make_tf_array(self._free_vars)</code></pre><h3>After Change</h3><pre><code class='java'>
+
+        self._free_vars = tf.Variable(self.get_free_state())
+        if float32_hack:
+            x = <a id="change">self.get_free_state().astype(np.float32)</a>
+            <a id="change">self._free_vars32 = tf.Variable(x)</a>
+            self._free_vars = tf.cast(self._free_vars32, tf.float64)
+
+        self.make_tf_array(self._free_vars)
+        with self.tf_mode():</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/GPflow/GPflow/commit/6b8a9a5f0e738d98904ff7c46c79a44bfdd56686#diff-fa3ab3ea3357daa6e9178533fb8ca280d4d9d82f9e4e8ae8bd100f106ec67becL150' target='_blank'>Link</a></div><div id='project'> Project Name: GPflow/GPflow</div><div id='commit'> Commit Name: 6b8a9a5f0e738d98904ff7c46c79a44bfdd56686</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: GPflow/model.py</div><div id='class'> Class Name: Model</div><div id='method'> Method Name: _compile</div><BR><BR><div id='link'><a href='https://github.com/tensorlayer/tensorlayer/commit/16a31e2c9fedc654e9117b42b8144adf1d0e4900#diff-436fddbd886f9015c9ca09639011738efa50232cb57dd7b5498c01b00e4f3421L202' target='_blank'>Link</a></div><div id='project'> Project Name: tensorlayer/tensorlayer</div><div id='commit'> Commit Name: 16a31e2c9fedc654e9117b42b8144adf1d0e4900</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: examples/reinforcement_learning/tutorial_A3C.py</div><div id='class'> Class Name: Worker</div><div id='method'> Method Name: work</div><BR><BR><div id='link'><a href='https://github.com/keunwoochoi/kapre/commit/8cdbb1637b140c01f431831e7b2c2a63afc96209#diff-cdb9b0155cf70a0643d3f5b7fa6c9430ba1caea422b13f795023c83408149672L87' target='_blank'>Link</a></div><div id='project'> Project Name: keunwoochoi/kapre</div><div id='commit'> Commit Name: 8cdbb1637b140c01f431831e7b2c2a63afc96209</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: kapre/backend.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: filterbank_mel</div><BR><BR><div id='link'><a href='https://github.com/keunwoochoi/kapre/commit/8cdbb1637b140c01f431831e7b2c2a63afc96209#diff-cdb9b0155cf70a0643d3f5b7fa6c9430ba1caea422b13f795023c83408149672L94' target='_blank'>Link</a></div><div id='project'> Project Name: keunwoochoi/kapre</div><div id='commit'> Commit Name: 8cdbb1637b140c01f431831e7b2c2a63afc96209</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: kapre/backend.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: filterbank_log</div><BR>

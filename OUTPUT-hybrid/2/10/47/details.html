@@ -1,0 +1,60 @@
+<html><h3>38e9391dcb5e8991a1a663601ce78bf7f08df474,tensorflow_transform/pretrained_models_test.py,PretrainedModelsTest,save_model_with_single_input,#PretrainedModelsTest#Any#,32
+</h3><img src='119536.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+  def save_model_with_single_input(self, export_dir):
+    builder = tf.compat.v1.saved_model.builder.SavedModelBuilder(export_dir)
+    <a id="change">with self.test_session(graph=tf.Graph()) as sess:
+      input1 = tf.compat.v1.placeholder(
+          dtype=tf.int32, shape=[5], name=&quotmyinput&quot)
+      initializer = tf.compat.v1.initializers.constant([1, 2, 3, 4, 5])
+      with tf.compat.v1.variable_scope(
+          &quotModel&quot, reuse=None, initializer=initializer):
+        v1 = tf.compat.v1.get_variable(&quotv1&quot, [5], dtype=tf.int32)
+      output1 = tf.add(v1, input1, name=&quotmyadd&quot)
+      inputs = {&quotsingle_input&quot: input1}
+      outputs = {&quotsingle_output&quot: output1}
+      signature_def_map = {
+          &quotmy_signature_single_input&quot:
+              tf.compat.v1.saved_model.signature_def_utils
+              .predict_signature_def(inputs, outputs)
+      }
+      sess.run(tf.compat.v1.global_variables_initializer())
+      builder.add_meta_graph_and_variables(
+          sess, [tf.saved_model.SERVING], signature_def_map=signature_def_map)
+      builder.save(False)
+
+ </a> def save_model_with_multi_inputs(self, export_dir):
+    builder = tf.compat.v1.saved_model.builder.SavedModelBuilder(export_dir)
+    with self.test_session(graph=tf.Graph()) as sess:
+      input1 = tf.compat.v1.placeholder(</code></pre><h3>After Change</h3><pre><code class='java'>
+
+  def save_model_with_single_input(self, export_dir):
+    builder = tf.compat.v1.saved_model.builder.SavedModelBuilder(export_dir)
+    <a id="change">with tf.compat.v1.Graph().as_default() as graph:
+      with self.test_session(graph=graph) as sess:
+        input1 = tf.compat.v1.placeholder(
+            dtype=tf.int32, shape=[5], name=&quotmyinput&quot)
+        initializer = tf.compat.v1.initializers.constant([1, 2, 3, 4, 5])
+        with tf.compat.v1.variable_scope(
+            &quotModel&quot, reuse=None, initializer=initializer):
+          v1 = tf.compat.v1.get_variable(&quotv1&quot, [5], dtype=tf.int32)
+        output1 = tf.add(v1, input1, name=&quotmyadd&quot)
+        inputs = {&quotsingle_input&quot: input1}
+        outputs = {&quotsingle_output&quot: output1}
+        signature_def_map = {
+            &quotmy_signature_single_input&quot:
+                tf.compat.v1.saved_model.signature_def_utils
+                .predict_signature_def(inputs, outputs)
+        }
+        sess.run(tf.compat.v1.global_variables_initializer())
+        builder.add_meta_graph_and_variables(
+            sess, [tf.saved_model.SERVING], signature_def_map=signature_def_map)
+        builder.save(False)
+
+ </a> def save_model_with_multi_inputs(self, export_dir):
+    builder = tf.compat.v1.saved_model.builder.SavedModelBuilder(export_dir)
+    with tf.compat.v1.Graph().as_default() as graph:
+      with self.test_session(graph=graph) as sess:</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 6</div><BR><div id='size'>Non-data size: 9</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/38e9391dcb5e8991a1a663601ce78bf7f08df474#diff-c1edaeffad1aef71d2ae69ebe720ebb778a7cf960f70ab0f38316d8805a2a8baL32' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 38e9391dcb5e8991a1a663601ce78bf7f08df474</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/pretrained_models_test.py</div><div id='class'> Class Name: PretrainedModelsTest</div><div id='method'> Method Name: save_model_with_single_input</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/38e9391dcb5e8991a1a663601ce78bf7f08df474#diff-c1edaeffad1aef71d2ae69ebe720ebb778a7cf960f70ab0f38316d8805a2a8baL110' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 38e9391dcb5e8991a1a663601ce78bf7f08df474</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/pretrained_models_test.py</div><div id='class'> Class Name: PretrainedModelsTest</div><div id='method'> Method Name: testApplySavedModelSingleInput</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/38e9391dcb5e8991a1a663601ce78bf7f08df474#diff-c1edaeffad1aef71d2ae69ebe720ebb778a7cf960f70ab0f38316d8805a2a8baL126' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 38e9391dcb5e8991a1a663601ce78bf7f08df474</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/pretrained_models_test.py</div><div id='class'> Class Name: PretrainedModelsTest</div><div id='method'> Method Name: testApplySavedModelMultiInputs</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/38e9391dcb5e8991a1a663601ce78bf7f08df474#diff-c1edaeffad1aef71d2ae69ebe720ebb778a7cf960f70ab0f38316d8805a2a8baL55' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 38e9391dcb5e8991a1a663601ce78bf7f08df474</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/pretrained_models_test.py</div><div id='class'> Class Name: PretrainedModelsTest</div><div id='method'> Method Name: save_model_with_multi_inputs</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/38e9391dcb5e8991a1a663601ce78bf7f08df474#diff-c1edaeffad1aef71d2ae69ebe720ebb778a7cf960f70ab0f38316d8805a2a8baL155' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 38e9391dcb5e8991a1a663601ce78bf7f08df474</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/pretrained_models_test.py</div><div id='class'> Class Name: PretrainedModelsTest</div><div id='method'> Method Name: testApplyFunctionWithCheckpointTwoInputs</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/38e9391dcb5e8991a1a663601ce78bf7f08df474#diff-c1edaeffad1aef71d2ae69ebe720ebb778a7cf960f70ab0f38316d8805a2a8baL96' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 38e9391dcb5e8991a1a663601ce78bf7f08df474</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/pretrained_models_test.py</div><div id='class'> Class Name: PretrainedModelsTest</div><div id='method'> Method Name: save_checkpoint_with_two_inputs</div><BR>

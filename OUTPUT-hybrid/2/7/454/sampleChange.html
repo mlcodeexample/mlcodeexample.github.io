@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        for l, layer in enumerate(self.layers):
+            y = th.zeros(g.number_of_nodes(), self.n_hidden if l != len(self.layers) - 1 else self.n_classes)
+
+            for start in tqdm.trange(0, <a id="change">len(nodes)</a>, batch_size):
+                end = start + batch_size
+                <a id="change">batch_nodes = nodes[start:end]</a>
+                block = dgl.to_block(dgl.in_subgraph(g, batch_nodes), batch_nodes)
+                input_nodes = block.srcdata[dgl.NID]
+
+                h = x[input_nodes].to(device)</code></pre><h3>After Change</h3><pre><code class='java'>
+                num_workers=args.num_workers)
+
+            for input_nodes, output_nodes, blocks in tqdm.tqdm(dataloader):
+                <a id="change">block = blocks[0]</a>
+
+                h = x[input_nodes].to(device)
+                h_dst = h[:block.number_of_dst_nodes()]
+                h = layer(block, (h, h_dst))</code></pre>

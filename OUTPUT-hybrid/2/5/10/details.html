@@ -1,0 +1,28 @@
+<html><h3>119e54a353513ff53d4f91b258dff2f8dbecbe5a,tgen/lexicalize.py,RNNLMFormSelect,_init_neural_network,#RNNLMFormSelect#,278
+</h3><img src='6640.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                self._cell = tf.contrib.rnn.BasicLSTMCell(self.emb_size)
+            if re.match(r&quot/[0-9]$&quot, self.cell_type):
+                self._cell = tf.contrib.rnn.MultiRNNCell([self.cell] * int(self.cell_type[-1]))
+            <a id="change">self._initial_state = self._cell.zero_state(tf.shape(self._inputs)[0], tf.float32)</a>
+
+            &#47&#47 embeddings
+            emb_cell = tf.contrib.rnn.EmbeddingWrapper(self._cell, self.vocab_size, self.emb_size)
+            &#47&#47 RNN encoder</code></pre><h3>After Change</h3><pre><code class='java'>
+            &#47&#47 RNN encoder
+            inputs = [tf.squeeze(input_, [1])
+                      for input_ in tf.split(axis=1, num_or_size_splits=self.max_sent_len, value=self._inputs)]
+            <a id="change">if self.bidi:
+                enc_outputs, _, _ = tf.nn.static_bidirectional_rnn(emb_cell, emb_cell, inputs, dtype=tf.float32)
+                enc_size = 2 * self.emb_size
+            else:
+                enc_outputs, _ = tf.nn.static_rnn(emb_cell, inputs, dtype=tf.float32)
+                enc_size = self.emb_size
+
+            &#47&#47 output layer
+           </a> enc_output = tf.reshape(tf.concat(axis=1, values=enc_outputs), [-1, enc_size])
+            self._logits = (tf.matmul(enc_output,
+                                      tf.get_variable("W", [enc_size, self.vocab_size])) +
+                            tf.get_variable("b", [self.vocab_size]))</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/UFAL-DSG/tgen/commit/119e54a353513ff53d4f91b258dff2f8dbecbe5a#diff-953ff8f9919686b8c654069e8519186bb4692bf4f0bf38059455dfb50bcaf09eL278' target='_blank'>Link</a></div><div id='project'> Project Name: UFAL-DSG/tgen</div><div id='commit'> Commit Name: 119e54a353513ff53d4f91b258dff2f8dbecbe5a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tgen/lexicalize.py</div><div id='class'> Class Name: RNNLMFormSelect</div><div id='method'> Method Name: _init_neural_network</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/830108b4b5f71f1a63cbd97c8131ba1aef4ac56a#diff-f9d289c900dcc1e60b70fd4386e567d18fcfc488f2a72882def1fd30d90bb394L82' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: 830108b4b5f71f1a63cbd97c8131ba1aef4ac56a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/utils/shapes.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: mask_sequences</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/f55217e5fee88bc38e58e62e886f79e561c4d069#diff-dacb09cf40d9d4957ac1c354fb3b8f6edfd058433a32f421da31f760d88e96acL125' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: f55217e5fee88bc38e58e62e886f79e561c4d069</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/losses/losses_utils.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: reduce_batch_time</div><BR>

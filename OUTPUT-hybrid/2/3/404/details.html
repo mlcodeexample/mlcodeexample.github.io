@@ -1,0 +1,26 @@
+<html><h3>74796ff02e9425ca336f595978fe6e7c422c0378,tensorlayer/layers.py,DropoutLayer,__init__,#DropoutLayer#Any#Any#Any#Any#,858
+</h3><img src='534104.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+        &#47&#47 The name of placeholder for keep_prob is the same with the name
+        &#47&#47 of the Layer.
+        <a id="change">if is_fix:
+            self.outputs = tf.nn.dropout(self.inputs, keep, name=name)
+        else:
+            set_keep[name] = tf.placeholder(tf.float32)
+            self.outputs = tf.nn.dropout(self.inputs, set_keep[name], name=name) &#47&#47 1.2
+
+       </a> self.all_layers = list(layer.all_layers)
+        self.all_params = list(layer.all_params)
+        self.all_drop = dict(layer.all_drop)
+        if is_fix is False:</code></pre><h3>After Change</h3><pre><code class='java'>
+        self.all_params = list(layer.all_params)
+        self.all_drop = dict(layer.all_drop)
+        self.all_layers.extend( [self.outputs] )
+        <a id="change">self.all_params.extend( variables )</a>
+
+&#47&#47&#47&#47 Estimator layer
+class EstimatorLayer(Layer):
+    </code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/zsdonghao/text-to-image/commit/74796ff02e9425ca336f595978fe6e7c422c0378#diff-4ae88bc9e7591485a5eb7a2f6592a370c907bee8518c1e2210e18586f5b75f96L859' target='_blank'>Link</a></div><div id='project'> Project Name: zsdonghao/text-to-image</div><div id='commit'> Commit Name: 74796ff02e9425ca336f595978fe6e7c422c0378</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorlayer/layers.py</div><div id='class'> Class Name: DropoutLayer</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/IndicoDataSolutions/finetune/commit/bd18db469c937fcfe0ea1835784ce10147780c7c#diff-df5148065849b41e950ab9718fd5081cb3aa73a740c0f898ca9a4112b3a2fdc6L52' target='_blank'>Link</a></div><div id='project'> Project Name: IndicoDataSolutions/finetune</div><div id='commit'> Commit Name: bd18db469c937fcfe0ea1835784ce10147780c7c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: finetune/base_models/bert/encoder.py</div><div id='class'> Class Name: BERTEncoder</div><div id='method'> Method Name: _encode</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/67b2ab42dd619a2b9ef961b52658ae9cc19d724e#diff-142422c5a625fcdbb55be5892d6f9e5592ef9b59fb615b064220aaa2c82b6d33L84' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: 67b2ab42dd619a2b9ef961b52658ae9cc19d724e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/bandits/policies/mixture_policy.py</div><div id='class'> Class Name: MixturePolicy</div><div id='method'> Method Name: _variables</div><BR>

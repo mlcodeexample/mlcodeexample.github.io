@@ -1,0 +1,21 @@
+<html><h3>1a433b9140cc4824ec50f13e3295a5cfcf046c27,onnx_tf/handlers/backend/gather.py,Gather,version_11,#Any#Any#,19
+</h3><img src='1036735.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    axis = attrs.get("axis", 0)
+    result = cls.chk_idx_out_of_bounds_along_axis(x, axis, indices)
+    msg = &quotGather indices are out of bounds, please double check the indices and retry.&quot
+    <a id="change">with tf.control_dependencies([tf.compat.v1.assert_equal(result, True, message=msg)]):
+      indices = cls.process_neg_idx_along_axis(x, axis, indices)
+      attrs[&quotaxis&quot] = axis
+      return [cls.make_tensor_from_onnx_node(node, attrs=attrs, inputs=[x, indices], **kwargs)]</a>
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+  @classmethod
+  def version_11(cls, node, **kwargs):
+    <a id="change">return cls._common(node, **kwargs)</a>
+
+  @classmethod
+  def version_13(cls, node, **kwargs):
+    return cls._common(node, **kwargs)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/onnx/onnx-tensorflow/commit/1a433b9140cc4824ec50f13e3295a5cfcf046c27#diff-4ce454ccb69e3aa7a93f419b4ae736f2ba819e270d8aa28d86eb2ec7c617be85L20' target='_blank'>Link</a></div><div id='project'> Project Name: onnx/onnx-tensorflow</div><div id='commit'> Commit Name: 1a433b9140cc4824ec50f13e3295a5cfcf046c27</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: onnx_tf/handlers/backend/gather.py</div><div id='class'> Class Name: Gather</div><div id='method'> Method Name: version_11</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/9a177951e4f5dc305beee3fe6b12123c34fbe471#diff-f285c82ff9da7ae9e147ac024cf12d825788e03ced373a3573282884c3272bfaL118' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: 9a177951e4f5dc305beee3fe6b12123c34fbe471</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/policies/tf_py_policy.py</div><div id='class'> Class Name: TFPyPolicy</div><div id='method'> Method Name: _action</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/f7cd20b56dd5b290ddfa1dc9a17d516b112a0baf#diff-fdfb1f40e6fe8018f323584a76cfd4cfa28c0a1fee2fb87e6261fb75a0bb39c8L461' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: f7cd20b56dd5b290ddfa1dc9a17d516b112a0baf</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/temporal_pattern.py</div><div id='class'> Class Name: SpikeAveragePooling2D</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/NeuromorphicProcessorProject/snn_toolbox/commit/f7cd20b56dd5b290ddfa1dc9a17d516b112a0baf#diff-fdfb1f40e6fe8018f323584a76cfd4cfa28c0a1fee2fb87e6261fb75a0bb39c8L487' target='_blank'>Link</a></div><div id='project'> Project Name: NeuromorphicProcessorProject/snn_toolbox</div><div id='commit'> Commit Name: f7cd20b56dd5b290ddfa1dc9a17d516b112a0baf</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: snntoolbox/simulation/backends/inisim/temporal_pattern.py</div><div id='class'> Class Name: SpikeMaxPooling2D</div><div id='method'> Method Name: call</div><BR>

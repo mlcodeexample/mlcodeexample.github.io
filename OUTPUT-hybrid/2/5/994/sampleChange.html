@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    parser.add_argument(&quot--lfw_pairs&quot, type=str,
+        help=&quotThe file containing the pairs to use for validation.&quot, default=&quotdata/pairs.txt&quot)
+    parser.add_argument(&quot--lfw_file_ext&quot, type=str,
+        help=&quotThe file extension for the LFW dataset.&quot, default=&quotpng&quot, choices=<a id="change">[&quotjpg&quot, &quotpng&quot]</a>)
+    parser.add_argument(&quot--lfw_nrof_folds&quot, type=int,
+        help=&quotNumber of folds to use for cross validation. Mainly used for testing.&quot, default=10)
+    return parser.parse_args(argv)</code></pre><h3>After Change</h3><pre><code class='java'>
+        help=&quotDistance metric  0:euclidian, 1:cosine similarity.&quot, default=0)
+    parser.add_argument(&quot--use_flipped_images&quot, 
+        help=&quotConcatenates embeddings for the image and its horizontally flipped counterpart.&quot, action=&quotstore_true&quot)
+    <a id="change">parser.add_argument(&quot--subtract_mean&quot, 
+        help=&quotSubtract feature mean before calculating distance.&quot, action=&quotstore_true&quot)</a>
+    parser.add_argument(&quot--use_fixed_image_standardization&quot, 
+        help=&quotPerforms fixed standardization of images.&quot, action=&quotstore_true&quot)
+    return parser.parse_args(argv)
+</code></pre>

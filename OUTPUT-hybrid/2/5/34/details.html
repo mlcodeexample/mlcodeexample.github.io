@@ -1,0 +1,25 @@
+<html><h3>81a34e895e1e657b8c41b631594cfcfda99f250d,basenji/seqnn.py,SeqNN,set_params,#SeqNN#Any#,478
+</h3><img src='87877.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    if self.batch_renorm:
+      RMAX_decay = ops.adjust_max(6000, 60000, 1, 3, name=&quotRMAXDECAY&quot)
+      DMAX_decay = ops.adjust_max(6000, 60000, 0, 5, name=&quotDMAXDECAY&quot)
+      <a id="change">self.renorm_clipping = {
+          &quotrmin&quot: 1. / RMAX_decay,
+          &quotrmax&quot: RMAX_decay,
+          &quotdmax&quot: DMAX_decay
+      }</a>
+    else:
+      self.renorm_clipping = {}
+
+  def train_epoch(self,</code></pre><h3>After Change</h3><pre><code class='java'>
+    &#47&#47 other
+    &#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47&#47
+    self.save_reprs = job.get(&quotsave_reprs&quot, False)
+    self.renorm_clipping = <a id="change">layers.renorm_clipping() if self.batch_renorm else {}</a>
+
+  def train_epoch(self,
+                  sess,
+                  batcher,</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/calico/basenji/commit/81a34e895e1e657b8c41b631594cfcfda99f250d#diff-174aa221bf6a87b32e334f0d7b4286b92410251ef96d2af6a51631aa61904baaL422' target='_blank'>Link</a></div><div id='project'> Project Name: calico/basenji</div><div id='commit'> Commit Name: 81a34e895e1e657b8c41b631594cfcfda99f250d</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basenji/seqnn.py</div><div id='class'> Class Name: SeqNN</div><div id='method'> Method Name: set_params</div><BR><BR><div id='link'><a href='https://github.com/calico/basenji/commit/7ff7ed2cf2d3d9cab8b944d4194f6a3b180deaab#diff-17d5b57045e44a3a09d16204d921541f8415582c21342fbed4d9352c77cf3449L83' target='_blank'>Link</a></div><div id='project'> Project Name: calico/basenji</div><div id='commit'> Commit Name: 7ff7ed2cf2d3d9cab8b944d4194f6a3b180deaab</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: basenji/augmentation.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: augment_deterministic</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/08c0e994cc0e20cb576469c01b472a43e3279e86#diff-a9abe0f6fb0c80fd06a424efaf2a48f23ddc0cb123e5ccbc248e6c41bf48e5f9L39' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 08c0e994cc0e20cb576469c01b472a43e3279e86</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/beam/tft_beam_io/transform_fn_io_test.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/08c0e994cc0e20cb576469c01b472a43e3279e86#diff-191b519262add0061c7926fc9416081db49afa358d00d33643a316fbb52e71a7L33' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 08c0e994cc0e20cb576469c01b472a43e3279e86</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/beam/tft_beam_io/beam_metadata_io_test.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR>

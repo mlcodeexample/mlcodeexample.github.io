@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        for class_i in xrange(0, self._numberOfOutputClasses) :
+            &#47&#47Number of Real Positive, Real Negatives, True Predicted Positives and True Predicted Negatives are reported PER CLASS (first for WHOLE).
+            tensorOneAtRealPos = T.eq(y, class_i)
+            <a id="change">tensorOneAtRealNeg = T.neq(y, class_i)</a>
+
+            tensorOneAtPredictedPos = <a id="change">T.eq(yPredToU</a>se, class_i)
+            tensorOneAtPredictedNeg = T.neq(yPredToUse, class_i)
+            tensorOneAtTruePos = T.and_(tensorOneAtRealPos,tensorOneAtPredictedPos)
+            tensorOneAtTrueNeg = T.and_(tensorOneAtRealNeg,tensorOneAtPredictedNeg)</code></pre><h3>After Change</h3><pre><code class='java'>
+            tensorOneAtRealNeg = tf.logical_not(tensorOneAtRealPos)
+
+            tensorOneAtPredictedPos = tf.equal(yPredToUse, class_i)
+            <a id="change">tensorOneAtPredictedNeg = tf.logical_not(tensorOneAtPredictedPos)</a>
+            tensorOneAtTruePos = tf.logical_and(tensorOneAtRealPos,tensorOneAtPredictedPos)
+            tensorOneAtTrueNeg = tf.logical_and(tensorOneAtRealNeg,tensorOneAtPredictedNeg)
+                    
+            returnedListWithNumberOfRpRnTpTnForEachClass.append( tf.reduce_sum( tf.cast(tensorOneAtRealPos, dtype="int32")) )</code></pre>

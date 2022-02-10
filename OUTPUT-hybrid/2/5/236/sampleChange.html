@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                                               name=None)  &#47&#47 weak hash
+        if self.mask_zero:
+            mask_1 = tf.cast(tf.not_equal(x, "0"), &quotint64&quot)
+            <a id="change">mask_2 = tf.cast(tf.not_equal(x, "0.0"), &quotint64&quot)</a>
+            mask = mask_1 * mask_2
+            hash_x = (hash_x + 1) * mask
+        return hash_x
+</code></pre><h3>After Change</h3><pre><code class='java'>
+    def call(self, x, mask=None, **kwargs):
+
+
+        <a id="change">if x.dtype != tf.string:
+            zero = tf.as_string(tf.zeros([1], dtype=x.dtype))
+            x = tf.as_string(x, )
+        else:
+            zero = tf.as_string(tf.zeros([1], dtype=&quotint32&quot))
+
+       </a> num_buckets = self.num_buckets if not self.mask_zero else self.num_buckets - 1
+        try:
+            hash_x = tf.string_to_hash_bucket_fast(x, num_buckets,
+                                                   name=None)  &#47&#47 weak hash</code></pre>

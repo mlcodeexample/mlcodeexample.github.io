@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    return state
+
+  def reduce_aggregated_logs(self, aggregated_logs):
+    <a id="change">return {self.miou_metric.name: self.miou_metric.result().numpy()}</a>
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+  def reduce_aggregated_logs(self, aggregated_logs):
+    result = {}
+    <a id="change">ious = self.iou_metric.result()</a>
+    &#47&#47 TODO(arashwan): support loading class name from a label map file.
+    if self.task_config.evaluation.report_per_class_iou:
+      for i, value in enumerate(<a id="change">ious.numpy()</a>):
+        result.update({&quotiou/{}&quot.format(i): value})
+    &#47&#47 Computes mean IoU
+    result.update({&quotmean_iou&quot: tf.reduce_mean(ious).numpy()})</code></pre>

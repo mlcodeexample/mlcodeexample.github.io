@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        return tl.rein.choice_action_by_probs(probs.ravel())
+
+    def choose_action_greedy(self, s):
+        <a id="change">probs = self.sess.run(self.acts_prob, {self.s: [s]})</a>  &#47&#47 get probabilities of all actions
+        return np.argmax(probs.ravel())
+
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+    def choose_action_greedy(self, s):
+            &#47&#47 probs = self.sess.run(self.acts_prob, {self.s: [s]})  &#47&#47 get probabilities of all actions
+        _logits = <a id="change">self.model([s]).outputs</a>
+        <a id="change">_probs = tf.nn.softmax(_logits).numpy()</a>
+        return np.argmax(_probs.ravel())
+
+
+class Critic(object):</code></pre>

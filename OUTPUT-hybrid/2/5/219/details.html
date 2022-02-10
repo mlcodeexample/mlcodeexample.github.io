@@ -1,0 +1,28 @@
+<html><h3>fe50c52a31b3231a1777f14eb6131a819f082fc8,Models/UnetSpectrogramSeparator.py,UnetSpectrogramSeparator,get_output,#UnetSpectrogramSeparator#Any#Any#Any#Any#,39
+</h3><img src='362661.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                return mags
+            else:
+                &#47&#47 Reconstruct audio
+                acc_stft = tf.multiply(tf.complex(mags[0], 0.0), <a id="change">tf.exp(tf.complex(0.0, mix_angle))</a>)
+                voice_stft = tf.multiply(tf.complex(mags[1], 0.0), tf.exp(tf.complex(0.0, mix_angle)))
+
+                acc_audio = tf.contrib.signal.inverse_stft(acc_stft, self.frame_len, self.hop, self.frame_len, window_fn=inv_window)
+                <a id="change">voice_audio = tf.contrib.signal.inverse_stft(voice_stft, self.frame_len, self.hop, self.frame_len, window_fn=inv_window)</a>
+
+                tf.summary.audio("acc_audio", acc_audio, 8192, collections=["sup"])
+                tf.summary.audio("voice_audio", voice_audio, 8192, collections=["sup"])
+
+                &#47&#47 Reshape to [batch_size, samples, 1]
+                <a id="change">acc_audio = tf.expand_dims(acc_audio, 2)</a>
+                voice_audio = tf.expand_dims(voice_audio, 2)
+
+                <a id="change">return acc_audio, voice_audio</a>
+</code></pre><h3>After Change</h3><pre><code class='java'>
+
+                    audio_out[source_name] = audio
+
+                <a id="change">return audio_out</a>
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 5</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/f90/Wave-U-Net/commit/fe50c52a31b3231a1777f14eb6131a819f082fc8#diff-d8d58036fddcb628f6900878febf45be417f47a21ce533647eeb26360e58f4d0L39' target='_blank'>Link</a></div><div id='project'> Project Name: f90/Wave-U-Net</div><div id='commit'> Commit Name: fe50c52a31b3231a1777f14eb6131a819f082fc8</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: Models/UnetSpectrogramSeparator.py</div><div id='class'> Class Name: UnetSpectrogramSeparator</div><div id='method'> Method Name: get_output</div><BR><BR><div id='link'><a href='https://github.com/zsdonghao/text-to-image/commit/74796ff02e9425ca336f595978fe6e7c422c0378#diff-fbbf2e5c0c8f7f982f1f21477db91c6661e370163db852d18a9d4b446ce2be0bL100' target='_blank'>Link</a></div><div id='project'> Project Name: zsdonghao/text-to-image</div><div id='commit'> Commit Name: 74796ff02e9425ca336f595978fe6e7c422c0378</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorlayer/activation.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: pixel_wise_softmax</div><BR><BR><div id='link'><a href='https://github.com/arnomoonens/yarll/commit/ecf257c1813cf3dd320c6d717208611dadeb2f0e#diff-25ca742231f2a845f22c7c1c51bd92f0c32b153c14aa84dc9117806ea5841aedL17' target='_blank'>Link</a></div><div id='project'> Project Name: arnomoonens/yarll</div><div id='commit'> Commit Name: ecf257c1813cf3dd320c6d717208611dadeb2f0e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: agents/trpo/trpo.py</div><div id='class'> Class Name: TRPO</div><div id='method'> Method Name: make_actor_loss</div><BR><BR><div id='link'><a href='https://github.com/arnomoonens/yarll/commit/ecf257c1813cf3dd320c6d717208611dadeb2f0e#diff-271d1a99b7abfa8b2e8dba971746981693c42f6f6903bd269c493cf6673a3cf7L128' target='_blank'>Link</a></div><div id='project'> Project Name: arnomoonens/yarll</div><div id='commit'> Commit Name: ecf257c1813cf3dd320c6d717208611dadeb2f0e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: agents/ppo/ppo.py</div><div id='class'> Class Name: PPO</div><div id='method'> Method Name: make_actor_loss</div><BR>

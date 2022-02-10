@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+  
+
+  main_dim, cond_dim, cond_direction = trapezoid_trust
+  layers = <a id="change">_unstack_2d(weights, main_dim, cond_dim)</a>
+
+  max_main_dim = lattice_sizes[main_dim] - 1
+  if cond_direction &lt; 0:
+    layers = _reverse_second_list_dimension(layers)
+  for j in range(constraint_group, lattice_sizes[cond_dim] - 1, 2):
+    lhs_difference = layers[0][j + 1] - layers[0][j]
+    lhs_correction = tf.maximum(lhs_difference / 2, 0)
+    <a id="change">layers[0][j]</a> += lhs_correction
+    <a id="change">layers[0][j + 1]</a> -= lhs_correction
+
+    rhs_difference = layers[max_main_dim][j] - layers[max_main_dim][j + 1]
+    rhs_correction = tf.maximum(rhs_difference / 2, 0)
+    <a id="change">layers[max_main_dim][j]</a> -= rhs_correction
+    <a id="change">layers[max_main_dim][j + 1]</a> += rhs_correction
+  if cond_direction &lt; 0:
+    layers = _reverse_second_list_dimension(layers)
+
+  <a id="change">return _stack_2d(layers, main_dim, cond_dim)</a>
+
+
+def _project_partial_monotonic_dominance(weights, lattice_sizes,
+                                         monotonic_dominance, constraint_group):</code></pre><h3>After Change</h3><pre><code class='java'>
+  
+
+  main_dim, cond_dim, cond_direction = trapezoid_trust
+  layers = <a id="change">_unstack_nd(weights, [main_dim, cond_dim])</a>
+
+  max_main_dim = lattice_sizes[main_dim] - 1
+  if cond_direction &lt; 0:
+    layers = _reverse_second_list_dimension(layers)
+  for j in range(constraint_group, lattice_sizes[cond_dim] - 1, 2):
+    lhs_difference = layers[0][j + 1] - layers[0][j]
+    lhs_correction = tf.maximum(lhs_difference / 2, 0)
+    <a id="change">layers[0][j]</a> += lhs_correction
+    <a id="change">layers[0][j + 1]</a> -= lhs_correction
+
+    rhs_difference = layers[max_main_dim][j] - layers[max_main_dim][j + 1]
+    rhs_correction = tf.maximum(rhs_difference / 2, 0)
+    <a id="change">layers[max_main_dim][j]</a> -= rhs_correction
+    <a id="change">layers[max_main_dim][j + 1]</a> += rhs_correction
+  if cond_direction &lt; 0:
+    layers = _reverse_second_list_dimension(layers)
+
+  <a id="change">return _stack_nd(layers, [main_dim, cond_dim])</a>
+
+
+def _project_partial_monotonic_dominance(weights, lattice_sizes,
+                                         monotonic_dominance, constraint_group):</code></pre>

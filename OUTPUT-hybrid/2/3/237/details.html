@@ -1,0 +1,27 @@
+<html><h3>ecbe066e40882b166401b70ae9c4f1d535c93b12,texar/losses/adv_losses.py,,binary_adversarial_losses,#Any#Any#Any#Any#,12
+</h3><img src='371616.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    else:
+        raise ValueError("Unknown mode: %s. Only &quotmin_fake&quot and &quotmax_real&quot "
+                         "are allowed.")
+    <a id="change">return gen_loss, disc_loss</a>
+
+</code></pre><h3>After Change</h3><pre><code class='java'>
+    real_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(
+        logits=real_logits, labels=tf.ones_like(real_logits)))
+    fake_logits = discriminator_fn(fake_data)
+    fake_loss = <a id="change">tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(
+        logits=fake_logits, labels=tf.zeros_like(fake_logits)))</a>
+    d_loss = real_loss + fake_loss
+    if mode == "min_fake":
+        g_loss = - fake_loss
+    elif mode == "max_real":
+        g_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(
+            logits=fake_logits, labels=tf.ones_like(fake_logits)))
+    else:
+        raise ValueError("Unknown mode: %s. Only &quotmin_fake&quot and &quotmax_real&quot "
+                         "are allowed.")
+    <a id="change">return g_loss, d_loss</a>
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/asyml/texar/commit/ecbe066e40882b166401b70ae9c4f1d535c93b12#diff-352df499dbc50fc952705aee8e5345263615dbb7ecef8d0ed09f46b9aef0b572L38' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: ecbe066e40882b166401b70ae9c4f1d535c93b12</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/losses/adv_losses.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: binary_adversarial_losses</div><BR><BR><div id='link'><a href='https://github.com/zsdonghao/text-to-image/commit/33708650375d063ed38e317478be3b35c5921914#diff-87ad50e157eb29abedfcc00e3683663fc1feb68653dc988ba2ab7a475858ec66L81' target='_blank'>Link</a></div><div id='project'> Project Name: zsdonghao/text-to-image</div><div id='commit'> Commit Name: 33708650375d063ed38e317478be3b35c5921914</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorlayer/cost.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: mean_squared_error</div><BR><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/f360de0fa4454122d665b9c32f4d5911a4ebec0c#diff-65d170e9551c638599acfb99f31f4b91c5adb1d4388a3268c3c42093c1184d89L32' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: f360de0fa4454122d665b9c32f4d5911a4ebec0c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/loss.py</div><div id='class'> Class Name: LossFunction</div><div id='method'> Method Name: layer_op</div><BR>

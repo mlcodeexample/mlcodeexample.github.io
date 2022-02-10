@@ -1,0 +1,36 @@
+<html><h3>a3fe8bdf1c484e390dfe3947cc395372c0187589,tensorforce/agents/vpg_agent.py,VPGAgent,__init__,#VPGAgent#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#,25
+</h3><img src='1532311.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            update_mode[&quotunit&quot] = &quotepisodes&quot
+
+        &#47&#47 Memory
+        if <a id="change">memory is None:
+</a>            &#47&#47 Assumed episode length of 1000 timesteps.
+            memory = dict(
+                type=&quotlatest&quot, include_next_states=False,
+                capacity=<a id="change">(1000 * update_mode[&quotbatch_size&quot])</a>
+            )
+        else:
+            assert not memory[&quotinclude_next_states&quot]
+
+        &#47&#47 if update_mode is `timesteps`, require memory `latest`
+        &#47&#47 Note: We actually test all combinations in test_vpg_memories - disable assertion for now
+        &#47&#47 assert (update_mode[&quotunit&quot] != &quottimesteps&quot or memory[&quottype&quot] == &quotlatest&quot)
+
+        &#47&#47 Optimizer
+        if optimizer is None:
+            optimizer = dict(type=&quotadam&quot, learning_rate=1e-3)
+
+        <a id="change">self.model</a> = PGLogProbModel(
+            &#47&#47 Model
+            states=self.states_spec, actions=self.actions_spec, scope=scope, device=device,
+            saver=saver, summarizer=summarizer, execution=execution,</code></pre><h3>After Change</h3><pre><code class='java'>
+            update_mode[&quotunit&quot] = &quotepisodes&quot
+
+        &#47&#47 Memory
+        if <a id="change">isinstance(memory, int)</a>:
+            memory = dict(type=&quotlatest&quot, include_next_states=False, capacity=memory)
+        else:
+            assert not memory[&quotinclude_next_states&quot]</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 6</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/a3fe8bdf1c484e390dfe3947cc395372c0187589#diff-b416ffa65fe714ff3f6d33761143bc3dc18ee0d6fca952a9e0b6b907ffdd7e2fL79' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: a3fe8bdf1c484e390dfe3947cc395372c0187589</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/agents/vpg_agent.py</div><div id='class'> Class Name: VPGAgent</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/a3fe8bdf1c484e390dfe3947cc395372c0187589#diff-43014f4b7ebf03b066a24ef41927803e32e2ba53ea9ff7eed3e448f2fb6333e3L96' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: a3fe8bdf1c484e390dfe3947cc395372c0187589</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/agents/trpo_agent.py</div><div id='class'> Class Name: TRPOAgent</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/a3fe8bdf1c484e390dfe3947cc395372c0187589#diff-6bc02dac7f9a88a00c78e8688e7ec3d9e6c0cd81f3789ac2b3a2d978293a4943L90' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: a3fe8bdf1c484e390dfe3947cc395372c0187589</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/agents/ppo_agent.py</div><div id='class'> Class Name: PPOAgent</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/a3fe8bdf1c484e390dfe3947cc395372c0187589#diff-81b8d0fe41780518d6f7321d1186768701d614ed1404130becb3ca196fd7edccL77' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: a3fe8bdf1c484e390dfe3947cc395372c0187589</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/agents/dqn_nstep_agent.py</div><div id='class'> Class Name: DQNNstepAgent</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/a3fe8bdf1c484e390dfe3947cc395372c0187589#diff-7b32eda1e7e3886c82414c3bf0902e5f568e3c1e2f0a5cf82bd9aed4eaa2a44dL79' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: a3fe8bdf1c484e390dfe3947cc395372c0187589</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/agents/naf_agent.py</div><div id='class'> Class Name: NAFAgent</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/a3fe8bdf1c484e390dfe3947cc395372c0187589#diff-13f15eae956c44df5ad914802095d14519b8745460d0189c9a7a6a7349e38052L79' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: a3fe8bdf1c484e390dfe3947cc395372c0187589</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/agents/dqn_agent.py</div><div id='class'> Class Name: DQNAgent</div><div id='method'> Method Name: __init__</div><BR>

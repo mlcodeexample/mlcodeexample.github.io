@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        
+        &#47&#47 TODO: unit test!
+        if node_type is None:
+            return <a id="change">list(self)</a>
+        else:
+            return [
+                n
+                for n, ndata in self._graph.nodes(data=True)</code></pre><h3>After Change</h3><pre><code class='java'>
+            A list of node IDs with type node_type
+        
+        &#47&#47 TODO: unit test!
+        <a id="change">if node_type in self._node_index_maps:
+            return list(
+                n for n in self._node_index_maps[node_type].keys() if n is not None
+            )
+
+        else:
+            return [n for n in self.nodes() if self.node_type(n) == node_type]
+
+   </a> def node_type(self, node):
+        
+        Get the type of the node
+</code></pre>

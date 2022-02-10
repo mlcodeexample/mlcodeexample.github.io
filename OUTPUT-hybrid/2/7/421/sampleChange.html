@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        if y is not None:
+            feed_dict[self.y] = batch_dict[&quoty&quot]
+
+        <a id="change">return feed_dict</a>
+
+    def predict(self, batch_dict):
+        Do prediction from a `batch_dict`
+</code></pre><h3>After Change</h3><pre><code class='java'>
+        :param train: (`bool`) Are we training (or evaluating)?
+        :return: A `feed_dict`
+        
+        <a id="change">if get_version(tf) &lt; 2:
+            batch_dict_for_model = new_placeholder_dict(train)
+
+            for key in self.src_keys:
+
+                batch_dict_for_model["{}:0".format(key)] = batch_dict[key]
+
+            y = batch_dict.get(&quoty&quot)
+            if y is not None:
+                batch_dict_for_model[self.y] = batch_dict[&quoty&quot]
+
+        else:
+            SET_TRAIN_FLAG(train)
+
+            batch_dict_for_model = {}
+            for key in self.src_keys:
+                batch_dict_for_model[key] = batch_dict[key]
+
+       </a> return batch_dict_for_model
+
+    def predict(self, batch_dict):
+        Do prediction from a `batch_dict`</code></pre>

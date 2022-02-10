@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        if update_frequency != &quotbatch_size&quot:
+            update[&quotfrequency&quot] = update_frequency
+        if start_updating is not None:
+            <a id="change">update[&quotstart&quot]</a> = start_updating
+
+        optimizer = dict(type=&quotadam&quot, learning_rate=learning_rate)
+        objective = &quotdeterministic_policy_gradient&quot</code></pre><h3>After Change</h3><pre><code class='java'>
+        &#47&#47 Config, saver, summarizer, recorder
+        config=None, saver=None, summarizer=None, recorder=None,
+        &#47&#47 Deprecated
+        estimate_terminal=None, critic_network=None, **kwargs<a id="change">
+    ):
+        raise TensorforceError(message=&quotTemporarily broken.&quot)
+        if estimate_terminal is not None:
+            raise TensorforceError.deprecated(
+                n</a>ame=&quotDPG&quot, argument=&quotestimate_terminal&quot, replacement=&quotpredict_terminal_values&quot
+            )
+        if critic_network is not None:
+            raise TensorforceError.deprecated(</code></pre>

@@ -1,0 +1,21 @@
+<html><h3>5a4a3ac3c8a87b612ab205ec98ed1be0efa80720,official/nlp/modeling/ops/sampling_module_test.py,SamplingModuleTest,test_topk,#SamplingModuleTest#Any#,67
+</h3><img src='524296.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        padded_decode=padded_decode)
+    ids, _ = top_k_obj.generate(
+        initial_ids=tf.constant([9, 1]), initial_cache=self.cache)
+    <a id="change">self.assertAllEqual([2, 5], ids.shape)</a>
+
+if __name__ == &quot__main__&quot:
+  tf.test.main()
+</code></pre><h3>After Change</h3><pre><code class='java'>
+    tf.random.set_seed(1)
+    ids, _ = top_k_obj.generate(
+        initial_ids=tf.constant([9, 1]), initial_cache=self.cache)
+    <a id="change">top_k_expected = tf.constant([[9, 1, 0, 2, 2], [1, 0, 1, 1, 0]])</a>
+    self.assertAllEqual(top_k_expected, ids)
+
+  @parameterized.named_parameters([
+      (&quotpadded_decode_true&quot, True),</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/models/commit/5a4a3ac3c8a87b612ab205ec98ed1be0efa80720#diff-87f739bec69807dc4fa2b07e3ae8853727c17787ebb9db7c9918b511ae0e77e0L75' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/models</div><div id='commit'> Commit Name: 5a4a3ac3c8a87b612ab205ec98ed1be0efa80720</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: official/nlp/modeling/ops/sampling_module_test.py</div><div id='class'> Class Name: SamplingModuleTest</div><div id='method'> Method Name: test_topk</div><BR><BR><div id='link'><a href='https://github.com/GPflow/GPflow/commit/f36052b395dc48a473dcc5b49d8d9a3b5d6f58ba#diff-71207977c6d6e8e6bcba6035bf24bc4ca250aa956d596478cec3ed9d8a07972cL119' target='_blank'>Link</a></div><div id='project'> Project Name: GPflow/GPflow</div><div id='commit'> Commit Name: f36052b395dc48a473dcc5b49d8d9a3b5d6f58ba</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: gpflow/conditionals/util.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: sample_mvn</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/models/commit/4909765543ff0c96627161ecc75eec6c309dbdce#diff-1af10b3cf9124afb18cac596b6320e4df19dbb7c0cb983728a20a5eef21e4efcL39' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/models</div><div id='commit'> Commit Name: 4909765543ff0c96627161ecc75eec6c309dbdce</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: official/resnet/keras/keras_common_test.py</div><div id='class'> Class Name: KerasCommonTests</div><div id='method'> Method Name: test_build_stats</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/a3b5ba44826094feb3f9f02265c416045f59aa08#diff-2ef9b2d3126388ffe7f0e469e40b69abfda7fd12bbfd2a2001b15549a6478752L56' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: a3b5ba44826094feb3f9f02265c416045f59aa08</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/bandits/policies/policy_utilities_test.py</div><div id='class'> Class Name: PolicyUtilitiesTest</div><div id='method'> Method Name: testBadMask</div><BR>

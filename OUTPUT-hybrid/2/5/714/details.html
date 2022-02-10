@@ -1,0 +1,22 @@
+<html><h3>20f388cfe01635a2073723c5c4ffd6dd7a87fbb2,tensorflow_hub/tools/module_search/utils.py,,knn_errorrate_loo,#Any#Any#Any#,140
+</h3><img src='922924.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+  cnt = 0
+  for i in range(np.shape(d)[0]):
+    cnt_i = 0
+    <a id="change">for j in range(k):
+      if y[i] != y[indices[i, j]]:
+        cnt_i += 1
+   </a> if cnt_i &gt;= k / 2.0:
+      cnt += 1
+
+  return float(cnt) / np.shape(d)[0]</code></pre><h3>After Change</h3><pre><code class='java'>
+    indices = np.argmin(d, axis=1)
+
+    cnt = 0
+    for idx, val in <a id="change">enumerate(indices)</a>:
+      if y[idx] != y[val]:
+        cnt += 1
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/hub/commit/20f388cfe01635a2073723c5c4ffd6dd7a87fbb2#diff-ede2a3389f55bc62e19f594496e58466639a9aa4939f25dd1aa7098ef2b46fdaL154' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/hub</div><div id='commit'> Commit Name: 20f388cfe01635a2073723c5c4ffd6dd7a87fbb2</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_hub/tools/module_search/utils.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: knn_errorrate_loo</div><BR><BR><div id='link'><a href='https://github.com/openai/baselines/commit/b71152eea0470ac2629c33e0fc66a54fe494949f#diff-56f6344a19b7839c3fd50d079b1f13fe91ba59e74960972bd2206abe9516b49bL15' target='_blank'>Link</a></div><div id='project'> Project Name: openai/baselines</div><div id='commit'> Commit Name: b71152eea0470ac2629c33e0fc66a54fe494949f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: baselines/common/vec_env/dummy_vec_env.py</div><div id='class'> Class Name: DummyVecEnv</div><div id='method'> Method Name: step_wait</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/hub/commit/20f388cfe01635a2073723c5c4ffd6dd7a87fbb2#diff-ede2a3389f55bc62e19f594496e58466639a9aa4939f25dd1aa7098ef2b46fdaL118' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/hub</div><div id='commit'> Commit Name: 20f388cfe01635a2073723c5c4ffd6dd7a87fbb2</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_hub/tools/module_search/utils.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: knn_errorrate</div><BR>

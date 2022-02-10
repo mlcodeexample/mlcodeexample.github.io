@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    &#47&#47 Check the shape of the observation matrix.
+    if not observation.shape.is_compatible_with([None, self._context_dim]):
+      raise ValueError(&quotObservation shape is expected to be {}. Got {}.&quot.format(
+          [None, self._context_dim], <a id="change">observation.shape.as_list()</a>))
+
+    observation = tf.cast(observation, dtype=self._dtype)
+</code></pre><h3>After Change</h3><pre><code class='java'>
+        lambda: self._get_actions_from_linucb(encoded_observation, mask))
+
+    arm_observations = ()
+    <a id="change">if self._accepts_per_arm_features:
+      arm_observations = observation[bandit_spec_utils.PER_ARM_FEATURE_KEY]
+   </a> policy_info = policy_utilities.populate_policy_info(
+        arm_observations, chosen_actions, (), est_mean_rewards,
+        self._emit_policy_info, self._accepts_per_arm_features)
+    return policy_step.PolicyStep(chosen_actions, policy_state, policy_info)</code></pre>

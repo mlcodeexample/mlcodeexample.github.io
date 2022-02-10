@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    batch, in_dim = data.shape
+    out_dim, _ = weight.shape
+    matmul = cublas.matmul(data, weight, False, True)
+    <a id="change">if isinstance(batch, int):
+        cfg.add_flop(batch * in_dim * out_dim * 2)
+    elif isinstance(batch, tir.IntImm):
+        cfg.add_flop(batch.value * in_dim * out_dim * 2)
+    &#47&#47 if we get a te.Var, we cannot add flop counts
+   </a> if bias is not None:
+        matmul = te.compute(
+            (batch, out_dim), lambda i, j: matmul[i, j] + bias[j], tag=tag.BROADCAST
+        )</code></pre><h3>After Change</h3><pre><code class='java'>
+    batch, in_dim = get_const_tuple(data.shape)
+    out_dim, _ = get_const_tuple(weight.shape)
+    matmul = cublas.matmul(data, weight, False, True)
+    if all(<a id="change">isinstance</a>(d, int) <a id="change">for</a> d in [batch, in_dim, out_dim]):
+        cfg.add_flop(batch * in_dim * out_dim * 2)
+    if bias is not None:
+        matmul = te.compute(</code></pre>

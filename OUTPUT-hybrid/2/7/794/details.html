@@ -1,0 +1,27 @@
+<html><h3>8cdbb1637b140c01f431831e7b2c2a63afc96209,kapre/time_frequency.py,Spectrogram,call,#Spectrogram#Any#,139
+</h3><img src='1009071.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    def call(self, x):
+        output = self._spectrogram_mono(x[:, 0:1, :])
+        if self.is_mono is False:
+            <a id="change">for ch_idx in range(1, self.n_ch):
+                output = K.concatenate(
+                    (output, self._spectrogram_mono(x[:, ch_idx : ch_idx + 1, :])),
+                    axis=self.ch_axis_idx,
+                )
+       </a> if self.power_spectrogram != 2.0:
+            output = K.pow(K.sqrt(output), self.power_spectrogram)
+        if self.return_decibel_spectrogram:
+            output = backend_keras.amplitude_to_decibel(output)</code></pre><h3>After Change</h3><pre><code class='java'>
+            name=&quot%s_tf.signal.stft&quot % self.name,
+        )  &#47&#47 (batch, ch, time, freq)
+
+        <a id="change">if self.output_data_format == &quotchannels_last&quot:
+            stfts = tf.transpose(stfts, perm=(0, 2, 3, 1))  &#47&#47 (batch, t, f, ch)
+
+       </a> return stfts
+
+    def get_config(self):
+        config = super(STFT, self).get_config()</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 5</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/keunwoochoi/kapre/commit/8cdbb1637b140c01f431831e7b2c2a63afc96209#diff-2c1907602675e677df66c0bda1f1a65d1ed2c9d051eaf6e954d075dafd04884dL74' target='_blank'>Link</a></div><div id='project'> Project Name: keunwoochoi/kapre</div><div id='commit'> Commit Name: 8cdbb1637b140c01f431831e7b2c2a63afc96209</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: kapre/time_frequency.py</div><div id='class'> Class Name: Spectrogram</div><div id='method'> Method Name: call</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/c611d9b6b35e44326bc18096dc57abe18eb6c90b#diff-075306f22c8de3b0e87dcc9255168b4a666fbc741524069dcd17ef54e6dfecc8L232' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: c611d9b6b35e44326bc18096dc57abe18eb6c90b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/replay_buffers/tf_uniform_replay_buffer_test.py</div><div id='class'> Class Name: TFUniformReplayBufferTest</div><div id='method'> Method Name: testMultiStepStackedSampling</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/c611d9b6b35e44326bc18096dc57abe18eb6c90b#diff-075306f22c8de3b0e87dcc9255168b4a666fbc741524069dcd17ef54e6dfecc8L255' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: c611d9b6b35e44326bc18096dc57abe18eb6c90b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/replay_buffers/tf_uniform_replay_buffer_test.py</div><div id='class'> Class Name: TFUniformReplayBufferTest</div><div id='method'> Method Name: testMultiStepStackedBatchedSampling</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/agents/commit/c611d9b6b35e44326bc18096dc57abe18eb6c90b#diff-075306f22c8de3b0e87dcc9255168b4a666fbc741524069dcd17ef54e6dfecc8L208' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/agents</div><div id='commit'> Commit Name: c611d9b6b35e44326bc18096dc57abe18eb6c90b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tf_agents/replay_buffers/tf_uniform_replay_buffer_test.py</div><div id='class'> Class Name: TFUniformReplayBufferTest</div><div id='method'> Method Name: testMultiStepSampling</div><BR>

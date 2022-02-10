@@ -1,0 +1,20 @@
+<html><h3>a3fe8bdf1c484e390dfe3947cc395372c0187589,tensorforce/core/distributions/gaussian.py,Gaussian,tf_log_probability,#Gaussian#Any#Any#,104
+</h3><img src='1120401.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    def tf_log_probability(self, distr_params, action):
+        mean, stddev, log_stddev = distr_params
+        sq_mean_distance = tf.square(x=(action - mean))
+        sq_stddev = tf.maximum(x=<a id="change">tf.square(x=stddev)</a>, y=util.epsilon)
+        return -0.5 * sq_mean_distance / sq_stddev - log_stddev - 0.5 * log(2.0 * pi)
+
+    def tf_entropy(self, distr_params):</code></pre><h3>After Change</h3><pre><code class='java'>
+        pi_const = tf.constant(value=pi, dtype=util.tf_dtype(dtype=&quotfloat&quot))
+
+        sq_mean_distance = tf.square(x=(action - mean))
+        <a id="change">sq_stddev = tf.maximum(x=tf.square(x=stddev), y=epsilon)</a>
+
+        return -half * sq_mean_distance / sq_stddev - log_stddev - \
+            half * tf.math.log(x=(two * pi_const))
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/a3fe8bdf1c484e390dfe3947cc395372c0187589#diff-e9f7c2fd5c6d7511db37aadde687bdccbc3c4cc4d0e9a313c085f8e1414df6b7L97' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: a3fe8bdf1c484e390dfe3947cc395372c0187589</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/core/distributions/gaussian.py</div><div id='class'> Class Name: Gaussian</div><div id='method'> Method Name: tf_log_probability</div><BR><BR><div id='link'><a href='https://github.com/reinforceio/tensorforce/commit/a3fe8bdf1c484e390dfe3947cc395372c0187589#diff-e9f7c2fd5c6d7511db37aadde687bdccbc3c4cc4d0e9a313c085f8e1414df6b7L115' target='_blank'>Link</a></div><div id='project'> Project Name: reinforceio/tensorforce</div><div id='commit'> Commit Name: a3fe8bdf1c484e390dfe3947cc395372c0187589</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorforce/core/distributions/gaussian.py</div><div id='class'> Class Name: Gaussian</div><div id='method'> Method Name: tf_kl_divergence</div><BR><BR><div id='link'><a href='https://github.com/NVIDIA/OpenSeq2Seq/commit/44ae6129731ee1d225db8a5f1bafea5fd4b9b542#diff-c1513b4195bee84c6b11cfed3dbfa853aa29ac9024da9a6fc2b58b45cc196397L70' target='_blank'>Link</a></div><div id='project'> Project Name: NVIDIA/OpenSeq2Seq</div><div id='commit'> Commit Name: 44ae6129731ee1d225db8a5f1bafea5fd4b9b542</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: open_seq2seq/parts/transformer/common.py</div><div id='class'> Class Name: LayerNormalization</div><div id='method'> Method Name: call</div><BR>

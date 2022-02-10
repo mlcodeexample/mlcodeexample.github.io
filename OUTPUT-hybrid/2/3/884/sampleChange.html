@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+  rnn_layer = rnn_cell(
+      rnn_hidden_size, activation=rnn_activation, return_sequences=True,
+      name="rnn_{}".format(layer_id))
+  <a id="change">if is_bidirectional:
+    rnn_layer = tf.keras.layers.Bidirectional(rnn_layer, merge_mode="sum")
+
+ </a> return rnn_layer(input_data)
+
+
+def _ctc_lambda_func(args):</code></pre><h3>After Change</h3><pre><code class='java'>
+
+  &#47&#47 Construct forward/backward RNN cells.
+  fw_cell = rnn_cell(num_units=rnn_hidden_size,
+                     name=<a id="change">"rnn_fw_{}".format(layer_id)</a>)
+  bw_cell = rnn_cell(num_units=rnn_hidden_size,
+                     name="rnn_bw_{}".format(layer_id))
+</code></pre>

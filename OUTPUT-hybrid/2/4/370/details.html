@@ -1,0 +1,17 @@
+<html><h3>6f539ad2324ddccc18b6ac39e4a2f4aeb12173a2,tests/test_pydocstyle.py,,,#,28
+</h3><img src='517479.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    for n, code in sorted([(n, code) for code, n in counts.items()], reverse=True):
+        p = lookup_error_params(code)
+        print(&quot%s %8d %s&quot % (code, n, p.short_desc))
+    <a id="change">print(&quot%s %8d violations&quot % (&quottot&quot, len(violations)))</a>
+    &#47&#47 TODO: exit(1)
+</code></pre><h3>After Change</h3><pre><code class='java'>
+            &#47&#47raise Exception(&quotPyDoc Coding Style: %d violations have been found&quot % ( len(self.violations)))  &#47&#47&#47&#47 TODO: Correct these errors to allow Exception
+
+
+<a id="change">if __name__ == &quot__main__&quot:
+    unittest.main()</a>
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorlayer/tensorlayer/commit/6f539ad2324ddccc18b6ac39e4a2f4aeb12173a2#diff-6c88a578fc0137a3bfe02babbaaee8057a77300135ac4dbab1b693e9b472870dL28' target='_blank'>Link</a></div><div id='project'> Project Name: tensorlayer/tensorlayer</div><div id='commit'> Commit Name: 6f539ad2324ddccc18b6ac39e4a2f4aeb12173a2</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tests/test_pydocstyle.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR><BR><div id='link'><a href='https://github.com/tensorlayer/tensorlayer/commit/6f539ad2324ddccc18b6ac39e4a2f4aeb12173a2#diff-28bbfc0925a016432c81078877b43f338ec2e6c07527c856ba5f7fa48909b2d9L29' target='_blank'>Link</a></div><div id='project'> Project Name: tensorlayer/tensorlayer</div><div id='commit'> Commit Name: 6f539ad2324ddccc18b6ac39e4a2f4aeb12173a2</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tests/test_reuse_mlp.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR><BR><div id='link'><a href='https://github.com/NifTK/NiftyNet/commit/4acd2b863fe95af9dd8af7d759c68832462cd94e#diff-a8b1842a605e08d9388a75cb12761ae3ba9f87e3cd4ce9816200df088f6ce8fcL67' target='_blank'>Link</a></div><div id='project'> Project Name: NifTK/NiftyNet</div><div id='commit'> Commit Name: 4acd2b863fe95af9dd8af7d759c68832462cd94e</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: niftynet/layer/crf.py</div><div id='class'> Class Name: CRFAsRNNLayer</div><div id='method'> Method Name: layer_op</div><BR>

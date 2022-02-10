@@ -1,0 +1,35 @@
+<html><h3>bd18db469c937fcfe0ea1835784ce10147780c7c,finetune/base_models/bert/encoder.py,BERTEncoder,_encode,#BERTEncoder#Any#Any#Any#,44
+</h3><img src='206496.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            if context_ is not None:
+                token_starts = [context[&quotstart&quot] for context in context_]
+                original_tokens = []
+                <a id="change">for char_loc in batch_character_locs[i]:
+                    original_token=-1
+                    for i in range(len(token_starts)):
+                        if char_loc &gt;= token_starts[i]:
+                            original_token += 1
+                    original_tokens.append(original_token)
+               </a> expanded_context = [None]*len(original_tokens)
+                for j in range(len(expanded_context)):
+                    expanded_context[j] =  context_[original_tokens[j]]
+                batch_context.append(expanded_context)</code></pre><h3>After Change</h3><pre><code class='java'>
+            &#47&#47 Context is tokenwise, so we need to duplicate contexts for each subtoken of a token, and to match length of labels
+            if context_ is not None:
+                original_tokens = []
+                <a id="change">for char_loc, token in zip(
+                    batch_original_character_locs[i], batch_tokens[i]
+                ):
+                    original_token = 0
+                    for subtoken_idx in range(len(context_)):
+                        if (
+                            char_loc + offset &gt; context_[subtoken_idx]["end"]
+                        ):  &#47&#47 subtract one since subtokens include spaces at the beginning, while the &quotstart&quots from context do not
+                            original_token += 1
+                    original_tokens.append(original_token)
+               </a> expanded_context = [None] * len(original_tokens)
+                for j in range(len(expanded_context)):
+                    expanded_context[j] = context_[original_tokens[j]]
+                batch_context.append(expanded_context)</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/IndicoDataSolutions/finetune/commit/bd18db469c937fcfe0ea1835784ce10147780c7c#diff-df5148065849b41e950ab9718fd5081cb3aa73a740c0f898ca9a4112b3a2fdc6L52' target='_blank'>Link</a></div><div id='project'> Project Name: IndicoDataSolutions/finetune</div><div id='commit'> Commit Name: bd18db469c937fcfe0ea1835784ce10147780c7c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: finetune/base_models/bert/encoder.py</div><div id='class'> Class Name: BERTEncoder</div><div id='method'> Method Name: _encode</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/1330ea3102315bd79c9c6efdbd8818c8e2a3cb8f#diff-f582aafccf8343587e7bd879c7191fa93da2d547f815068a0b74c88b15dc9b74L257' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: 1330ea3102315bd79c9c6efdbd8818c8e2a3cb8f</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/metalearning/maml.py</div><div id='class'> Class Name: MAML</div><div id='method'> Method Name: train_on_current_task</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/models/commit/8c6df6412ae7141f46e7752be2a2a16c519b8ccc#diff-52e2423d71e3dee9a83b8569c78ddf7c0ef31f43247323b64dd53c06442f85beL241' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/models</div><div id='commit'> Commit Name: 8c6df6412ae7141f46e7752be2a2a16c519b8ccc</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: official/nlp/tasks/question_answering.py</div><div id='class'> Class Name: QuestionAnsweringTask</div><div id='method'> Method Name: aggregate_logs</div><BR>

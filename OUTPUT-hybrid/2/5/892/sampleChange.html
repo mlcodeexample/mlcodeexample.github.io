@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    flattened_anchor_boxes = tf.concat(flattened_anchor_boxes, axis=0)
+    similarity_matrix = self.similarity_calc(gt_boxes, flattened_anchor_boxes)
+    match_results = self.matcher(similarity_matrix)
+    <a id="change">cls_targets</a>, box_targets, cls_weights, box_weights = self.anchor_labeler(
+        gt_boxes, gt_labels, match_results)
+    box_targets_list = box_list.BoxList(box_targets)
+    anchor_box_list = box_list.BoxList(flattened_anchor_boxes)</code></pre><h3>After Change</h3><pre><code class='java'>
+    cls_targets = self.anchor_labeler(gt_labels, match_indices, cls_mask, -1)
+    box_mask = tf.tile(cls_mask, [1, 4])
+    box_targets = self.anchor_labeler(gt_boxes, match_indices, box_mask)
+    weights = <a id="change">tf.squeeze(tf.ones_like(gt_labels, dtype=tf.float32), -1)</a>
+    box_weights = self.anchor_labeler(weights, match_indices, mask)
+    ignore_mask = tf.equal(match_indicators, -2)
+    <a id="change">cls_weights = self.anchor_labeler(weights, match_indices, ignore_mask)</a>
+    box_targets_list = box_list.BoxList(box_targets)
+    anchor_box_list = box_list.BoxList(flattened_anchor_boxes)
+    box_targets = self.box_coder.encode(box_targets_list, anchor_box_list)
+</code></pre>

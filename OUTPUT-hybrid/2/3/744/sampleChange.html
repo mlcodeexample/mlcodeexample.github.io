@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        y=ry[k][iy][ix]
+        w=rw[k][iy][ix]
+        h=rh[k][iy][ix]
+        <a id="change">img=cv2.circle(img,(int(x),int(y)),radius=2,color=color,thickness=-1)</a>
+        img=cv2.rectangle(img,(int(x-w//2),int(y-h//2)),(int(x+w//2),int(y+h//2)),color,1)
+    return img
+
+def draw_edge(img,img_e,rx,ry,rw,rh,hnei,wnei,hout,wout,limbs,threshold=0.7):</code></pre><h3>After Change</h3><pre><code class='java'>
+    valid_idxs=np.where(img_pc&gt;=threshold,1,0)
+    ks,iys,ixs=np.nonzero(valid_idxs)
+    h,w,_=img.shape
+    thickness=<a id="change">int(min(h,w)/100)</a>
+    for k,iy,ix in zip(ks,iys,ixs):
+        x=rx[k][iy][ix]
+        y=ry[k][iy][ix]
+        w=rw[k][iy][ix]</code></pre>

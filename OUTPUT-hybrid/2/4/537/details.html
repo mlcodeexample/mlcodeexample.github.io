@@ -1,0 +1,21 @@
+<html><h3>b68db1aaf6abe4d2cea8321cc6f1564228dd60f5,deepchem/models/tensorgraph/models/seqtoseq.py,SeqToSeq,__init__,#SeqToSeq#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#Any#,68
+</h3><img src='696312.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    self._annealing_final_step = annealing_final_step
+    self._annealing_start_step = annealing_start_step
+    self._features = self._create_features()
+    <a id="change">self._labels = layers.Label(shape=(None, None, len(output_tokens)))</a>
+    self._gather_indices = layers.Feature(
+        shape=(self.batch_size, 2), dtype=tf.int32)
+    self._reverse_input = reverse_input
+    self._variational = variational</code></pre><h3>After Change</h3><pre><code class='java'>
+    self.encoder = self._create_encoder(encoder_layers, dropout)
+    self.decoder = self._create_decoder(decoder_layers, dropout)
+    features = self._create_features()
+    <a id="change">gather_indices = Input(shape=(2,), dtype=tf.int32)</a>
+    global_step = Input(shape=tuple(), dtype=tf.int32)
+    embedding = self.encoder([features, gather_indices])
+    self._embedding = self.encoder([features, gather_indices], training=False)
+    if variational:</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 4</div><BR><div id='size'>Non-data size: 4</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L68' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: SeqToSeq</div><div id='method'> Method Name: __init__</div><BR><BR><div id='link'><a href='https://github.com/dmlc/dgl/commit/168a88e57070871eef5a9fcdad3ed1a4d708d7bd#diff-e5255001201701cb854d57d6236fea78f0cb826c05dbde702fd7ba7b8fde0b72L194' target='_blank'>Link</a></div><div id='project'> Project Name: dmlc/dgl</div><div id='commit'> Commit Name: 168a88e57070871eef5a9fcdad3ed1a4d708d7bd</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: examples/pytorch/rgcn-hetero/model.py</div><div id='class'> Class Name: EntityClassify</div><div id='method'> Method Name: forward</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L529' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: AspuruGuzikAutoEncoder</div><div id='method'> Method Name: _create_decoder</div><BR><BR><div id='link'><a href='https://github.com/asyml/texar/commit/99153ad034108b7d0e759fc246cb3d05593ee897#diff-564f524ac1a158477799843e56ea4a40674f4742a73de318294ca41c4703a28bL136' target='_blank'>Link</a></div><div id='project'> Project Name: asyml/texar</div><div id='commit'> Commit Name: 99153ad034108b7d0e759fc246cb3d05593ee897</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: texar/agents/pg_agent.py</div><div id='class'> Class Name: PGAgent</div><div id='method'> Method Name: _train_policy</div><BR>

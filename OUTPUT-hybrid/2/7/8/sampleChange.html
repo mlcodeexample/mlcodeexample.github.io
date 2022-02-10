@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            if ety in self._etype2canonical:
+                self._etype2canonical[ety] = tuple()
+            else:
+                <a id="change">self._etype2canonical[ety]</a> = self._canonical_etypes[i]
+        self._etypes_invmap = {t : i for i, t in enumerate(self._canonical_etypes)}
+
+        &#47&#47 Cached metagraph in networkx</code></pre><h3>After Change</h3><pre><code class='java'>
+    def _init(self, gidx, ntypes, etypes, node_frames, edge_frames):
+        Init internal states.
+        self._graph = gidx
+        <a id="change">self._canonical_etypes = None</a>
+
+        &#47&#47 Handle node types
+        if isinstance(ntypes, tuple):
+            if len(ntypes) != 2:
+                errmsg = &quotInvalid input. Expect a pair (srctypes, dsttypes) but got {}&quot.format(
+                    ntypes)
+                raise TypeError(errmsg)
+            if not is_unibipartite(self._graph.metagraph):
+                raise ValueError(&quotInvalid input. The metagraph must be a uni-directional&quot
+                                 &quot bipartite graph.&quot)
+            self._ntypes = ntypes[0] + ntypes[1]
+            self._srctypes_invmap = {t : i for i, t in enumerate(ntypes[0])}
+            self._dsttypes_invmap = {t : i + len(ntypes[0]) for i, t in enumerate(ntypes[1])}
+            self._is_unibipartite = True
+            <a id="change">if len(ntypes[0]) == 1 and len(ntypes[1]) == 1 and len(etypes) == 1:
+                self._canonical_etypes = [(ntypes[0][0], etypes[0], ntypes[1][0])]
+       </a> else:
+            self._ntypes = ntypes
+            src_dst_map = find_src_dst_ntypes(self._ntypes, self._graph.metagraph)
+            self._is_unibipartite = (src_dst_map is not None)
+            if self._is_unibipartite:
+                self._srctypes_invmap, self._dsttypes_invmap = src_dst_map
+            else:
+                self._srctypes_invmap = {t : i for i, t in enumerate(self._ntypes)}
+                self._dsttypes_invmap = self._srctypes_invmap
+
+        &#47&#47 Handle edge types
+        self._etypes = etypes
+        if self._canonical_etypes is None:
+            self._canonical_etypes = make_canonical_etypes(
+                self._etypes, self._ntypes, self._graph.metagraph)
+
+        &#47&#47 An internal map from etype to canonical etype tuple.
+        &#47&#47 If two etypes have the same name, an empty tuple is stored instead to indicate
+        &#47&#47 ambiguity.
+        self._etype2canonical = {}
+        for i, ety in enumerate(self._etypes):
+            if ety in self._etype2canonical:
+                self._etype2canonical[ety] = tuple()
+            else:
+                <a id="change">self._etype2canonical[ety]</a> = self._canonical_etypes[i]
+        self._etypes_invmap = {t : i for i, t in enumerate(self._canonical_etypes)}
+
+        &#47&#47 Cached metagraph in networkx</code></pre>

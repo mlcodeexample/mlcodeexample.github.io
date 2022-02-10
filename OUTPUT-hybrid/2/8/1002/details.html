@@ -1,0 +1,111 @@
+<html><h3>08c0e994cc0e20cb576469c01b472a43e3279e86,tensorflow_transform/coders/csv_coder_test.py,,,#,29
+</h3><img src='1371860.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        multivalent_columns=[&quotx&quot]),
+]
+
+<a id="change">_DECODE_ONLY_CASES</a> = [
+    dict(
+        testcase_name=&quotscalar_float_with_decimal_point&quot,
+        columns=[&quotx&quot],
+        feature_spec={&quotx&quot: tf.FixedLenFeature([], tf.float32)},
+        csv_line=&quot12.0&quot,
+        instance={&quotx&quot: 12}),
+    dict(
+        testcase_name=&quotscalar_float_with_quoted_value&quot,
+        columns=[&quotx&quot],
+        feature_spec={&quotx&quot: tf.FixedLenFeature([], tf.float32)},
+        csv_line=&quot"12.0"&quot,
+        instance={&quotx&quot: 12}),
+    &#47&#47 TODO(b/35847532): Move this once it succeeds a roundtrip decode/encode.
+    dict(
+        testcase_name=&quotvar_len_string_with_missing_value&quot,
+        columns=[&quotx&quot],
+        feature_spec={&quotx&quot: tf.VarLenFeature(tf.string)},
+        csv_line=&quot&quot,
+        instance={&quotx&quot: []}),
+    &#47&#47 TODO(KesterTong): Fix bugs in encoding.
+    dict(
+        testcase_name=&quotmultiple_columns_numpy&quot,
+        columns=_COLUMNS,
+        feature_spec=_FEATURE_SPEC,
+        csv_line=&quot12,"this is a ,text",categorical_value,1,89.0,12.0,20&quot,
+        instance={
+            &quotcategory1&quot: np.array([b&quotcategorical_value&quot]),
+            &quotnumeric1&quot: np.array(12),
+            &quotnumeric2&quot: np.array([89.0]),
+            &quotnumeric3&quot: np.array([20]),
+            &quottext1&quot: np.array([b&quotthis is a ,text&quot]),
+            &quoty&quot: <a id="change">(np.array(1), np.array([12.0]))</a>
+        }),
+    dict(
+        testcase_name=&quotmultiple_columns_unicode_numpy&quot,
+        columns=_COLUMNS,
+        feature_spec=_FEATURE_SPEC,
+        csv_line=u&quot12,"this is a ,text",Hello κόσμε,1,89.0,12.0,20&quot,
+        instance={
+            &quotcategory1&quot: np.array([u&quotHello κόσμε&quot.encode(&quotutf-8&quot)]),
+            &quotnumeric1&quot: np.array(12),
+            &quotnumeric2&quot: np.array([89.0]),
+            &quotnumeric3&quot: np.array([20]),
+            &quottext1&quot: np.array([b&quotthis is a ,text&quot]),
+            &quoty&quot: <a id="change">(np.array(1), np.array([12.0]))</a>
+        }),
+    dict(
+        testcase_name=&quotmultiple_missing_var_len_features&quot,
+        columns=[&quota&quot, &quotb&quot, &quotc&quot],</code></pre><h3>After Change</h3><pre><code class='java'>
+        multivalent_columns=[&quotx&quot]),
+]
+
+<a id="change">_DECODE_ONLY_CASES</a> = [
+    dict(
+        testcase_name=&quotscalar_float_with_decimal_point&quot,
+        columns=[&quotx&quot],
+        feature_spec={&quotx&quot: tf.FixedLenFeature([], tf.float32)},
+        csv_line=&quot12.0&quot,
+        instance={&quotx&quot: 12}),
+    dict(
+        testcase_name=&quotscalar_float_with_quoted_value&quot,
+        columns=[&quotx&quot],
+        feature_spec={&quotx&quot: tf.FixedLenFeature([], tf.float32)},
+        csv_line=&quot"12.0"&quot,
+        instance={&quotx&quot: 12}),
+    &#47&#47 TODO(b/35847532): Move this once it succeeds a roundtrip decode/encode.
+    dict(
+        testcase_name=&quotvar_len_string_with_missing_value&quot,
+        columns=[&quotx&quot],
+        feature_spec={&quotx&quot: tf.VarLenFeature(tf.string)},
+        csv_line=&quot&quot,
+        instance={&quotx&quot: []}),
+    &#47&#47 TODO(KesterTong): Fix bugs in encoding.
+    dict(
+        testcase_name=&quotmultiple_columns_numpy&quot,
+        columns=_COLUMNS,
+        feature_spec=_FEATURE_SPEC,
+        csv_line=&quot12,"this is a ,text",categorical_value,1,89.0,12.0,20&quot,
+        instance={
+            &quotcategory1&quot: np.array([b&quotcategorical_value&quot]),
+            &quotnumeric1&quot: np.array(12),
+            &quotnumeric2&quot: np.array([89.0]),
+            &quotnumeric3&quot: np.array([20]),
+            &quottext1&quot: np.array([b&quotthis is a ,text&quot]),
+            &quotidx&quot: <a id="change">np.array(1)</a>,
+            &quotvalue&quot: np.array([12.0]),
+        }),
+    dict(
+        testcase_name=&quotmultiple_columns_unicode_numpy&quot,
+        columns=_COLUMNS,
+        feature_spec=_FEATURE_SPEC,
+        csv_line=u&quot12,"this is a ,text",Hello κόσμε,1,89.0,12.0,20&quot,
+        instance={
+            &quotcategory1&quot: np.array([u&quotHello κόσμε&quot.encode(&quotutf-8&quot)]),
+            &quotnumeric1&quot: np.array(12),
+            &quotnumeric2&quot: np.array([89.0]),
+            &quotnumeric3&quot: np.array([20]),
+            &quottext1&quot: np.array([b&quotthis is a ,text&quot]),
+            &quotidx&quot: <a id="change">np.array(1)</a>,
+            &quotvalue&quot: np.array([12.0]),
+        }),
+    dict(</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 8</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/08c0e994cc0e20cb576469c01b472a43e3279e86#diff-8823329d0ddf9055fed1f222d36e6db7d3a1b0cd302b0fda69793c9a522b6f23L179' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 08c0e994cc0e20cb576469c01b472a43e3279e86</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/coders/csv_coder_test.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/08c0e994cc0e20cb576469c01b472a43e3279e86#diff-47650156c474c2a4df9331ceb2a7cdbc0e6479afe827f1004f0d17a2e8bd9e07L51' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 08c0e994cc0e20cb576469c01b472a43e3279e86</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/impl_helper_test.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/08c0e994cc0e20cb576469c01b472a43e3279e86#diff-e25156aa2293ddd618e5509c5d0f0202aa6e37dbcf56c84ff06f6cf0064cb258L61' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 08c0e994cc0e20cb576469c01b472a43e3279e86</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/coders/example_proto_coder_test.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR>

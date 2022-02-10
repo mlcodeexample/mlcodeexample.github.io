@@ -1,0 +1,24 @@
+<html><h3>c871784f3eaaab960b6d29ac9b31bb287eb9e588,python/tvm/topi/cuda/dense.py,,dense_cublas,#Any#Any#Any#Any#Any#,34
+</h3><img src='1365824.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    batch, in_dim = data.shape
+    out_dim, _ = weight.shape
+    matmul = cublas.matmul(data, weight, False, True)
+    <a id="change">if isinstance(batch, int):
+        cfg.add_flop(batch * in_dim * out_dim * 2)
+    elif isinstance(batch, tir.IntImm):
+        cfg.add_flop(batch.value * in_dim * out_dim * 2)
+    &#47&#47 if we get a te.Var, we cannot add flop counts
+   </a> if bias is not None:
+        matmul = te.compute(
+            (batch, out_dim), lambda i, j: matmul[i, j] + bias[j], tag=tag.BROADCAST
+        )</code></pre><h3>After Change</h3><pre><code class='java'>
+    batch, in_dim = get_const_tuple(data.shape)
+    out_dim, _ = get_const_tuple(weight.shape)
+    matmul = cublas.matmul(data, weight, False, True)
+    if all(<a id="change">isinstance</a>(d, int) <a id="change">for</a> d in [batch, in_dim, out_dim]):
+        cfg.add_flop(batch * in_dim * out_dim * 2)
+    if bias is not None:
+        matmul = te.compute(</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 3</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/apache/incubator-tvm/commit/c871784f3eaaab960b6d29ac9b31bb287eb9e588#diff-15e86bb78ec9722638641950a89deeca777fa09097d2760d993b087451dc03fbL42' target='_blank'>Link</a></div><div id='project'> Project Name: apache/incubator-tvm</div><div id='commit'> Commit Name: c871784f3eaaab960b6d29ac9b31bb287eb9e588</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: python/tvm/topi/cuda/dense.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: dense_cublas</div><BR><BR><div id='link'><a href='https://github.com/stellargraph/stellargraph/commit/bcf6d0a188ee9ba868c1de01c347f813e3aaa35c#diff-2ab00be2a3dc4cac8ec3b20cbad49325b92e23fcb68844abb4dcb790b2479742L497' target='_blank'>Link</a></div><div id='project'> Project Name: stellargraph/stellargraph</div><div id='commit'> Commit Name: bcf6d0a188ee9ba868c1de01c347f813e3aaa35c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: stellargraph/core/graph_networkx.py</div><div id='class'> Class Name: NetworkXStellarGraph</div><div id='method'> Method Name: nodes_of_type</div><BR><BR><div id='link'><a href='https://github.com/tensorflow/transform/commit/54e07bdb2ba299fd6f364289510612f2fe6af8ff#diff-59967749354d77883612a1d0ecc2f04b732c2f5cf98845aee3e6cf77ead61cf4L204' target='_blank'>Link</a></div><div id='project'> Project Name: tensorflow/transform</div><div id='commit'> Commit Name: 54e07bdb2ba299fd6f364289510612f2fe6af8ff</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tensorflow_transform/nodes.py</div><div id='class'> Class Name: Traverser</div><div id='method'> Method Name: _visit_operation</div><BR>

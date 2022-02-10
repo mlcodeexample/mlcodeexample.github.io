@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+
+        else:
+            &#47&#47 Placeholders for the dense adjacency matrix
+            A_m = Input(batch_shape=<a id="change">(1, N_nodes, N_nodes)</a>)
+            A_placeholders = [A_m]
+
+        if self.use_sparse:</code></pre><h3>After Change</h3><pre><code class='java'>
+            for the APPNP model (containing node features and graph adjacency),
+            and `x_out` is a Keras tensor for the APPNP model output.
+        
+        <a id="change">if self.multiplicity != 1:
+            raise RuntimeError(
+                "APPNP does not currently support propagating a link model"
+            )
+
+       </a> out_indices_t = Input(batch_shape=(1, None), dtype="int32")
+
+        if self.use_sparse:
+            &#47&#47 Placeholders for the sparse adjacency matrix</code></pre>

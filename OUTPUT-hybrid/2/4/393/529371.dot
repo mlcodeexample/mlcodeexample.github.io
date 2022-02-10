@@ -1,0 +1,16 @@
+digraph G {
+subgraph cluster0 {
+1 [label="PyWithStatement" a="104" s="6008,6042" l="10,2" shape="diamond"];
+3 [label="as_default" a="32" s="6030" l="12" shape="box"];
+4 [label="FieldAccess" a="22" s="6018" l="11" shape="box"];
+label = "Old";
+style="dotted";
+}
+subgraph cluster1 {
+2 [label="[]" a="2" s="6364,6372" l="7,1" shape="box"];
+label = "New";
+style="dotted";
+}
+3 -> 1 [label="_cond_"];
+4 -> 3 [label="_recv_"];
+}

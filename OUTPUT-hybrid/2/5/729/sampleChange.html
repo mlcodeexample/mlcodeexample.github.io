@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+  def call(self, x, **kwargs):
+    Standard Keras call() method.
+    if not isinstance(x, dict):
+      <a id="change">raise ValueError(&quotInput to the RTL layer must be dict&quot)</a>
+    &#47&#47 Flatten the input.
+    &#47&#47 The order for flattening should match the order in _get_rtl_structure.
+    input_tensors = []
+    for input_key in sorted(x.keys()):</code></pre><h3>After Change</h3><pre><code class='java'>
+      else:
+        input_tensors.append(items)
+    if len(input_tensors) == 1:
+      <a id="change">flattened_input = input_tensors[0]</a>
+    else:
+      flattened_input = tf.concat(input_tensors, axis=1)
+
+    &#47&#47 outputs_for_monotonicity[0] are non-monotonic outputs</code></pre>

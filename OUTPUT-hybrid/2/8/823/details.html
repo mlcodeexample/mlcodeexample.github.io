@@ -1,0 +1,29 @@
+<html><h3>b68db1aaf6abe4d2cea8321cc6f1564228dd60f5,deepchem/models/tensorgraph/models/seqtoseq.py,SeqToSeq,predict_from_sequences,#SeqToSeq#Any#Any#,226
+</h3><img src='1038079.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    result = []
+    with self._get_tf("Graph").as_default():
+      for batch in self._batch_elements(sequences):
+        <a id="change">feed_dict = {}</a>
+        feed_dict[self._features] = self._create_input_array(batch)
+        feed_dict[self._gather_indices] = [(i, len(batch[i])
+                                            if i &lt; len(batch) else 0)
+                                           for i in range(self.batch_size)]
+        feed_dict[self._training_placeholder] = 0.0
+        for initial, zero in zip(self.rnn_initial_states, self.rnn_zero_states):
+          feed_dict[initial] = zero
+        <a id="change">probs = self.session.run(self.output, feed_dict=feed_dict)</a>
+        for i in range(len(batch)):
+          result.append(self._beam_search(probs[i], beam_width))
+    return result
+</code></pre><h3>After Change</h3><pre><code class='java'>
+      features = self._create_input_array(batch)
+      indices = np.array([(i, len(batch[i]) if i &lt; len(batch) else 0)
+                          for i in range(self.batch_size)])
+      probs = self.predict_on_generator([[<a id="change">(features, indices,
+                                           self.get_global_step())</a>, None,
+                                          None]])
+      for i in range(len(batch)):
+        result.append(self._beam_search(probs[i], beam_width))</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 6</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L226' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: SeqToSeq</div><div id='method'> Method Name: predict_from_sequences</div><BR><BR><div id='link'><a href='https://github.com/deepchem/deepchem/commit/b68db1aaf6abe4d2cea8321cc6f1564228dd60f5#diff-6cf2ff1fbc6e47b7291cc3f953a4aac31e0c7eea6f5ef342433cfecbf5e28562L283' target='_blank'>Link</a></div><div id='project'> Project Name: deepchem/deepchem</div><div id='commit'> Commit Name: b68db1aaf6abe4d2cea8321cc6f1564228dd60f5</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deepchem/models/tensorgraph/models/seqtoseq.py</div><div id='class'> Class Name: SeqToSeq</div><div id='method'> Method Name: predict_embeddings</div><BR><BR><div id='link'><a href='https://github.com/arnomoonens/yarll/commit/86ce5d52134a56806112ff8664e4034338e0e05a#diff-b6ad861197e3ed50385bc08dbb9454faf358b1c1140c6a806c07997faf1551e6L208' target='_blank'>Link</a></div><div id='project'> Project Name: arnomoonens/yarll</div><div id='commit'> Commit Name: 86ce5d52134a56806112ff8664e4034338e0e05a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: yarll/agents/ppo/ppo.py</div><div id='class'> Class Name: PPO</div><div id='method'> Method Name: learn</div><BR>

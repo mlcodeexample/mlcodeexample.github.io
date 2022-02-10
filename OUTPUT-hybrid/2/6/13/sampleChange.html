@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        basis = [
+            gs.array_from_sparse([
+                (row, col), (col, row)], [1., 1.], (self.n, self.n))
+            <a id="change">for</a> row in gs.arange(self.n)
+            for col in gs.arange(row, self.n)]
+        basis = gs.stack(
+            basis) * (gs.ones((self.n, self.n)) - 1. / 2 * gs.eye(self.n))</code></pre><h3>After Change</h3><pre><code class='java'>
+
+    def get_basis(self):
+        Compute the basis of the vector space of symmetric matrices.
+        <a id="change">basis = []</a>
+        for row in gs.arange(self.n):
+            <a id="change">for col in gs.arange(row, self.n):
+                if row == col:
+                    indices = [(row, row)]
+                    values = [1.]
+                else:
+                    indices = [(row, col), (col, row)]
+                    values = [1., 1.]
+                basis.append(gs.array_from_sparse(
+                    indices, values, (self.n, ) * 2))
+       </a> basis = gs.stack(basis)
+        return basis
+
+    basis = property(get_basis)</code></pre>

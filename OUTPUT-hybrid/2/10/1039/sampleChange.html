@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    m = model.alexnet(images, seed=SEED, **kwargs)
+    loss = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=m.output, labels=labels)
+    graph = tf.get_default_graph()
+    targets = <a id="change">{
+            &#47&#47    &quotconv1&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv1/pool:0&quot])),
+            &#47&#47    &quotconv2&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv2/pool:0&quot])),
+            &#47&#47    &quotconv3&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv3/relu:0&quot])),
+            &#47&#47    &quotconv4&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv4/relu:0&quot])),
+            &#47&#47    &quotconv5&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv5/pool:0&quot])),
+            &#47&#47    &quotfc6&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotfc6/relu:0&quot])),
+            &#47&#47    &quotfc7&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotfc7/relu:0&quot])),
+            &#47&#47    &quotfc8&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotfc8/fc:0&quot])),
+               &quotloss&quot: tf.reduce_mean(loss)
+               }</a>
+    return targets
+
+
+def get_imagenet():</code></pre><h3>After Change</h3><pre><code class='java'>
+    m = model.alexnet(images, seed=SEED, **kwargs)
+    loss = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=m.output, labels=labels)
+    graph = tf.get_default_graph()
+    targets = <a id="change">{&quotconv1&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv1/output:0&quot])),
+               &quotconv2&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv2/output:0&quot])),
+               &quotconv3&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv3/output:0&quot])),
+               &quotconv4&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv4/output:0&quot])),
+               &quotconv5&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotconv5/output:0&quot])),
+               &quotfc6&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotfc6/output:0&quot])),
+               &quotfc7&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotfc7/output:0&quot])),
+               &quotfc8&quot: graph.get_tensor_by_name(&quot/&quot.join([scope, &quotfc8/output:0&quot])),
+               &quotloss&quot: tf.reduce_mean(loss)
+               }</a>
+    return targets
+
+
+def get_imagenet():</code></pre>

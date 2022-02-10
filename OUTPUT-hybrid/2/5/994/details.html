@@ -1,0 +1,21 @@
+<html><h3>d1595c208a5b316b1a30ba50acd8d77f6241316a,tindetheus/facenet_clone/validate_on_lfw.py,,parse_arguments,#Any#,93
+</h3><img src='1369365.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    parser.add_argument(&quot--lfw_pairs&quot, type=str,
+        help=&quotThe file containing the pairs to use for validation.&quot, default=&quotdata/pairs.txt&quot)
+    parser.add_argument(&quot--lfw_file_ext&quot, type=str,
+        help=&quotThe file extension for the LFW dataset.&quot, default=&quotpng&quot, choices=<a id="change">[&quotjpg&quot, &quotpng&quot]</a>)
+    parser.add_argument(&quot--lfw_nrof_folds&quot, type=int,
+        help=&quotNumber of folds to use for cross validation. Mainly used for testing.&quot, default=10)
+    return parser.parse_args(argv)</code></pre><h3>After Change</h3><pre><code class='java'>
+        help=&quotDistance metric  0:euclidian, 1:cosine similarity.&quot, default=0)
+    parser.add_argument(&quot--use_flipped_images&quot, 
+        help=&quotConcatenates embeddings for the image and its horizontally flipped counterpart.&quot, action=&quotstore_true&quot)
+    <a id="change">parser.add_argument(&quot--subtract_mean&quot, 
+        help=&quotSubtract feature mean before calculating distance.&quot, action=&quotstore_true&quot)</a>
+    parser.add_argument(&quot--use_fixed_image_standardization&quot, 
+        help=&quotPerforms fixed standardization of images.&quot, action=&quotstore_true&quot)
+    return parser.parse_args(argv)
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 2</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/cjekel/tindetheus/commit/d1595c208a5b316b1a30ba50acd8d77f6241316a#diff-f609f82abe93858c33ebfe8084e317cc5773c4944196f393f1241668273efcb0L94' target='_blank'>Link</a></div><div id='project'> Project Name: cjekel/tindetheus</div><div id='commit'> Commit Name: d1595c208a5b316b1a30ba50acd8d77f6241316a</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: tindetheus/facenet_clone/validate_on_lfw.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: parse_arguments</div><BR><BR><div id='link'><a href='https://github.com/chuyangliu/snake/commit/7e799d025a71b84c844253e22e15cee7060975d6#diff-d6af0459a37d985953d7040c14f53feb3b9cc9e58b543aa3c2b80256d276c5e0L9' target='_blank'>Link</a></div><div id='project'> Project Name: chuyangliu/snake</div><div id='commit'> Commit Name: 7e799d025a71b84c844253e22e15cee7060975d6</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: run.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR><BR><div id='link'><a href='https://github.com/GoogleCloudPlatform/ml-on-gcp/commit/8079adae33711e4886a625df3f0ae9860739f7b9#diff-d14af158fd6ca06ea342c9ee12428ba4a41e4b893af1be9f4f09a946bc978ab1L42' target='_blank'>Link</a></div><div id='project'> Project Name: GoogleCloudPlatform/ml-on-gcp</div><div id='commit'> Commit Name: 8079adae33711e4886a625df3f0ae9860739f7b9</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: example_zoo/tools/process.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: </div><BR>

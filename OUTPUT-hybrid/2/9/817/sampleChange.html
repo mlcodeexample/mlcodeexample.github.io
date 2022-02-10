@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+        else:
+            update = dict(unit=&quotepisodes&quot, batch_size=batch_size, frequency=update_frequency)
+        optimizer = dict(type=&quotadam&quot, learning_rate=learning_rate)
+        optimizer = <a id="change">dict(
+            type=&quotsubsampling_step&quot, optimizer=optimizer, fraction=subsampling_fraction
+        )</a>
+        <a id="change">optimizer = dict(type=&quotmulti_step&quot, optimizer=optimizer, num_steps=optimization_steps)</a>
+        objective = dict(
+            type=&quotpolicy_gradient&quot, ratio_based=True, clipping_value=likelihood_ratio_clipping
+        )
+        if baseline_network is None:</code></pre><h3>After Change</h3><pre><code class='java'>
+        &#47&#47 Preprocessing
+        preprocessing=None,
+        &#47&#47 Exploration
+        exploration=0.0, variable_noise=0.0,<a id="change">
+        &#47&#47 Regularization
+        l2_regularization=0.0, entropy_regularization=0.0,
+        &#47&#47 TensorFlow etc
+        name=&quotagent&quot, device=None, parallel_interactions=1, config=No</a>ne, saver=None,
+        summarizer=None, recorder=None,
+        &#47&#47 Deprecated
+        optimization_steps=None, estimate_terminal=None, critic_network=None, critic_optimizer=None,</code></pre>

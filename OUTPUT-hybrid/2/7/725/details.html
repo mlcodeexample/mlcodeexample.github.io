@@ -1,0 +1,19 @@
+<html><h3>ede220455551e37c2a288c284abb6511bc75bf0b,musegan/modules.py,PhraseDiscriminator,__call__,#PhraseDiscriminator#Any#Any#,115
+</h3><img src='953818.png'><BR><BR><BR><link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+                              kernels=[2, 1], strides=[1, 1], name=&quoth0&quot))
+            h1 = lrelu(conv2d(concat_cond_conv(h0, self.condition), self.output_dim, kernels=[3, 1], strides=[3, 1],
+                              name=&quoth1&quot))
+            <a id="change">h1 = tf.squeeze(tf.squeeze(h1, axis=2), axis=1)</a>
+        return h1
+</code></pre><h3>After Change</h3><pre><code class='java'>
+            h1 = lrelu(conv2d(h0, 128, kernels=[3, 1], strides=[3, 1],name=&quoth1&quot))
+
+            &#47&#47&#47&#47 linear
+            <a id="change">h2 = tf.reshape(h1, [-1, np.product([s.value for s in h1.get_shape()[1:]])])</a>
+            h2 = lrelu(linear(h2, 1024, name=&quoth2&quot))
+            h3 = linear(h2, 1, name=&quoth3&quot)
+        return h3
+</code></pre><div id='inPattern'>In pattern: SUPERPATTERN</div><BR><div id='frequency'>Frequency: 3</div><BR><div id='size'>Non-data size: 5</div><BR><h3>Instances</h3><BR><div id='link'><a href='https://github.com/salu133445/musegan/commit/ede220455551e37c2a288c284abb6511bc75bf0b#diff-d02cfb0973e2fc8410c3a2e402ef944a0d7fb8d93da8327a0fff92de524d77e3L115' target='_blank'>Link</a></div><div id='project'> Project Name: salu133445/musegan</div><div id='commit'> Commit Name: ede220455551e37c2a288c284abb6511bc75bf0b</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: musegan/modules.py</div><div id='class'> Class Name: PhraseDiscriminator</div><div id='method'> Method Name: __call__</div><BR><BR><div id='link'><a href='https://github.com/deepmipt/DeepPavlov/commit/ba675a4894fbf3df2257c3815bc591c770c7470c#diff-217940e47cd7b3c4591a95f53416d52e4f3e65c96f4af4f601e6ddab616ce750L541' target='_blank'>Link</a></div><div id='project'> Project Name: deepmipt/DeepPavlov</div><div id='commit'> Commit Name: ba675a4894fbf3df2257c3815bc591c770c7470c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deeppavlov/core/layers/tf_layers.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: cudnn_gru</div><BR><BR><div id='link'><a href='https://github.com/deepmipt/DeepPavlov/commit/ba675a4894fbf3df2257c3815bc591c770c7470c#diff-217940e47cd7b3c4591a95f53416d52e4f3e65c96f4af4f601e6ddab616ce750L580' target='_blank'>Link</a></div><div id='project'> Project Name: deepmipt/DeepPavlov</div><div id='commit'> Commit Name: ba675a4894fbf3df2257c3815bc591c770c7470c</div><div id='time'> Time: </div><div id='author'> Author: null</div><div id='file'> File Name: deeppavlov/core/layers/tf_layers.py</div><div id='class'> Class Name: </div><div id='method'> Method Name: cudnn_lstm</div><BR>

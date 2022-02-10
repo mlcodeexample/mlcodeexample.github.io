@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            data_loss = 0
+            for pred in list_prediction:
+                if self._loss_func_params:
+                    <a id="change">data_loss += self._data_loss_func(
+                        pred, ground_truth, weight_map,
+                        **self._loss_func_params)</a>
+                else:
+                    data_loss += self._data_loss_func(
+                        pred, ground_truth, weight_map)
+            <a id="change">return data_loss / len(list_prediction)</a>
+
+
+def generalised_dice_loss(prediction,
+                          ground_truth,</code></pre><h3>After Change</h3><pre><code class='java'>
+            if weight_map is not None:
+                weight_map = tf.reshape(weight_map, [-1])
+
+            <a id="change">data_loss = []</a>
+            for pred in prediction:
+                if self._loss_func_params:
+                    data_loss.append(self._data_loss_func(
+                        pred, ground_truth, weight_map,
+                        **self._loss_func_params))
+                else:
+                    data_loss.append(self._data_loss_func(
+                        pred, ground_truth, weight_map))
+            <a id="change">return tf.reduce_mean(data_loss)</a>
+
+
+def generalised_dice_loss(prediction,
+                          ground_truth,</code></pre>

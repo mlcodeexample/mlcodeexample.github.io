@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    &#47&#47 Compute the distances and radial symmetry functions.
+    D = self.distance_tensor(X, Nbrs, self.boxsize, B, N, M, d)
+    R = self.distance_matrix(D)
+    R = tf.reshape(R, <a id="change">[1]</a> + R.shape.as_list())
+    rsf = self.radial_symmetry_function(R, self.rc, self.rs, self.re)
+
+    if not self.atom_types:</code></pre><h3>After Change</h3><pre><code class='java'>
+    &#47&#47 Compute the distances and radial symmetry functions.
+    D = self.distance_tensor(X, Nbrs, self.boxsize, B, N, M, d)
+    R = self.distance_matrix(D)
+    <a id="change">R = tf.expand_dims(R, 0)</a>
+    rsf = self.radial_symmetry_function(R, self.rc, self.rs, self.re)
+
+    if not self.atom_types:
+      cond = tf.cast(tf.not_equal(Nbrs_Z, 0), tf.float32)</code></pre>

@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+            if context_ is not None:
+                token_starts = [context[&quotstart&quot] for context in context_]
+                original_tokens = []
+                <a id="change">for char_loc in batch_character_locs[i]:
+                    original_token=-1
+                    for i in range(len(token_starts)):
+                        if char_loc &gt;= token_starts[i]:
+                            original_token += 1
+                    original_tokens.append(original_token)
+               </a> expanded_context = [None]*len(original_tokens)
+                for j in range(len(expanded_context)):
+                    expanded_context[j] =  context_[original_tokens[j]]
+                batch_context.append(expanded_context)</code></pre><h3>After Change</h3><pre><code class='java'>
+            &#47&#47 Context is tokenwise, so we need to duplicate contexts for each subtoken of a token, and to match length of labels
+            if context_ is not None:
+                original_tokens = []
+                <a id="change">for char_loc, token in zip(
+                    batch_original_character_locs[i], batch_tokens[i]
+                ):
+                    original_token = 0
+                    for subtoken_idx in range(len(context_)):
+                        if (
+                            char_loc + offset &gt; context_[subtoken_idx]["end"]
+                        ):  &#47&#47 subtract one since subtokens include spaces at the beginning, while the &quotstart&quots from context do not
+                            original_token += 1
+                    original_tokens.append(original_token)
+               </a> expanded_context = [None] * len(original_tokens)
+                for j in range(len(expanded_context)):
+                    expanded_context[j] = context_[original_tokens[j]]
+                batch_context.append(expanded_context)</code></pre>

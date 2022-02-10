@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../../../../default.css">
+<script src="../../../../highlight.pack.js"></script> 
+<script>hljs.initHighlightingOnLoad();</script>
+<html><h3></h3><h3>Before Change</h3><pre><code class='java'>
+    with open(os.path.join(path_wd, filename_ann + &quot.h5&quot), &quotw&quot):
+        pass
+
+    config_filepath = <a id="change">os.path.join(path_wd, &quotconfig&quot)</a>
+    with open(config_filepath, &quotw&quot) as configfile:
+        config.write(configfile)
+
+    config = update_setup(config_filepath)</code></pre><h3>After Change</h3><pre><code class='java'>
+
+@pytest.fixture(scope=&quotfunction&quot)
+def _config(_path_wd, _datapath):
+    <a id="change">return get_config(_path_wd, _datapath)</a>
+
+
+@pytest.fixture(scope=&quotfunction&quot)
+def _config_first(_path_wd, _datapath_first):</code></pre>
